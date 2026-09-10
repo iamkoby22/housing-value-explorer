@@ -6,14 +6,19 @@
     "node": ">=22.13.0"
   },
   "scripts": {
-    "dev": "vinext dev",
+    "dev": "node scripts/dev.mjs",
+    "dev:web": "vinext dev",
+    "dev:inference": "node scripts/run-python.mjs inference/valuation_service.py",
+    "build:inference": "node scripts/run-python.mjs scripts/build_inference_artifacts.py",
     "build": "vinext build",
     "start": "wrangler dev --config dist/server/wrangler.json",
     "lint": "oxlint",
     "format": "oxfmt",
     "format:check": "oxfmt --check",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run && node scripts/run-python.mjs -m unittest discover -s tests_python -v",
+    "test:web": "vitest run",
+    "test:inference": "node scripts/run-python.mjs -m unittest discover -s tests_python -v"
   },
   "dependencies": {
     "@base-ui/react": "1.7.0",

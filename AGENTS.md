@@ -16,6 +16,9 @@ Scientific rules:
 - Every county result must retain its overlap and reliability context.
 - Prefer the deterministic exporter over hand-copying research values.
 - Raw ACS microdata must not be bundled into the web application.
+- Phase 3 inference must load the checked-in exact Method 2B artifact; do not substitute coefficients, retune, or refit during a user request.
+- Keep SHAP in native log1p output units and verify local additivity before presenting an explanation.
+- Treat ZIP input as a Census ZCTA lookup resolved to State–PUMA; never imply ZIP, ZCTA, county, and PUMA are equivalent.
 
 Product rules:
 
@@ -23,6 +26,7 @@ Product rules:
 - Maintain the editorial visual system in `DESIGN.md` and avoid generic AI/SaaS patterns.
 - Use human-readable labels in the interface; internal feature names belong in methodology/detail views.
 - Do not introduce authentication, a database, workers, or unrelated product concepts without a concrete approved need.
+- Preserve the local-only privacy boundary: no names, emails, street addresses, request persistence, or third-party property lookups.
 
 Quality rules:
 

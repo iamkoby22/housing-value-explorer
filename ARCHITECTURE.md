@@ -2,7 +2,7 @@
 
 ## Scope
 
-This is a standalone public research-results explorer. It has no authentication, accounts, database, background workers, or dependency on VISION Office.
+This is a standalone research-results explorer and local homeowner valuation tool. It has no authentication, accounts, database, background workers, or dependency on VISION Office.
 
 ## Stack
 
@@ -12,7 +12,8 @@ This is a standalone public research-results explorer. It has no authentication,
 - Recharts for general statistical graphics
 - D3 Geo for the five-state SVG geography selector
 - Zod for runtime validation of curated research JSON
-- Local Vinext development runtime; the project remains packageable for later hosting
+- Local Python/XGBoost inference service bound to loopback only
+- Local Vinext development runtime; no remote Phase 3 deployment
 
 One charting approach and one geographic renderer are used; no overlapping visualization frameworks are introduced.
 
@@ -31,6 +32,22 @@ Authoritative notebook + geographic SHAP workbook + notebook-produced CSVs
 ```
 
 Raw ACS PUMS microdata is never shipped to the browser. The exporter normalizes existing outputs without retraining or changing the study methodology. It records source SHA-256 hashes, provenance, units, weighting, geographic level, and caveats.
+
+Phase 3 adds a separate local inference path:
+
+```text
+Exact notebook Method 2B specification + 2020–2023 development cohort
+                              ↓
+           scripts/build_inference_artifacts.py
+                              ↓
+   model_artifacts/reduced_xgboost_method2b.joblib
+                              ↓
+       inference/valuation_service.py (127.0.0.1:8765)
+                              ↓
+               /estimate homeowner workspace
+```
+
+The productionized refit exactly reproduces the notebook's 2024 MAE, RMSE, and R². The service performs exact preprocessing, prediction, inverse `expm1`, semantic TreeSHAP aggregation, and per-request additivity checks. It neither stores requests nor exposes raw microdata.
 
 ## Curated datasets
 
@@ -67,16 +84,17 @@ Raw ACS PUMS microdata is never shipped to the browser. The exporter normalizes 
 - `/model` — validation and temporal performance
 - `/research` — scientific documentation and limitations
 - `/evaluate` — Phase 2 analytical workspace with housing, geography, comparison, SHAP, model, diagnostics, and methodology modules
+- `/estimate` — Phase 3 progressive home profile, model estimate, local SHAP, support diagnostics, local context, and session-only scenario lab
 
 ## Runtime and deployment
 
-The default runtime is local: `npm run dev` starts the application server, React frontend, and static research-data layer together. No separate backend process, database, or database binding is required. Phase 2 was verified at `http://localhost:3001`; no Phase 2 remote deployment was performed.
+The default runtime is local: `npm run dev` starts Vinext and the Python inference service together. No database or database binding is required. The browser application is normally served at `http://localhost:3001`; model inference is loopback-only at `http://127.0.0.1:8765`. No Phase 2 or Phase 3 remote deployment was performed.
 
 ## Five-phase roadmap
 
 1. Research grounding, deterministic data layer, design system, polished Overview, and foundational routes.
 2. Deep geographic explorer with housing context, PUMA/county layers, comparison, linked URL state, and reliability UX. **Implemented locally.**
-3. Deep SHAP explorer with feature profiles, dependence, ranking variation, and stability.
+3. Individual home valuation, exact local SHAP, support diagnostics, and scenario intelligence. **Implemented locally.**
 4. Model/publication layer with diagnostics, robust methodology, and downloadable supplements.
 5. Integration, accessibility, performance, responsive refinement, and release hardening.
 

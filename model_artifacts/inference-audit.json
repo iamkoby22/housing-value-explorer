@@ -1,0 +1,49 @@
+{
+  "model": "Reduced XGBoost - Log1p target (Method 2B)",
+  "source": "UNBOXINGTHEBLACKBOX.ipynb cells 150, 172, 174, 176, 178, and 184",
+  "artifact": "model_artifacts/reduced_xgboost_method2b.joblib",
+  "loaded_or_refit": "Reproducibly refit because no serialized estimator existed",
+  "serialization": "joblib protocol 4, compression level 3",
+  "features": [
+    "bedroom_count",
+    "non_bedroom_rooms",
+    "lot_size_order",
+    "year_built_order",
+    "survey_year",
+    "signed_log_household_income_2024",
+    "household_size",
+    "year_moved_order",
+    "first_mortgage_log_2024",
+    "hoa_fee_log_2024",
+    "electricity_log_2024",
+    "gas_log_2024",
+    "other_fuel_log_2024",
+    "water_sewer_log_2024",
+    "structure_type",
+    "heating_fuel",
+    "state_puma",
+    "household_type"
+  ],
+  "training_records": 960182,
+  "temporal_records": 268930,
+  "generated_2024_metrics": {
+    "records": 268930,
+    "mae": 275638.81476808304,
+    "rmse": 710455.8985894376,
+    "r_squared": 0.3176961238651559
+  },
+  "notebook_2024_metrics": {
+    "mae": 275638.81476808304,
+    "rmse": 710455.8985894376,
+    "r_squared": 0.3176961238651559,
+    "records": 268930
+  },
+  "metric_differences": {
+    "mae": 0.0,
+    "rmse": 0.0,
+    "r_squared": 0.0
+  },
+  "serialization_max_prediction_difference": 0.0,
+  "crosswalk_sha256": "041fa1cb1a03b865bf121abae3d0c591c022876dc1272f9fe637b6ca00d91746",
+  "crosswalk_records_supported": 7268
+}

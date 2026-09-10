@@ -39,6 +39,8 @@ The compact header contains exactly five primary destinations: Overview, Explore
 
 The `/evaluate` analytical workspace is entered from a clear public-page CTA. Inside it, the public header is replaced by a collapsible dark sidebar, a progressive context bar, a wide evidence canvas, and an optional detail panel. On mobile the sidebar becomes a drawer. A persistent “Back to research” link preserves the transition to the public editorial site.
 
+The `/estimate` homeowner workspace keeps the five-item public navigation unchanged. A progressive five-step questionnaire sits on a light paper surface; results shift to the dark evidence surface so the model estimate, local context, SHAP decomposition, and Scenario Lab form one clear hierarchy. Guided and full-detail modes expose the same locked model rather than different estimators.
+
 ## Charts
 
 - Charts begin with a research question, not a decorative title.

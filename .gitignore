@@ -38,4 +38,6 @@ next-env.d.ts
 /work/
 /.npm-cache/
 /.python-packages/
+__pycache__/
+*.py[cod]
 *.tsbuildinfo

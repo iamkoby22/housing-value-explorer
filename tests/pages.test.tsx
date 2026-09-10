@@ -10,6 +10,7 @@ describe('critical page rendering', () => {
     expect(html).toContain('Geographic variation in the drivers');
     expect(html).toContain('Reduced XGBoost');
     expect(html).toContain('268.9K');
+    expect(html).toContain('href="/estimate"');
     expect(html).toContain('href="/explore"');
   });
 

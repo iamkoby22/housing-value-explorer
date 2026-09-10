@@ -6,6 +6,8 @@
 
 This application presents an existing predictive study of owner-estimated housing values. It does not retrain the model or recompute the scientific analysis in the browser.
 
+The Phase 3 valuation workspace applies a serialized, reproducibly refit copy of the locked selected estimator. It is productized inference, not renewed model development. Exact provenance and numerical equality are documented in `MODEL_INFERENCE_AUDIT.md`.
+
 ## Research questions and contribution
 
 The primary question is how accurately 2024 inflation-adjusted property values for owner-occupied one-family houses in California, Florida, New York, Tennessee, and Texas can be predicted from 2020–2023 ACS PUMS property, household, financing, utility, and State-PUMA characteristics.
@@ -80,6 +82,9 @@ Every county view must carry record count, effective sample size, median overlap
 - Validation addresses short-horizon temporal generalization to 2024.
 - Mortgage variables combine financing and underlying property/borrower context.
 - Ordered ACS categories are not interval measurements.
+- Individual estimates are experimental research-model outputs, not appraisals, transaction prices, listing recommendations, or guarantees.
+- ZIP input is treated as a 2020 Census ZCTA and resolved to the largest-area intersecting 2020 State–PUMA; ZIP, ZCTA, and PUMA are not equivalent.
+- Scenario changes are model re-predictions with other entered inputs held fixed, not causal intervention or renovation-return estimates.
 
 ## Authoritative sources
 

@@ -42,11 +42,11 @@ export default function OverviewPage() {
             housing, financial, household, and geographic information.
           </p>
           <div className="hero-actions">
-            <Link className="primary-link" href="/evaluate">
-              Evaluate the research <span aria-hidden="true">→</span>
+            <Link className="primary-link" href="/estimate">
+              Estimate a home <span aria-hidden="true">→</span>
             </Link>
-            <Link className="text-link" href="/explore">
-              Explore the public findings
+            <Link className="text-link" href="/evaluate">
+              Evaluate the research
             </Link>
           </div>
         </div>
@@ -57,6 +57,9 @@ export default function OverviewPage() {
             Chosen using five-fold development CV, then evaluated on 2024 and
             explained with TreeSHAP.
           </p>
+          <Link className="text-link" href="/explore">
+            Explore the public findings
+          </Link>
         </aside>
       </section>
 
