@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-import { AnalysisWorkspace } from '@/components/analysis-workspace';
+import { LegacyEvaluateRedirect } from '@/components/legacy-evaluate-redirect';
 
 export const metadata: Metadata = {
   title: 'Evaluate the research',
@@ -9,5 +9,5 @@ export const metadata: Metadata = {
 };
 
 export default function EvaluatePage() {
-  return <AnalysisWorkspace />;
+  return <LegacyEvaluateRedirect />;
 }

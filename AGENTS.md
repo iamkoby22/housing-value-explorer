@@ -22,7 +22,8 @@ Scientific rules:
 
 Product rules:
 
-- Keep exactly five primary destinations: Overview, Explore, Drivers, Model, Research.
+- Keep exactly six primary destinations: Overview, Explore, Estimate, Drivers, Model, Research.
+- Reuse the unified analytical application shell on every primary route; `/evaluate` is compatibility-only.
 - Maintain the editorial visual system in `DESIGN.md` and avoid generic AI/SaaS patterns.
 - Use human-readable labels in the interface; internal feature names belong in methodology/detail views.
 - Do not introduce authentication, a database, workers, or unrelated product concepts without a concrete approved need.

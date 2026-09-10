@@ -13,7 +13,7 @@ Open the local URL printed by Vinext.
 
 The single development command starts the React application and the local-only Python inference service together. There is no database. The web preview normally opens at `http://localhost:3001` when port 3000 is occupied; the inference service binds only to `http://127.0.0.1:8765`.
 
-The public research presentation begins at `/`. The Phase 2 analytical workspace is at `/evaluate`. The Phase 3 homeowner valuation workspace is at `/estimate`. All phases are intentionally local-only and have not been remotely deployed.
+The unified application begins at `/` and uses one collapsible shell across Overview, Explore, Estimate, Drivers, Model, and Research. The former `/evaluate` route remains as a query-preserving compatibility redirect. All phases are intentionally local-only and have not been remotely deployed.
 
 Set `HOUSING_EXPLORER_PYTHON` if the appropriate Python interpreter is not discoverable automatically. The pinned dependencies are recorded in `requirements.txt`.
 

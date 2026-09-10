@@ -41,14 +41,6 @@ export default function OverviewPage() {
             Tennessee, and Texas—tracking how the same fitted model relies on
             housing, financial, household, and geographic information.
           </p>
-          <div className="hero-actions">
-            <Link className="primary-link" href="/estimate">
-              Estimate a home <span aria-hidden="true">→</span>
-            </Link>
-            <Link className="text-link" href="/evaluate">
-              Evaluate the research
-            </Link>
-          </div>
         </div>
         <aside className="hero-aside">
           <span>Selected model</span>
@@ -58,10 +50,32 @@ export default function OverviewPage() {
             explained with TreeSHAP.
           </p>
           <Link className="text-link" href="/explore">
-            Explore the public findings
+            Explore the findings
           </Link>
         </aside>
       </section>
+
+      <nav
+        className="overview-actions page-width"
+        aria-label="Overview actions"
+      >
+        <Link href="/explore">
+          <span>Explore</span>
+          <strong>Explore housing data</strong>
+        </Link>
+        <Link href="/estimate">
+          <span>Estimate</span>
+          <strong>Estimate a home</strong>
+        </Link>
+        <Link href="/drivers">
+          <span>Drivers</span>
+          <strong>View model drivers</strong>
+        </Link>
+        <Link href="/model">
+          <span>Model</span>
+          <strong>Inspect performance</strong>
+        </Link>
+      </nav>
 
       <section className="scope-band" aria-label="Study scope">
         <div className="page-width scope-grid">

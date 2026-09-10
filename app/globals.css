@@ -2927,3 +2927,457 @@ tbody th code {
     grid-column: 1;
   }
 }
+
+/* Phase 4 · unified analytical application shell */
+.app-shell {
+  --app-sidebar-width: 248px;
+  min-height: 100vh;
+  background: #f1eee6;
+}
+.app-shell.is-collapsed {
+  --app-sidebar-width: 72px;
+}
+.app-sidebar {
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 60;
+  width: var(--app-sidebar-width);
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #303a36;
+  background: var(--ink);
+  color: #f7f4ec;
+  transition: width 160ms ease;
+}
+.app-brand {
+  min-height: 76px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #38423e;
+}
+.app-brand > a {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+.app-mark {
+  flex: 0 0 36px;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #6c7772;
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+.app-brand-copy,
+.app-brand-copy strong,
+.app-brand-copy small {
+  min-width: 0;
+  display: block;
+}
+.app-brand-copy strong {
+  overflow: hidden;
+  font: 400 15px var(--serif);
+  white-space: nowrap;
+}
+.app-brand-copy small {
+  margin-top: 3px;
+  color: #89958f;
+  font-size: 8px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.app-sidebar nav {
+  flex: 1;
+  padding: 18px 12px;
+}
+.app-sidebar nav a {
+  min-height: 43px;
+  margin-bottom: 3px;
+  padding: 9px 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-left: 2px solid transparent;
+  color: #b7c0bc;
+  font-size: 12px;
+  font-weight: 700;
+}
+.app-sidebar nav a:hover,
+.app-sidebar nav a:focus-visible {
+  background: #222d29;
+  color: white;
+}
+.app-sidebar nav a[aria-current='page'] {
+  border-left-color: #75b7a2;
+  background: #22352e;
+  color: white;
+}
+.app-sidebar-meta {
+  padding: 14px 18px;
+  border-top: 1px solid #38423e;
+}
+.app-sidebar-meta span,
+.app-sidebar-meta small {
+  display: block;
+}
+.app-sidebar-meta span {
+  color: #b7c0bc;
+  font-size: 9px;
+}
+.app-sidebar-meta small {
+  margin-top: 3px;
+  color: #77837e;
+  font-size: 8px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.app-sidebar-toggle,
+.app-mobile-close,
+.app-mobile-bar button,
+.app-shell-scrim {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.app-sidebar-toggle {
+  min-height: 54px;
+  padding: 10px 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-top: 1px solid #38423e;
+  color: #c9d1cd;
+  font-size: 11px;
+  font-weight: 700;
+}
+.app-mobile-close {
+  display: none;
+  color: white;
+}
+.app-stage {
+  min-height: 100vh;
+  margin-left: var(--app-sidebar-width);
+  transition: margin-left 160ms ease;
+}
+.app-main {
+  min-width: 0;
+  min-height: 100vh;
+}
+.app-mobile-bar,
+.app-shell-scrim {
+  display: none;
+}
+.app-shell.is-collapsed .app-brand-copy,
+.app-shell.is-collapsed .app-sidebar nav a span,
+.app-shell.is-collapsed .app-sidebar-meta,
+.app-shell.is-collapsed .app-sidebar-toggle span {
+  display: none;
+}
+.app-shell.is-collapsed .app-brand,
+.app-shell.is-collapsed .app-sidebar nav a,
+.app-shell.is-collapsed .app-sidebar-toggle {
+  justify-content: center;
+  padding-inline: 0;
+}
+
+.app-main .page-width {
+  width: min(1420px, calc(100% - 56px));
+}
+.app-main .hero {
+  min-height: auto;
+  padding-block: 52px 42px;
+  grid-template-columns: minmax(0, 1.55fr) minmax(260px, 0.55fr);
+  gap: 7vw;
+}
+.app-main .hero h1 {
+  font-size: clamp(43px, 5vw, 66px);
+  line-height: 0.99;
+}
+.app-main .hero-deck {
+  margin-top: 24px;
+  font-size: clamp(17px, 1.7vw, 21px);
+}
+.overview-actions {
+  margin-bottom: 28px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-block: 1px solid var(--rule);
+}
+.overview-actions a {
+  min-height: 74px;
+  padding: 15px 18px;
+  border-right: 1px solid var(--rule);
+}
+.overview-actions a:last-child {
+  border-right: 0;
+}
+.overview-actions span,
+.overview-actions strong {
+  display: block;
+}
+.overview-actions span {
+  color: var(--green);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.overview-actions strong {
+  margin-top: 5px;
+  font: 400 16px var(--serif);
+}
+.overview-actions a:hover {
+  background: var(--surface);
+}
+.app-main .page-shell {
+  padding-block: 48px 72px;
+}
+.app-main .page-intro {
+  margin-bottom: 42px;
+}
+.app-main .page-intro h1 {
+  font-size: clamp(40px, 4.5vw, 58px);
+}
+
+.analysis-workspace {
+  min-height: 100vh;
+  background: transparent;
+}
+.analysis-workspace .workspace-stage {
+  min-height: 0;
+  margin-left: 0;
+}
+.workspace-context > div:first-child small {
+  display: block;
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 10px;
+}
+.workspace-section-tabs {
+  margin-bottom: 28px;
+  display: flex;
+  border-bottom: 1px solid var(--rule);
+}
+.workspace-section-tabs button {
+  min-height: 42px;
+  padding: 8px 16px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 700;
+}
+.workspace-section-tabs button:hover,
+.workspace-section-tabs button[aria-current='page'] {
+  border-bottom-color: var(--green);
+  color: var(--ink);
+}
+.analysis-workspace .workspace-canvas {
+  width: min(1420px, calc(100% - 56px));
+  padding: 30px 0 72px;
+}
+.analysis-workspace .module-heading h1 {
+  font-size: clamp(36px, 3.7vw, 52px);
+}
+.global-driver-card > .card-heading > small {
+  color: var(--muted);
+  font-size: 9px;
+}
+.global-driver-list {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 34px;
+}
+.global-driver-list > div {
+  min-height: 34px;
+  display: grid;
+  grid-template-columns: 24px minmax(130px, 0.8fr) minmax(100px, 1fr) 42px;
+  gap: 9px;
+  align-items: center;
+  border-bottom: 1px solid var(--rule);
+}
+.global-driver-list span,
+.global-driver-list small {
+  color: var(--muted);
+  font-size: 8px;
+}
+.global-driver-list strong {
+  font-size: 9px;
+}
+.global-driver-list i {
+  height: 5px;
+  background: #e3ded3;
+}
+.global-driver-list b {
+  height: 100%;
+  display: block;
+  background: var(--green);
+}
+
+.app-main .valuation-intro {
+  padding-block: 48px 30px;
+  align-items: center;
+}
+.app-main .valuation-intro h1 {
+  font-size: clamp(40px, 4.5vw, 58px);
+}
+.app-main .valuation-intro > div > p:last-child {
+  margin-top: 16px;
+  font-size: 16px;
+}
+.app-main .valuation-workbench {
+  padding-bottom: 72px;
+}
+.legacy-redirect {
+  width: min(720px, calc(100% - 48px));
+  min-height: 70vh;
+  margin: 0 auto;
+  display: grid;
+  place-content: center;
+  gap: 6px;
+  text-align: center;
+}
+.legacy-redirect strong {
+  font: 400 28px var(--serif);
+}
+.legacy-redirect span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+@media (max-width: 1100px) {
+  .app-shell {
+    --app-sidebar-width: 72px;
+  }
+  .app-brand-copy,
+  .app-sidebar nav a span,
+  .app-sidebar-meta,
+  .app-sidebar-toggle span {
+    display: none;
+  }
+  .app-brand,
+  .app-sidebar nav a,
+  .app-sidebar-toggle {
+    justify-content: center;
+    padding-inline: 0;
+  }
+  .overview-actions {
+    grid-template-columns: 1fr 1fr;
+  }
+  .overview-actions a:nth-child(2) {
+    border-right: 0;
+  }
+  .overview-actions a:nth-child(-n + 2) {
+    border-bottom: 1px solid var(--rule);
+  }
+}
+
+@media (max-width: 760px) {
+  .app-shell {
+    --app-sidebar-width: 0px;
+  }
+  .app-sidebar {
+    width: min(84vw, 292px);
+    transform: translateX(-102%);
+    transition: transform 170ms ease;
+  }
+  .app-sidebar.is-mobile-open {
+    transform: translateX(0);
+  }
+  .app-brand-copy,
+  .app-sidebar nav a span,
+  .app-sidebar-meta,
+  .app-sidebar-toggle span {
+    display: block;
+  }
+  .app-brand,
+  .app-sidebar nav a,
+  .app-sidebar-toggle {
+    justify-content: flex-start;
+    padding-inline: 16px;
+  }
+  .app-mobile-close {
+    margin-left: auto;
+    display: inline-grid;
+    place-items: center;
+  }
+  .app-sidebar-toggle {
+    display: none;
+  }
+  .app-shell-scrim {
+    position: fixed;
+    inset: 0;
+    z-index: 55;
+    display: block;
+    background: rgba(24, 32, 29, 0.55);
+  }
+  .app-mobile-bar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    min-height: 52px;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--rule);
+    background: rgba(255, 253, 248, 0.97);
+  }
+  .app-mobile-bar button {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--ink);
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .app-mobile-bar strong {
+    font: 400 14px var(--serif);
+  }
+  .app-main .page-width,
+  .analysis-workspace .workspace-canvas {
+    width: min(100% - 28px, 1420px);
+  }
+  .app-main .hero {
+    padding-block: 36px 30px;
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .app-main .hero h1 {
+    font-size: 42px;
+  }
+  .overview-actions {
+    grid-template-columns: 1fr;
+  }
+  .overview-actions a {
+    min-height: 62px;
+    border-right: 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .overview-actions a:last-child {
+    border-bottom: 0;
+  }
+  .workspace-context {
+    top: 52px;
+  }
+  .workspace-section-tabs {
+    overflow-x: auto;
+  }
+  .workspace-section-tabs button {
+    flex: 0 0 auto;
+  }
+  .global-driver-list {
+    grid-template-columns: 1fr;
+  }
+}

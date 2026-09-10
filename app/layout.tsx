@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 
-import { SiteFooter } from '@/components/site-footer';
-import { SiteHeader } from '@/components/site-header';
+import { AppShell } from '@/components/app-shell';
 
 import './globals.css';
 
@@ -26,9 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <SiteHeader />
-        <main id="main-content">{children}</main>
-        <SiteFooter />
+        <AppShell>{children}</AppShell>
       </body>
     </html>
   );

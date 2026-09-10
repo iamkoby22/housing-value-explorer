@@ -35,11 +35,11 @@ Avoid gradients, neon, purple/blue AI styling, and decorative color. Chart color
 
 ## Navigation and controls
 
-The compact header contains exactly five primary destinations: Overview, Explore, Drivers, Model, Research. Active state uses weight and an underline, not a filled pill. Controls use visible labels, strong keyboard focus, and minimum 44px touch targets.
+One restrained, collapsible left sidebar contains exactly six primary destinations: Overview, Explore, Estimate, Drivers, Model, and Research. The selected route uses a quiet tonal field and rule. Collapsed items retain native tooltips, while tablet and mobile layouts use a navigation drawer. Controls use visible labels, strong keyboard focus, and minimum 44px touch targets.
 
-The `/evaluate` analytical workspace is entered from a clear public-page CTA. Inside it, the public header is replaced by a collapsible dark sidebar, a progressive context bar, a wide evidence canvas, and an optional detail panel. On mobile the sidebar becomes a drawer. A persistent “Back to research” link preserves the transition to the public editorial site.
+Every primary route lives inside this shell. Explore contains contextual Housing, Geography, and Compare tabs; Model contains Performance and Diagnostics tabs. Context controls remain local to the module that needs them. The former `/evaluate` route is retained only as a query-preserving compatibility redirect.
 
-The `/estimate` homeowner workspace keeps the five-item public navigation unchanged. A progressive five-step questionnaire sits on a light paper surface; results shift to the dark evidence surface so the model estimate, local context, SHAP decomposition, and Scenario Lab form one clear hierarchy. Guided and full-detail modes expose the same locked model rather than different estimators.
+The `/estimate` workflow is a first-class module. Its progressive five-step questionnaire sits on a light paper surface; results use a darker evidence region so the estimate, local context, SHAP decomposition, and Scenario Lab retain a clear hierarchy without becoming a separate product. Guided and full-detail modes expose the same locked model.
 
 ## Charts
 

@@ -27,7 +27,7 @@ const validRequest = {
 describe('Phase 3 valuation workspace', () => {
   it('renders a progressive homeowner workflow with scientific boundaries', () => {
     const html = renderToStaticMarkup(<EstimatePage />);
-    expect(html).toContain('Estimate a home with the research model');
+    expect(html).toContain('<h1>Estimate</h1>');
     expect(html).toContain('Property profile');
     expect(html).toContain('Research estimate, not an appraisal');
     expect(html).toContain('No name, email, or street address requested');

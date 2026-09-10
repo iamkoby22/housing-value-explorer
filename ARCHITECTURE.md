@@ -13,7 +13,7 @@ This is a standalone research-results explorer and local homeowner valuation too
 - D3 Geo for the five-state SVG geography selector
 - Zod for runtime validation of curated research JSON
 - Local Python/XGBoost inference service bound to loopback only
-- Local Vinext development runtime; no remote Phase 3 deployment
+- Local Vinext development runtime; no remote deployment
 
 One charting approach and one geographic renderer are used; no overlapping visualization frameworks are introduced.
 
@@ -69,8 +69,10 @@ The productionized refit exactly reproduces the notebook's 2024 MAE, RMSE, and R
 
 ## Application structure
 
-- `app/` — the five public routes, the `/evaluate` workspace, and shared layout.
-- `components/` — editorial shell and reusable visualization components.
+- `app/` — six canonical product routes plus the compatibility-only `/evaluate` route.
+- `components/app-shell.tsx` — shared responsive shell and primary navigation.
+- `components/analysis-workspace.tsx` — route-scoped Explore, Drivers, Model, and Diagnostics work surfaces.
+- `components/` — editorial content, valuation workflow, and reusable visualization components.
 - `lib/` — typed data schemas, loaders, labels, and formatting.
 - `scripts/` — deterministic research export and source audit.
 - `public/data/` — generated, browser-safe scientific results.
@@ -79,23 +81,23 @@ The productionized refit exactly reproduces the notebook's 2024 MAE, RMSE, and R
 ## Routing
 
 - `/` — Overview
-- `/explore` — geography selector and state detail foundation
-- `/drivers` — global importance and dependence
-- `/model` — validation and temporal performance
+- `/explore` — Housing EDA, geography, and comparison workspace
+- `/estimate` — progressive home profile, exact model estimate, local SHAP, support diagnostics, local context, and scenario lab
+- `/drivers` — global, state, approximate-county, and State-PUMA SHAP exploration and dependence
+- `/model` — model comparison, CV folds, temporal performance, and diagnostics
 - `/research` — scientific documentation and limitations
-- `/evaluate` — Phase 2 analytical workspace with housing, geography, comparison, SHAP, model, diagnostics, and methodology modules
-- `/estimate` — Phase 3 progressive home profile, model estimate, local SHAP, support diagnostics, local context, and session-only scenario lab
+- `/evaluate` — backward-compatible redirect to the appropriate canonical module while preserving query state
 
 ## Runtime and deployment
 
-The default runtime is local: `npm run dev` starts Vinext and the Python inference service together. No database or database binding is required. The browser application is normally served at `http://localhost:3001`; model inference is loopback-only at `http://127.0.0.1:8765`. No Phase 2 or Phase 3 remote deployment was performed.
+The default runtime is local: `npm run dev` starts Vinext and the Python inference service together. No database or database binding is required. The browser application is normally served at `http://localhost:3001`; model inference is loopback-only at `http://127.0.0.1:8765`. No remote deployment was performed.
 
 ## Five-phase roadmap
 
 1. Research grounding, deterministic data layer, design system, polished Overview, and foundational routes.
 2. Deep geographic explorer with housing context, PUMA/county layers, comparison, linked URL state, and reliability UX. **Implemented locally.**
 3. Individual home valuation, exact local SHAP, support diagnostics, and scenario intelligence. **Implemented locally.**
-4. Model/publication layer with diagnostics, robust methodology, and downloadable supplements.
+4. Unified application shell and experience consolidation. **Implemented locally.**
 5. Integration, accessibility, performance, responsive refinement, and release hardening.
 
 Scientific analysis changes remain outside the web application and require explicit authorization plus corresponding notebook changes.

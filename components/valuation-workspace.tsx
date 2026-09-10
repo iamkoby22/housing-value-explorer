@@ -363,12 +363,11 @@ export function ValuationWorkspace() {
     <div className="valuation-page">
       <section className="valuation-intro page-width">
         <div>
-          <p className="eyebrow">Phase 3 · Individual model inference</p>
-          <h1>Estimate a home with the research model</h1>
+          <p className="eyebrow">Individual model inference</p>
+          <h1>Estimate</h1>
           <p>
-            Enter a supported property profile, then inspect the exact Method 2B
-            prediction, its local TreeSHAP decomposition, and carefully bounded
-            “what if?” scenarios.
+            Estimate a property using the trained research model, then inspect
+            its local TreeSHAP explanation and carefully bounded scenarios.
           </p>
         </div>
         <aside>
@@ -1136,16 +1135,16 @@ export function ValuationWorkspace() {
               </div>
               <nav aria-label="Related research views">
                 <Link
-                  href={`/evaluate?module=geography&state=${encodeURIComponent(result.location.state_name)}&level=puma&puma=${encodeURIComponent(result.location.state_puma)}`}
+                  href={`/explore?module=geography&state=${encodeURIComponent(result.location.state_name)}&level=puma&puma=${encodeURIComponent(result.location.state_puma)}`}
                 >
                   Open geography <ArrowRight size={14} />
                 </Link>
                 <Link
-                  href={`/evaluate?module=drivers&state=${encodeURIComponent(result.location.state_name)}&level=puma&puma=${encodeURIComponent(result.location.state_puma)}`}
+                  href={`/drivers?module=drivers&state=${encodeURIComponent(result.location.state_name)}&level=puma&puma=${encodeURIComponent(result.location.state_puma)}`}
                 >
                   Open drivers & SHAP <ArrowRight size={14} />
                 </Link>
-                <Link href="/evaluate?module=models">
+                <Link href="/model?module=models">
                   Review models <ArrowRight size={14} />
                 </Link>
                 <Link href="/research">

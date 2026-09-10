@@ -1,21 +1,5 @@
 'use client';
 
-import {
-  ArrowLeft,
-  BarChart3,
-  BookOpen,
-  ChevronLeft,
-  ChevronRight,
-  CircleGauge,
-  GitCompareArrows,
-  House,
-  Map,
-  Menu,
-  Microscope,
-  Route,
-  X,
-} from 'lucide-react';
-import Link from 'next/link';
 import { useEffect, useMemo, useReducer, useState } from 'react';
 import {
   Bar,
@@ -117,34 +101,23 @@ const STATE_FIPS: Record<string, string> = {
   Texas: '48',
 };
 
-const navigation: {
-  section: string;
-  items: { module: WorkspaceModule; label: string; icon: typeof House }[];
-}[] = [
-  {
-    section: 'Explore',
-    items: [
-      { module: 'housing', label: 'Housing', icon: House },
-      { module: 'geography', label: 'Geography', icon: Map },
-      { module: 'compare', label: 'Compare', icon: GitCompareArrows },
-    ],
-  },
-  {
-    section: 'Explain',
-    items: [{ module: 'drivers', label: 'Drivers & SHAP', icon: Route }],
-  },
-  {
-    section: 'Evaluate',
-    items: [
-      { module: 'models', label: 'Models', icon: BarChart3 },
-      { module: 'diagnostics', label: 'Diagnostics', icon: CircleGauge },
-    ],
-  },
-  {
-    section: 'Document',
-    items: [{ module: 'methodology', label: 'Methodology', icon: Microscope }],
-  },
-];
+const moduleLabels: Record<WorkspaceModule, string> = {
+  housing: 'Housing',
+  geography: 'Geography',
+  compare: 'Compare',
+  drivers: 'Drivers & SHAP',
+  models: 'Model performance',
+  diagnostics: 'Diagnostics',
+  methodology: 'Methodology',
+};
+
+export type WorkspaceScope = 'explore' | 'drivers' | 'model';
+
+const scopedModules: Record<WorkspaceScope, WorkspaceModule[]> = {
+  explore: ['housing', 'geography', 'compare'],
+  drivers: ['drivers'],
+  model: ['models', 'diagnostics'],
+};
 
 function useDataset<T>(path: string | null) {
   const [result, setResult] = useState<{
@@ -210,83 +183,8 @@ function Loading({ error }: { error?: string }) {
   );
 }
 
-export function WorkspaceSidebar({
-  active,
-  collapsed,
-  mobileOpen,
-  onToggle,
-  onCloseMobile,
-  onSelect,
-}: {
-  active: WorkspaceModule;
-  collapsed: boolean;
-  mobileOpen: boolean;
-  onToggle: () => void;
-  onCloseMobile: () => void;
-  onSelect: (module: WorkspaceModule) => void;
-}) {
-  return (
-    <aside
-      className={`workspace-sidebar ${collapsed ? 'is-collapsed' : ''} ${mobileOpen ? 'is-mobile-open' : ''}`}
-      aria-label="Analytical workspace navigation"
-    >
-      <div className="workspace-brand">
-        <Link href="/" aria-label="Back to public research overview">
-          <ArrowLeft size={17} />
-          <span>Back to research</span>
-        </Link>
-        <button
-          className="sidebar-close-mobile"
-          onClick={onCloseMobile}
-          aria-label="Close navigation"
-        >
-          <X size={18} />
-        </button>
-      </div>
-      <div className="workspace-title">
-        <BookOpen size={19} />
-        <span>
-          <strong>Evaluation workspace</strong>
-          <small>Verified notebook outputs</small>
-        </span>
-      </div>
-      <nav>
-        {navigation.map((group) => (
-          <div className="workspace-nav-group" key={group.section}>
-            <p>{group.section}</p>
-            {group.items.map((item) => {
-              const Icon = item.icon;
-              return (
-                <button
-                  key={item.module}
-                  aria-current={active === item.module ? 'page' : undefined}
-                  title={collapsed ? item.label : undefined}
-                  onClick={() => {
-                    onSelect(item.module);
-                    onCloseMobile();
-                  }}
-                >
-                  <Icon size={18} aria-hidden="true" />
-                  <span>{item.label}</span>
-                </button>
-              );
-            })}
-          </div>
-        ))}
-      </nav>
-      <button
-        className="sidebar-collapse"
-        onClick={onToggle}
-        aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-      >
-        {collapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
-        <span>{collapsed ? '' : 'Collapse'}</span>
-      </button>
-    </aside>
-  );
-}
-
 function WorkspaceContext({
+  scope,
   module,
   stateName,
   level,
@@ -298,6 +196,7 @@ function WorkspaceContext({
   onFeature,
   onMetric,
 }: {
+  scope: WorkspaceScope;
   module: WorkspaceModule;
   stateName: string;
   level: string;
@@ -309,6 +208,21 @@ function WorkspaceContext({
   onFeature: (value: string) => void;
   onMetric: (value: 'importance' | 'direction') => void;
 }) {
+  const scopeCopy = {
+    explore: {
+      title: 'Explore',
+      description:
+        'Interact with housing, geographic, and model-derived patterns.',
+    },
+    drivers: {
+      title: 'Drivers',
+      description: 'Understand the features shaping model predictions.',
+    },
+    model: {
+      title: 'Model',
+      description: 'Inspect model development, validation, and diagnostics.',
+    },
+  }[scope];
   const needsGeography = [
     'housing',
     'geography',
@@ -318,14 +232,9 @@ function WorkspaceContext({
   return (
     <header className="workspace-context">
       <div>
-        <span className="context-kicker">Research context</span>
-        <strong>
-          {
-            navigation
-              .flatMap((group) => group.items)
-              .find((item) => item.module === module)?.label
-          }
-        </strong>
+        <span className="context-kicker">{moduleLabels[module]}</span>
+        <strong>{scopeCopy.title}</strong>
+        <small>{scopeCopy.description}</small>
       </div>
       <div className="context-controls">
         {needsGeography ? (
@@ -1208,6 +1117,38 @@ function DriversExplorer({
           average.
         </p>
       </div>
+      <article className="workspace-card wide-card global-driver-card">
+        <div className="card-heading">
+          <div>
+            <span>Global importance · survey weighted</span>
+            <h2>Which features shape predictions across the full study?</h2>
+          </div>
+          <small>Mean absolute SHAP · log1p units</small>
+        </div>
+        <div className="global-driver-list">
+          {global.map((item, index) => (
+            <div key={item.feature}>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <strong>{humanize(item.feature)}</strong>
+              <i>
+                <b
+                  style={{
+                    width: `${(item.survey_weighted_mean_absolute_SHAP / global[0].survey_weighted_mean_absolute_SHAP) * 100}%`,
+                  }}
+                />
+              </i>
+              <small>
+                {item.survey_weighted_mean_absolute_SHAP.toFixed(3)}
+              </small>
+            </div>
+          ))}
+        </div>
+        <p className="workspace-caveat">
+          State–PUMA is the model’s direct geographic feature. Select a
+          substantive feature above to inspect its state, county, PUMA, and
+          dependence patterns.
+        </p>
+      </article>
       <article className="workspace-card wide-card geographic-feature-card">
         <div className="card-heading">
           <div>
@@ -1748,16 +1689,28 @@ function humanize(feature: string) {
   return labels[feature] ?? feature.replaceAll('_', ' ');
 }
 
-export function AnalysisWorkspace() {
+export function AnalysisWorkspace({
+  scope = 'explore',
+}: {
+  scope?: WorkspaceScope;
+}) {
+  const availableModules = scopedModules[scope];
   const [state, dispatch] = useReducer(
     workspaceReducer,
     defaultWorkspaceState,
-    (initial) =>
-      typeof window === 'undefined'
-        ? initial
-        : parseWorkspaceQuery(new URLSearchParams(window.location.search)),
+    (initial) => {
+      const parsed =
+        typeof window === 'undefined'
+          ? initial
+          : parseWorkspaceQuery(new URLSearchParams(window.location.search));
+      return {
+        ...parsed,
+        module: availableModules.includes(parsed.module)
+          ? parsed.module
+          : availableModules[0],
+      };
+    },
   );
-  const [mobileOpen, setMobileOpen] = useState(false);
   const { data: features, error: featureError } = useDataset<Feature[]>(
     '/data/feature-metadata.json',
   );
@@ -1770,33 +1723,10 @@ export function AnalysisWorkspace() {
   }, [state]);
   if (!features) return <Loading error={featureError} />;
   return (
-    <div
-      className={`analysis-workspace ${state.sidebarCollapsed ? 'sidebar-collapsed' : ''}`}
-    >
-      <WorkspaceSidebar
-        active={state.module}
-        collapsed={state.sidebarCollapsed}
-        mobileOpen={mobileOpen}
-        onToggle={() => dispatch({ type: 'toggle-sidebar' })}
-        onCloseMobile={() => setMobileOpen(false)}
-        onSelect={(value) => dispatch({ type: 'set-module', value })}
-      />
-      {mobileOpen ? (
-        <button
-          className="workspace-scrim"
-          onClick={() => setMobileOpen(false)}
-          aria-label="Close navigation overlay"
-        />
-      ) : null}
+    <div className="analysis-workspace">
       <div className="workspace-stage">
-        <button
-          className="workspace-mobile-menu"
-          onClick={() => setMobileOpen(true)}
-          aria-label="Open analytical navigation"
-        >
-          <Menu size={20} /> Menu
-        </button>
         <WorkspaceContext
+          scope={scope}
           module={state.module}
           stateName={state.state}
           level={state.level}
@@ -1808,7 +1738,25 @@ export function AnalysisWorkspace() {
           onFeature={(value) => dispatch({ type: 'set-feature', value })}
           onMetric={(value) => dispatch({ type: 'set-metric', value })}
         />
-        <main className="workspace-canvas" id="workspace-main">
+        <div className="workspace-canvas" id="workspace-main">
+          {availableModules.length > 1 ? (
+            <nav
+              className="workspace-section-tabs"
+              aria-label={`${scope} views`}
+            >
+              {availableModules.map((module) => (
+                <button
+                  key={module}
+                  aria-current={state.module === module ? 'page' : undefined}
+                  onClick={() =>
+                    dispatch({ type: 'set-module', value: module })
+                  }
+                >
+                  {moduleLabels[module]}
+                </button>
+              ))}
+            </nav>
+          ) : null}
           {state.module === 'housing' ? (
             <HousingExplorer stateName={state.state} />
           ) : null}
@@ -1848,7 +1796,7 @@ export function AnalysisWorkspace() {
           {state.module === 'methodology' ? (
             <MethodologyExplorer features={features} />
           ) : null}
-        </main>
+        </div>
       </div>
     </div>
   );
