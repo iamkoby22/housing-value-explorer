@@ -11,6 +11,8 @@ npm run dev
 
 Open the local URL printed by Vinext.
 
+The single development command serves the React frontend, application routes, and curated research JSON together. There is no separate database or backend service to start. The current workstation preview normally opens at `http://localhost:3001` when port 3000 is occupied.
+
 ## Research-data export
 
 The checked-in `public/data` artifacts are generated from the authoritative research outputs. From the repository root on the research workstation:

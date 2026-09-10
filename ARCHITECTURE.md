@@ -63,9 +63,9 @@ Raw ACS PUMS microdata is never shipped to the browser. The exporter normalizes 
 - `/model` — validation and temporal performance
 - `/research` — scientific documentation and limitations
 
-## Deployment
+## Runtime and deployment
 
-The repository builds to a static-compatible Vinext deployment package and is deployed to a housing-specific OpenAI Sites project. No database bindings are required.
+The default runtime is local: `npm run dev` starts the application server, React frontend, and static research-data layer together. No separate backend process, database, or database binding is required. The project can be packaged for hosting later, but remote publication is not required for local use.
 
 ## Five-phase roadmap
 
