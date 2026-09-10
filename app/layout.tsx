@@ -6,6 +6,7 @@ import { SiteHeader } from '@/components/site-header';
 import './globals.css';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://housing-value-explorer.iamkoby22.chatgpt.site'),
   title: {
     default: 'Unboxing the Black Box — Housing Value Explorer',
     template: '%s — Housing Value Explorer',
