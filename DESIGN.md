@@ -37,6 +37,8 @@ Avoid gradients, neon, purple/blue AI styling, and decorative color. Chart color
 
 The compact header contains exactly five primary destinations: Overview, Explore, Drivers, Model, Research. Active state uses weight and an underline, not a filled pill. Controls use visible labels, strong keyboard focus, and minimum 44px touch targets.
 
+The `/evaluate` analytical workspace is entered from a clear public-page CTA. Inside it, the public header is replaced by a collapsible dark sidebar, a progressive context bar, a wide evidence canvas, and an optional detail panel. On mobile the sidebar becomes a drawer. A persistent “Back to research” link preserves the transition to the public editorial site.
+
 ## Charts
 
 - Charts begin with a research question, not a decorative title.
@@ -48,7 +50,7 @@ The compact header contains exactly five primary destinations: Overview, Explore
 
 ## Map
 
-Phase 1 uses actual state geometry for the five-state selector. The map uses a neutral base, fine state borders, keyboard-selectable regions, and a synchronized detail panel. Phase 2 may add PUMA and county layers. Approximate county layers must expose reliability metadata and never imply exact household location.
+The map uses actual state, county, and 2020 State-PUMA boundary files. State selection drills into counties; the level control switches to the directly modeled PUMA geography. Approximate county layers expose reliability, overlap, record count, and effective sample size and never imply exact household location.
 
 ## Responsive behavior
 

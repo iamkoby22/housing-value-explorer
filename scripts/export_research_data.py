@@ -98,14 +98,14 @@ def geo_rows(
 ) -> list[dict[str, Any]]:
     importance_index = importance.set_index(id_fields)
     direction_index = direction.set_index(id_fields)
-    metadata = {
-        "records",
-        "survey_weight_sum",
+    metadata = (
         "effective_sample_size",
-        "median_PUMA_county_overlap_pct",
-        "records_with_overlap_at_least_80_pct",
         "reliability",
-    }
+        "records",
+        "records_with_overlap_at_least_80_pct",
+        "median_PUMA_county_overlap_pct",
+        "survey_weight_sum",
+    )
     result: list[dict[str, Any]] = []
     for _, row in ranking.iterrows():
         key = tuple(row[field] for field in id_fields)
@@ -196,6 +196,129 @@ def build_states_geojson(county_shapefile: Path) -> dict[str, Any]:
     return {"type": "FeatureCollection", "features": features}
 
 
+def simplify_geometry(geometry: dict[str, Any], tolerance: float = 0.01) -> dict[str, Any]:
+    """Reduce boundary payload size without changing topology or attributes."""
+
+    def simplify_ring(points: Any) -> list[list[float]]:
+        ring = [[float(point[0]), float(point[1])] for point in points]
+        if len(ring) <= 4:
+            return ring
+        closed = ring[0] == ring[-1]
+        work = ring[:-1] if closed else ring
+
+        def rdp(segment: list[list[float]]) -> list[list[float]]:
+            if len(segment) < 3:
+                return segment
+            start, end = segment[0], segment[-1]
+            dx, dy = end[0] - start[0], end[1] - start[1]
+            denominator = (dx * dx + dy * dy) ** 0.5
+            maximum, index = 0.0, 0
+            for position, point in enumerate(segment[1:-1], 1):
+                distance = (
+                    abs(dy * point[0] - dx * point[1] + end[0] * start[1] - end[1] * start[0]) / denominator
+                    if denominator
+                    else ((point[0] - start[0]) ** 2 + (point[1] - start[1]) ** 2) ** 0.5
+                )
+                if distance > maximum:
+                    maximum, index = distance, position
+            if maximum > tolerance:
+                left = rdp(segment[: index + 1])
+                right = rdp(segment[index:])
+                return left[:-1] + right
+            return [start, end]
+
+        simplified = rdp(work)
+        if closed and simplified[0] != simplified[-1]:
+            simplified.append(simplified[0])
+        return simplified if len(simplified) >= 4 else ring
+
+    coordinates = geometry["coordinates"]
+    if geometry["type"] == "Polygon":
+        simplified = [simplify_ring(ring) for ring in coordinates]
+    elif geometry["type"] == "MultiPolygon":
+        simplified = [
+            [simplify_ring(ring) for ring in polygon] for polygon in coordinates
+        ]
+    else:
+        raise ValueError(f"Unsupported boundary type: {geometry['type']}")
+    return {"type": geometry["type"], "coordinates": simplified}
+
+
+def build_local_geographies(
+    county_shapefile: Path, boundary_root: Path, output: Path
+) -> list[str]:
+    """Export the five-state county and per-state PUMA boundaries used by the study."""
+    try:
+        import shapefile  # type: ignore
+    except ImportError as exc:
+        raise RuntimeError("Install requirements.txt to export geography") from exc
+
+    county_reader = shapefile.Reader(str(county_shapefile))
+    county_fields = [field[0] for field in county_reader.fields[1:]]
+    county_features = []
+    expected_fips = set(STATE_FIPS.values())
+    for shape_record in county_reader.iterShapeRecords():
+        row = dict(zip(county_fields, shape_record.record))
+        state_fips = str(row["STATEFP"]).zfill(2)
+        if state_fips not in expected_fips:
+            continue
+        county_id = str(row["GEOID"]).zfill(5)
+        county_features.append(
+            {
+                "type": "Feature",
+                "id": county_id,
+                "properties": {
+                    "county_id": county_id,
+                    "county_label": str(row["NAMELSAD"]),
+                    "state_name": str(row["STATE_NAME"]),
+                    "state_fips": state_fips,
+                },
+                "geometry": simplify_geometry(shape_record.shape.__geo_interface__),
+            }
+        )
+    county_name = "county-geometry.geojson"
+    write_json(
+        output / county_name,
+        {"type": "FeatureCollection", "features": county_features},
+    )
+
+    folder_by_state = {
+        "California": "California",
+        "Florida": "Florida",
+        "New York": "New_York",
+        "Tennessee": "Tennessee",
+        "Texas": "Texas",
+    }
+    output_names = [county_name]
+    for state_name, folder in folder_by_state.items():
+        state_fips = STATE_FIPS[state_name]
+        source = boundary_root / folder / f"cb_2020_{state_fips}_puma20_500k.shp"
+        reader = shapefile.Reader(str(source))
+        fields = [field[0] for field in reader.fields[1:]]
+        features = []
+        for shape_record in reader.iterShapeRecords():
+            row = dict(zip(fields, shape_record.record))
+            puma_code = str(row["PUMACE20"]).zfill(5)
+            state_puma_id = f"{state_fips}_{puma_code}"
+            features.append(
+                {
+                    "type": "Feature",
+                    "id": state_puma_id,
+                    "properties": {
+                        "state_puma_id": state_puma_id,
+                        "state_name": state_name,
+                        "state_fips": state_fips,
+                        "puma_name": str(row["NAMELSAD20"]),
+                    },
+                    "geometry": simplify_geometry(shape_record.shape.__geo_interface__),
+                }
+            )
+        name = f"puma-geometry-{state_fips}.geojson"
+        write_json(output / name, {"type": "FeatureCollection", "features": features})
+        output_names.append(name)
+    return output_names
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--notebook", type=Path, required=True)
@@ -269,6 +392,38 @@ def main() -> None:
     leakage = pd.read_csv(args.publication_dir / "temporal_split_and_leakage_audit.csv")
     limitations = pd.read_csv(args.publication_dir / "publication_limitations_and_claim_boundaries.csv")
 
+    eda_sources = {
+        "mortgage_status": args.figures_dir / "figure_02_homeowner_mortgage_status_summary.csv",
+        "approximate_county_values": args.figures_dir / "figure_06_approximate_county_summary.csv",
+        "bedrooms_rooms": args.figures_dir / "figure_07_bedroom_room_summary.csv",
+        "approximate_county_bedrooms": args.figures_dir / "figure_08_bedrooms_by_approximate_county_summary.csv",
+        "puma_values": args.figures_dir / "figure_09_puma_property_value_summary.csv",
+        "year_built": args.figures_dir / "figure_10_property_value_by_year_built_summary.csv",
+        "bedrooms": args.figures_dir / "figure_11_weighted_median_bedrooms_property_value_summary.csv",
+        "structure_type": args.figures_dir / "figure_12_property_value_by_structure_type_state_summary.csv",
+        "lot_size": args.figures_dir / "figure_13_property_value_by_lot_size_state_summary.csv",
+        "lot_size_intervals": args.figures_dir / "figure_13_lot_size_property_value_forest_summary.csv",
+        "state_year_target": args.publication_dir / "acs_target_measurement_audit.csv",
+    }
+    for source in eda_sources.values():
+        if not source.exists():
+            raise FileNotFoundError(source)
+    eda_payload = {
+        name: records(pd.read_csv(source)) for name, source in eda_sources.items()
+    }
+
+    diagnostic_sources = {
+        "cv_folds": args.publication_dir / "final_model_cv_fold_results.csv",
+        "target_measurement": args.publication_dir / "acs_target_measurement_audit.csv",
+        "state_stability": args.publication_dir / "state_SHAP_ranking_bootstrap_stability.csv",
+        "county_stability": args.publication_dir / "county_SHAP_ranking_bootstrap_stability.csv",
+        "state_nongeographic_share": args.publication_dir / "state_non_geographic_SHAP_share.csv",
+        "state_dependence": args.publication_dir / "state_SHAP_dependence_binned.csv",
+    }
+    diagnostic_payload = {
+        name: records(pd.read_csv(source)) for name, source in diagnostic_sources.items()
+    }
+
     reliability_counts = county_rankings["reliability"].value_counts().to_dict()
     study_summary = {
         "title": "Unboxing the Black Box",
@@ -298,11 +453,32 @@ def main() -> None:
     write_json(args.output / "state-shap.json", {"metadata": {**common_meta, "geographic_level": "state", "unit": "log1p property-value SHAP units", "weighting": "Housing-unit survey weights", "caveat": "Predictive contribution, not causal effect"}, "data": state_payload})
     write_json(args.output / "county-shap.json", {"metadata": {**common_meta, "geographic_level": "dominant-overlap approximate county", "unit": "log1p property-value SHAP units", "weighting": "Housing-unit survey weights", "caveat": "Descriptive approximation from largest PUMA–county overlap; not an exact household county"}, "data": county_payload})
     write_json(args.output / "puma-shap.json", {"metadata": {**common_meta, "geographic_level": "State-PUMA", "unit": "log1p property-value SHAP units", "weighting": "Housing-unit survey weights", "caveat": "Geography entered directly into the fitted model"}, "data": puma_payload})
+    for state_name, state_fips in STATE_FIPS.items():
+        state_rows = [row for row in puma_payload if row["state_name"] == state_name]
+        write_json(
+            args.output / f"puma-shap-{state_fips}.json",
+            {
+                "metadata": {
+                    **common_meta,
+                    "geographic_level": "State-PUMA",
+                    "state": state_name,
+                    "unit": "log1p property-value SHAP units",
+                    "weighting": "Housing-unit survey weights",
+                    "caveat": "Geography entered directly into the fitted model",
+                },
+                "data": state_rows,
+            },
+        )
     write_json(args.output / "shap-dependence.json", {"metadata": {**common_meta, "unit": "log1p property-value SHAP units", "weighting": "Housing-unit survey weights", "caveat": "Modeled association, not an intervention or causal effect"}, "data": records(pd.read_csv(args.publication_dir / "shap_dependence_binned_non_geographic.csv"))})
     write_json(args.output / "methodology.json", {"metadata": common_meta, "data": {"method": records(method), "research_questions": records(questions), "leakage_audit": records(leakage), "limitations": records(limitations)}})
+    write_json(args.output / "housing-eda.json", {"metadata": {**common_meta, "unit": "2024-comparable U.S. dollars where monetary", "weighting": "Housing-unit survey weights for reported estimates", "caveat": "Existing notebook summaries only; no browser-side microdata or recalculation"}, "data": eda_payload})
+    write_json(args.output / "model-diagnostics.json", {"metadata": {**common_meta, "caveat": "Existing validation, target-audit, and bootstrap outputs only"}, "data": diagnostic_payload})
     write_json(args.output / "states.geojson", build_states_geojson(args.county_shapefile))
+    geography_outputs = build_local_geographies(
+        args.county_shapefile, args.county_shapefile.parent.parent, args.output
+    )
 
-    source_files = [
+    source_files = list(dict.fromkeys([
         args.notebook,
         args.workbook,
         feature_source,
@@ -311,13 +487,15 @@ def main() -> None:
         args.publication_dir / "shap_dependence_binned_non_geographic.csv",
         args.figures_dir / "method2b_tree_shap_global_importance.csv",
         args.county_shapefile,
-    ]
+        *eda_sources.values(),
+        *diagnostic_sources.values(),
+    ]))
     manifest = {
         "generator": common_meta,
         "sources": [{"path": str(path), "sha256": sha256(path), "bytes": path.stat().st_size} for path in source_files],
         "outputs": sorted(
             [path.name for path in args.output.glob("*.json") if path.name != "source-manifest.json"]
-            + ["states.geojson"]
+            + ["states.geojson", *geography_outputs]
         ),
         "validation": {
             "expected_states": EXPECTED_STATES,

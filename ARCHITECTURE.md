@@ -12,7 +12,7 @@ This is a standalone public research-results explorer. It has no authentication,
 - Recharts for general statistical graphics
 - D3 Geo for the five-state SVG geography selector
 - Zod for runtime validation of curated research JSON
-- Static hosting through OpenAI Sites
+- Local Vinext development runtime; the project remains packageable for later hosting
 
 One charting approach and one geographic renderer are used; no overlapping visualization frameworks are introduced.
 
@@ -43,12 +43,16 @@ Raw ACS PUMS microdata is never shipped to the browser. The exporter normalizes 
 - `puma-shap.json` — direct State-PUMA explanation results.
 - `shap-dependence.json` — publication-readiness non-geographic dependence bins.
 - `methodology.json` — workbook methods, leakage audit, limitations, and research questions.
+- `housing-eda.json` — notebook-produced housing and target summaries for the analytical workspace.
+- `model-diagnostics.json` — existing CV-fold, measurement-audit, and stability outputs.
 - `states.geojson` — actual state geometry, generated from research boundary files when available.
+- `county-geometry.geojson` — five-state county boundaries for descriptive approximate-county selection.
+- `puma-geometry-*.geojson` and `puma-shap-*.json` — state-specific lazy-load payloads for the modeled geography.
 - `source-manifest.json` — provenance and hashes.
 
 ## Application structure
 
-- `app/` — five routes and shared layout.
+- `app/` — the five public routes, the `/evaluate` workspace, and shared layout.
 - `components/` — editorial shell and reusable visualization components.
 - `lib/` — typed data schemas, loaders, labels, and formatting.
 - `scripts/` — deterministic research export and source audit.
@@ -62,15 +66,16 @@ Raw ACS PUMS microdata is never shipped to the browser. The exporter normalizes 
 - `/drivers` — global importance and dependence
 - `/model` — validation and temporal performance
 - `/research` — scientific documentation and limitations
+- `/evaluate` — Phase 2 analytical workspace with housing, geography, comparison, SHAP, model, diagnostics, and methodology modules
 
 ## Runtime and deployment
 
-The default runtime is local: `npm run dev` starts the application server, React frontend, and static research-data layer together. No separate backend process, database, or database binding is required. The project can be packaged for hosting later, but remote publication is not required for local use.
+The default runtime is local: `npm run dev` starts the application server, React frontend, and static research-data layer together. No separate backend process, database, or database binding is required. Phase 2 was verified at `http://localhost:3001`; no Phase 2 remote deployment was performed.
 
 ## Five-phase roadmap
 
 1. Research grounding, deterministic data layer, design system, polished Overview, and foundational routes.
-2. Deep geographic explorer with PUMA/county layers, comparison, zoom, and reliability UX.
+2. Deep geographic explorer with housing context, PUMA/county layers, comparison, linked URL state, and reliability UX. **Implemented locally.**
 3. Deep SHAP explorer with feature profiles, dependence, ranking variation, and stability.
 4. Model/publication layer with diagnostics, robust methodology, and downloadable supplements.
 5. Integration, accessibility, performance, responsive refinement, and release hardening.

@@ -14,6 +14,8 @@ const navigation = [
 export function SiteHeader() {
   const pathname = usePathname();
 
+  if (pathname.startsWith('/evaluate')) return null;
+
   return (
     <header className="site-header">
       <a className="skip-link" href="#main-content">

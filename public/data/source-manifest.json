@@ -43,14 +43,107 @@
       "path": "C:\\Users\\LORD OF LORDS\\Desktop\\csv_hfl (1)\\boundaries\\Counties\\cb_2020_us_county_500k.shp",
       "sha256": "6338e1d5b9093370eb66345f70c6d2198e526247666453e6e959bb055125f05a",
       "bytes": 18032348
+    },
+    {
+      "path": "C:\\Users\\LORD OF LORDS\\Desktop\\csv_hfl (1)\\capstone_figures\\figure_02_homeowner_mortgage_status_summary.csv",
+      "sha256": "16266a3d2d772b6e23def979863fdb5e0ebf85b9aef06e5c5eb9fe4176e48624",
+      "bytes": 799
+    },
+    {
+      "path": "C:\\Users\\LORD OF LORDS\\Desktop\\csv_hfl (1)\\capstone_figures\\figure_06_approximate_county_summary.csv",
+      "sha256": "8181bdb73f5c65202f4f9cf343a1bea346c089e991f196e5cdf7159e5174abb5",
+      "bytes": 16859
+    },
+    {
+      "path": "C:\\Users\\LORD OF LORDS\\Desktop\\csv_hfl (1)\\capstone_figures\\figure_07_bedroom_room_summary.csv",
+      "sha256": "da0c164d05a1468aa29e3c283ddc185305219a04a7020922da893d82aa5e6201",
+      "bytes": 1263
+    },
+    {
+      "path": "C:\\Users\\LORD OF LORDS\\Desktop\\csv_hfl (1)\\capstone_figures\\figure_08_bedrooms_by_approximate_county_summary.csv",
+      "sha256": "2e450828397c7f34eb5b591ed5c34496edd1fa58b3837b31764ef23d0deee596",
+      "bytes": 11953
+    },
+    {
+      "path": "C:\\Users\\LORD OF LORDS\\Desktop\\csv_hfl (1)\\capstone_figures\\figure_09_puma_property_value_summary.csv",
+      "sha256": "eec752836fab3024165a5c2cfd5d6afb30212f459a2ae7825c0e990dd64f1388",
+      "bytes": 25629
+    },
+    {
+      "path": "C:\\Users\\LORD OF LORDS\\Desktop\\csv_hfl (1)\\capstone_figures\\figure_10_property_value_by_year_built_summary.csv",
+      "sha256": "05e613a0e1aa022b5adeacd1636678e4be1c413221f0751deeb5ddb3d4f8f898",
+      "bytes": 2822
+    },
+    {
+      "path": "C:\\Users\\LORD OF LORDS\\Desktop\\csv_hfl (1)\\capstone_figures\\figure_11_weighted_median_bedrooms_property_value_summary.csv",
+      "sha256": "ef8b91cb23eae7914db39650ad3cb258597f030531836795eaf784b7b8909964",
+      "bytes": 928
+    },
+    {
+      "path": "C:\\Users\\LORD OF LORDS\\Desktop\\csv_hfl (1)\\capstone_figures\\figure_12_property_value_by_structure_type_state_summary.csv",
+      "sha256": "3d77cae192082fed0499ca92ac19e895e6167a83f99e75febe6bd8e1cacd58e8",
+      "bytes": 2005
+    },
+    {
+      "path": "C:\\Users\\LORD OF LORDS\\Desktop\\csv_hfl (1)\\capstone_figures\\figure_13_property_value_by_lot_size_state_summary.csv",
+      "sha256": "23401ea5221db43a27a99acdfdc79b47c6888dfac7487fc93fea335ad91553f2",
+      "bytes": 772
+    },
+    {
+      "path": "C:\\Users\\LORD OF LORDS\\Desktop\\csv_hfl (1)\\capstone_figures\\figure_13_lot_size_property_value_forest_summary.csv",
+      "sha256": "1e3d92e5f4d4dfa023336d67f237abf9200635bffcd85cdfe81b261bcb387fab",
+      "bytes": 1200
+    },
+    {
+      "path": "C:\\Users\\LORD OF LORDS\\Desktop\\csv_hfl (1)\\capstone_figures\\publication_readiness\\acs_target_measurement_audit.csv",
+      "sha256": "c79230d402998bed982df0bb2d7834b11f767a2c96d5c94bd62686fe24495cc2",
+      "bytes": 3117
+    },
+    {
+      "path": "C:\\Users\\LORD OF LORDS\\Desktop\\csv_hfl (1)\\capstone_figures\\publication_readiness\\final_model_cv_fold_results.csv",
+      "sha256": "45834540426d8d14ed3cf39ec562f1307ea901c6ffa081a9f7586cf5cdb7850a",
+      "bytes": 1659
+    },
+    {
+      "path": "C:\\Users\\LORD OF LORDS\\Desktop\\csv_hfl (1)\\capstone_figures\\publication_readiness\\state_SHAP_ranking_bootstrap_stability.csv",
+      "sha256": "80d3880c781a43e88d035583a4c10e30f6f8ac30df14f8378935b3fa7820c931",
+      "bytes": 584
+    },
+    {
+      "path": "C:\\Users\\LORD OF LORDS\\Desktop\\csv_hfl (1)\\capstone_figures\\publication_readiness\\county_SHAP_ranking_bootstrap_stability.csv",
+      "sha256": "8c222e2a0c61cc198716691bea1bf3a22c8c754f33ee0ffa3ae9d3239de80bbf",
+      "bytes": 37417
+    },
+    {
+      "path": "C:\\Users\\LORD OF LORDS\\Desktop\\csv_hfl (1)\\capstone_figures\\publication_readiness\\state_non_geographic_SHAP_share.csv",
+      "sha256": "6da106150e51d76236f8a3a323a16bbe52bb49a1f3f4487856d311c1640b98fe",
+      "bytes": 1936
+    },
+    {
+      "path": "C:\\Users\\LORD OF LORDS\\Desktop\\csv_hfl (1)\\capstone_figures\\publication_readiness\\state_SHAP_dependence_binned.csv",
+      "sha256": "6a3d9387af6037927c20c10e625ce0c0e6816eaf1a2dd4e33f7b2de0cdc09f2b",
+      "bytes": 12158
     }
   ],
   "outputs": [
+    "county-geometry.geojson",
     "county-shap.json",
     "feature-metadata.json",
     "global-shap.json",
+    "housing-eda.json",
     "methodology.json",
+    "model-diagnostics.json",
     "model-performance.json",
+    "puma-geometry-06.geojson",
+    "puma-geometry-12.geojson",
+    "puma-geometry-36.geojson",
+    "puma-geometry-47.geojson",
+    "puma-geometry-48.geojson",
+    "puma-shap-06.json",
+    "puma-shap-12.json",
+    "puma-shap-36.json",
+    "puma-shap-47.json",
+    "puma-shap-48.json",
     "puma-shap.json",
     "shap-dependence.json",
     "state-shap.json",

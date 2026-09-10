@@ -42,11 +42,11 @@ export default function OverviewPage() {
             housing, financial, household, and geographic information.
           </p>
           <div className="hero-actions">
-            <Link className="primary-link" href="/explore">
-              Explore the geography <span aria-hidden="true">→</span>
+            <Link className="primary-link" href="/evaluate">
+              Evaluate the research <span aria-hidden="true">→</span>
             </Link>
-            <Link className="text-link" href="/research">
-              Read the research design
+            <Link className="text-link" href="/explore">
+              Explore the public findings
             </Link>
           </div>
         </div>
