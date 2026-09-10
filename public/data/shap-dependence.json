@@ -1,0 +1,611 @@
+{
+  "metadata": {
+    "generated_by": "scripts/export_research_data.py",
+    "scientific_role": "Presentation-only normalization of existing analytical outputs",
+    "unit": "log1p property-value SHAP units",
+    "weighting": "Housing-unit survey weights",
+    "caveat": "Modeled association, not an intervention or causal effect"
+  },
+  "data": [
+    {
+      "feature": "first_mortgage_log_2024",
+      "feature_bin": "(-inf, 120.0]",
+      "weighted_mean_feature_value": 0.22572827,
+      "weighted_mean_SHAP": -0.0688409151,
+      "lower_95_SHAP": -0.0710295247,
+      "upper_95_SHAP": -0.0666523056,
+      "records": 119539,
+      "effective_sample_size": 72030.2106703459
+    },
+    {
+      "feature": "first_mortgage_log_2024",
+      "feature_bin": "(120.0, 740.0]",
+      "weighted_mean_feature_value": 537.1153466449,
+      "weighted_mean_SHAP": -0.3453901665,
+      "lower_95_SHAP": -0.3476977971,
+      "upper_95_SHAP": -0.343082536,
+      "records": 14489,
+      "effective_sample_size": 8332.6432210781
+    },
+    {
+      "feature": "first_mortgage_log_2024",
+      "feature_bin": "(740.0, 1000.0]",
+      "weighted_mean_feature_value": 898.8258205056,
+      "weighted_mean_SHAP": -0.1879462974,
+      "lower_95_SHAP": -0.188807616,
+      "upper_95_SHAP": -0.1870849787,
+      "records": 16387,
+      "effective_sample_size": 9778.3776129508
+    },
+    {
+      "feature": "first_mortgage_log_2024",
+      "feature_bin": "(1000.0, 1200.0]",
+      "weighted_mean_feature_value": 1156.651347211,
+      "weighted_mean_SHAP": -0.0964242493,
+      "lower_95_SHAP": -0.0971848385,
+      "upper_95_SHAP": -0.09566366,
+      "records": 11993,
+      "effective_sample_size": 6960.4872432282
+    },
+    {
+      "feature": "first_mortgage_log_2024",
+      "feature_bin": "(1200.0, 1400.0]",
+      "weighted_mean_feature_value": 1349.794889473,
+      "weighted_mean_SHAP": -0.0464289004,
+      "lower_95_SHAP": -0.0472541299,
+      "upper_95_SHAP": -0.0456036709,
+      "records": 12336,
+      "effective_sample_size": 7395.4510613289
+    },
+    {
+      "feature": "first_mortgage_log_2024",
+      "feature_bin": "(1400.0, 1600.0]",
+      "weighted_mean_feature_value": 1545.5043827988,
+      "weighted_mean_SHAP": -0.0165396261,
+      "lower_95_SHAP": -0.017481065,
+      "upper_95_SHAP": -0.0155981872,
+      "records": 12489,
+      "effective_sample_size": 7357.8043056701
+    },
+    {
+      "feature": "first_mortgage_log_2024",
+      "feature_bin": "(1600.0, 1800.0]",
+      "weighted_mean_feature_value": 1752.1066776928,
+      "weighted_mean_SHAP": 0.0416793055,
+      "lower_95_SHAP": 0.0405889919,
+      "upper_95_SHAP": 0.0427696191,
+      "records": 11139,
+      "effective_sample_size": 6626.6763676824
+    },
+    {
+      "feature": "first_mortgage_log_2024",
+      "feature_bin": "(1800.0, 2000.0]",
+      "weighted_mean_feature_value": 1956.740352335,
+      "weighted_mean_SHAP": 0.0893449802,
+      "lower_95_SHAP": 0.0881686431,
+      "upper_95_SHAP": 0.0905213173,
+      "records": 10674,
+      "effective_sample_size": 6472.1830826134
+    },
+    {
+      "feature": "first_mortgage_log_2024",
+      "feature_bin": "(2000.0, 2300.0]",
+      "weighted_mean_feature_value": 2198.3913169881,
+      "weighted_mean_SHAP": 0.1520341559,
+      "lower_95_SHAP": 0.1507324171,
+      "upper_95_SHAP": 0.1533358946,
+      "records": 12442,
+      "effective_sample_size": 7115.670607191
+    },
+    {
+      "feature": "first_mortgage_log_2024",
+      "feature_bin": "(2300.0, 2700.0]",
+      "weighted_mean_feature_value": 2537.5228867867,
+      "weighted_mean_SHAP": 0.2128934425,
+      "lower_95_SHAP": 0.2114511154,
+      "upper_95_SHAP": 0.2143357696,
+      "records": 13339,
+      "effective_sample_size": 7875.5631093638
+    },
+    {
+      "feature": "first_mortgage_log_2024",
+      "feature_bin": "(2700.0, 3100.0]",
+      "weighted_mean_feature_value": 2944.7263671641,
+      "weighted_mean_SHAP": 0.273192665,
+      "lower_95_SHAP": 0.2715343867,
+      "upper_95_SHAP": 0.2748509432,
+      "records": 10040,
+      "effective_sample_size": 5667.4902433411
+    },
+    {
+      "feature": "first_mortgage_log_2024",
+      "feature_bin": "(3100.0, 4000.0]",
+      "weighted_mean_feature_value": 3555.9746206493,
+      "weighted_mean_SHAP": 0.3753520736,
+      "lower_95_SHAP": 0.3735543155,
+      "upper_95_SHAP": 0.3771498317,
+      "records": 12440,
+      "effective_sample_size": 7524.0684571367
+    },
+    {
+      "feature": "first_mortgage_log_2024",
+      "feature_bin": "(4000.0, inf]",
+      "weighted_mean_feature_value": 5550.2605701237,
+      "weighted_mean_SHAP": 0.6075233858,
+      "lower_95_SHAP": 0.603922694,
+      "upper_95_SHAP": 0.6111240775,
+      "records": 11623,
+      "effective_sample_size": 6883.8221155165
+    },
+    {
+      "feature": "signed_log_household_income_2024",
+      "feature_bin": "(-inf, 16244.0]",
+      "weighted_mean_feature_value": 7453.4851289626,
+      "weighted_mean_SHAP": -0.126923097,
+      "lower_95_SHAP": -0.1279398357,
+      "upper_95_SHAP": -0.1259063582,
+      "records": 13812,
+      "effective_sample_size": 8033.3852853194
+    },
+    {
+      "feature": "signed_log_household_income_2024",
+      "feature_bin": "(16244.0, 29442.25]",
+      "weighted_mean_feature_value": 23217.9338297452,
+      "weighted_mean_SHAP": -0.1363008162,
+      "lower_95_SHAP": -0.1371571425,
+      "upper_95_SHAP": -0.1354444898,
+      "records": 13906,
+      "effective_sample_size": 8065.657840274
+    },
+    {
+      "feature": "signed_log_household_income_2024",
+      "feature_bin": "(29442.25, 40610.0]",
+      "weighted_mean_feature_value": 35361.8900058054,
+      "weighted_mean_SHAP": -0.114925627,
+      "lower_95_SHAP": -0.1155455244,
+      "upper_95_SHAP": -0.1143057296,
+      "records": 14479,
+      "effective_sample_size": 8401.0265264108
+    },
+    {
+      "feature": "signed_log_household_income_2024",
+      "feature_bin": "(40610.0, 50762.5]",
+      "weighted_mean_feature_value": 46294.5765741428,
+      "weighted_mean_SHAP": -0.094369168,
+      "lower_95_SHAP": -0.0948371122,
+      "upper_95_SHAP": -0.0939012238,
+      "records": 13628,
+      "effective_sample_size": 7903.5921566954
+    },
+    {
+      "feature": "signed_log_household_income_2024",
+      "feature_bin": "(50762.5, 60915.0]",
+      "weighted_mean_feature_value": 56448.8341881408,
+      "weighted_mean_SHAP": -0.0788844502,
+      "lower_95_SHAP": -0.079222967,
+      "upper_95_SHAP": -0.0785459333,
+      "records": 14189,
+      "effective_sample_size": 8161.2171479278
+    },
+    {
+      "feature": "signed_log_household_income_2024",
+      "feature_bin": "(60915.0, 71067.5]",
+      "weighted_mean_feature_value": 66537.0021502846,
+      "weighted_mean_SHAP": -0.0670843475,
+      "lower_95_SHAP": -0.0673374678,
+      "upper_95_SHAP": -0.0668312272,
+      "records": 14025,
+      "effective_sample_size": 7899.7821177306
+    },
+    {
+      "feature": "signed_log_household_income_2024",
+      "feature_bin": "(71067.5, 81118.475]",
+      "weighted_mean_feature_value": 76096.9946478359,
+      "weighted_mean_SHAP": -0.0552069187,
+      "lower_95_SHAP": -0.0554264918,
+      "upper_95_SHAP": -0.0549873455,
+      "records": 12699,
+      "effective_sample_size": 7405.2277646193
+    },
+    {
+      "feature": "signed_log_household_income_2024",
+      "feature_bin": "(81118.475, 91372.5]",
+      "weighted_mean_feature_value": 86200.5456287483,
+      "weighted_mean_SHAP": -0.0404131549,
+      "lower_95_SHAP": -0.0406358134,
+      "upper_95_SHAP": -0.0401904965,
+      "records": 14849,
+      "effective_sample_size": 8623.8206297771
+    },
+    {
+      "feature": "signed_log_household_income_2024",
+      "feature_bin": "(91372.5, 101525.0]",
+      "weighted_mean_feature_value": 97352.6635222234,
+      "weighted_mean_SHAP": -0.027614531,
+      "lower_95_SHAP": -0.0278286836,
+      "upper_95_SHAP": -0.0274003785,
+      "records": 13509,
+      "effective_sample_size": 7756.07975684
+    },
+    {
+      "feature": "signed_log_household_income_2024",
+      "feature_bin": "(101525.0, 111677.5]",
+      "weighted_mean_feature_value": 107053.0107349655,
+      "weighted_mean_SHAP": -0.0150961962,
+      "lower_95_SHAP": -0.0153685173,
+      "upper_95_SHAP": -0.014823875,
+      "records": 12294,
+      "effective_sample_size": 7289.7913809785
+    },
+    {
+      "feature": "signed_log_household_income_2024",
+      "feature_bin": "(111677.5, 123352.875]",
+      "weighted_mean_feature_value": 117964.8099224852,
+      "weighted_mean_SHAP": -0.0090812946,
+      "lower_95_SHAP": -0.0093848311,
+      "upper_95_SHAP": -0.0087777581,
+      "records": 12463,
+      "effective_sample_size": 7231.5514447749
+    },
+    {
+      "feature": "signed_log_household_income_2024",
+      "feature_bin": "(123352.875, 137058.75]",
+      "weighted_mean_feature_value": 130438.6212328026,
+      "weighted_mean_SHAP": 0.0037621622,
+      "lower_95_SHAP": 0.0033668635,
+      "upper_95_SHAP": 0.0041574608,
+      "records": 13691,
+      "effective_sample_size": 8126.7975520486
+    },
+    {
+      "feature": "signed_log_household_income_2024",
+      "feature_bin": "(137058.75, 152287.5]",
+      "weighted_mean_feature_value": 145396.3593941873,
+      "weighted_mean_SHAP": 0.0206931925,
+      "lower_95_SHAP": 0.0202047169,
+      "upper_95_SHAP": 0.0211816681,
+      "records": 13850,
+      "effective_sample_size": 7949.527529893
+    },
+    {
+      "feature": "signed_log_household_income_2024",
+      "feature_bin": "(152287.5, 167922.35]",
+      "weighted_mean_feature_value": 160294.4896376604,
+      "weighted_mean_SHAP": 0.033497231,
+      "lower_95_SHAP": 0.032936335,
+      "upper_95_SHAP": 0.034058127,
+      "records": 11681,
+      "effective_sample_size": 7121.6930052559
+    },
+    {
+      "feature": "signed_log_household_income_2024",
+      "feature_bin": "(167922.35, 188836.5]",
+      "weighted_mean_feature_value": 178441.1002240139,
+      "weighted_mean_SHAP": 0.0560878305,
+      "lower_95_SHAP": 0.0554415584,
+      "upper_95_SHAP": 0.0567341025,
+      "records": 13291,
+      "effective_sample_size": 8019.598366858
+    },
+    {
+      "feature": "signed_log_household_income_2024",
+      "feature_bin": "(188836.5, 213202.5]",
+      "weighted_mean_feature_value": 201342.4777474623,
+      "weighted_mean_SHAP": 0.0790248015,
+      "lower_95_SHAP": 0.0782697048,
+      "upper_95_SHAP": 0.0797798982,
+      "records": 12999,
+      "effective_sample_size": 7744.6788518199
+    },
+    {
+      "feature": "signed_log_household_income_2024",
+      "feature_bin": "(213202.5, 247010.325]",
+      "weighted_mean_feature_value": 229454.5837713355,
+      "weighted_mean_SHAP": 0.1016125121,
+      "lower_95_SHAP": 0.10080834,
+      "upper_95_SHAP": 0.1024166842,
+      "records": 12706,
+      "effective_sample_size": 7615.473160374
+    },
+    {
+      "feature": "signed_log_household_income_2024",
+      "feature_bin": "(247010.325, 302544.5]",
+      "weighted_mean_feature_value": 271296.845976978,
+      "weighted_mean_SHAP": 0.140484302,
+      "lower_95_SHAP": 0.1395456137,
+      "upper_95_SHAP": 0.1414229902,
+      "records": 13285,
+      "effective_sample_size": 8014.8641318241
+    },
+    {
+      "feature": "signed_log_household_income_2024",
+      "feature_bin": "(302544.5, 421328.75]",
+      "weighted_mean_feature_value": 351693.2297089177,
+      "weighted_mean_SHAP": 0.1920677189,
+      "lower_95_SHAP": 0.1910293079,
+      "upper_95_SHAP": 0.1931061299,
+      "records": 13217,
+      "effective_sample_size": 7931.5258642026
+    },
+    {
+      "feature": "signed_log_household_income_2024",
+      "feature_bin": "(421328.75, inf]",
+      "weighted_mean_feature_value": 651653.6278287313,
+      "weighted_mean_SHAP": 0.2903337508,
+      "lower_95_SHAP": 0.2890329975,
+      "upper_95_SHAP": 0.291634504,
+      "records": 14357,
+      "effective_sample_size": 9019.4890867442
+    },
+    {
+      "feature": "bedroom_count",
+      "feature_bin": "(-inf, 2.0]",
+      "weighted_mean_feature_value": 1.8574556062,
+      "weighted_mean_SHAP": -0.1160414546,
+      "lower_95_SHAP": -0.1164598276,
+      "upper_95_SHAP": -0.1156230815,
+      "records": 41124,
+      "effective_sample_size": 24544.8811331403
+    },
+    {
+      "feature": "bedroom_count",
+      "feature_bin": "(2.0, 3.0]",
+      "weighted_mean_feature_value": 3.0,
+      "weighted_mean_SHAP": -0.0217782147,
+      "lower_95_SHAP": -0.0218243553,
+      "upper_95_SHAP": -0.0217320742,
+      "records": 132968,
+      "effective_sample_size": 78737.9600917917
+    },
+    {
+      "feature": "bedroom_count",
+      "feature_bin": "(3.0, 4.0]",
+      "weighted_mean_feature_value": 4.0,
+      "weighted_mean_SHAP": 0.0740153087,
+      "lower_95_SHAP": 0.0738544672,
+      "upper_95_SHAP": 0.0741761502,
+      "records": 75842,
+      "effective_sample_size": 44110.1621160478
+    },
+    {
+      "feature": "bedroom_count",
+      "feature_bin": "(4.0, 5.0]",
+      "weighted_mean_feature_value": 5.0,
+      "weighted_mean_SHAP": 0.1498373827,
+      "lower_95_SHAP": 0.1493232804,
+      "upper_95_SHAP": 0.1503514849,
+      "records": 17299,
+      "effective_sample_size": 9969.7629907353
+    },
+    {
+      "feature": "bedroom_count",
+      "feature_bin": "(5.0, inf]",
+      "weighted_mean_feature_value": 6.5735452486,
+      "weighted_mean_SHAP": 0.178675979,
+      "lower_95_SHAP": 0.175706105,
+      "upper_95_SHAP": 0.1816458531,
+      "records": 1697,
+      "effective_sample_size": 1020.2252984334
+    },
+    {
+      "feature": "year_built_order",
+      "feature_bin": "(-inf, 1940.0]",
+      "weighted_mean_feature_value": 1939.3648686604,
+      "weighted_mean_SHAP": -0.0678535088,
+      "lower_95_SHAP": -0.0686384582,
+      "upper_95_SHAP": -0.0670685594,
+      "records": 35436,
+      "effective_sample_size": 21193.1284781901
+    },
+    {
+      "feature": "year_built_order",
+      "feature_bin": "(1940.0, 1950.0]",
+      "weighted_mean_feature_value": 1950.0,
+      "weighted_mean_SHAP": -0.0533016395,
+      "lower_95_SHAP": -0.0537829243,
+      "upper_95_SHAP": -0.0528203547,
+      "records": 31080,
+      "effective_sample_size": 19248.2293477885
+    },
+    {
+      "feature": "year_built_order",
+      "feature_bin": "(1950.0, 1960.0]",
+      "weighted_mean_feature_value": 1960.0,
+      "weighted_mean_SHAP": -0.0446151029,
+      "lower_95_SHAP": -0.0449130311,
+      "upper_95_SHAP": -0.0443171748,
+      "records": 27914,
+      "effective_sample_size": 17044.2417306459
+    },
+    {
+      "feature": "year_built_order",
+      "feature_bin": "(1960.0, 1970.0]",
+      "weighted_mean_feature_value": 1970.0,
+      "weighted_mean_SHAP": -0.0403932509,
+      "lower_95_SHAP": -0.0405574211,
+      "upper_95_SHAP": -0.0402290807,
+      "records": 34683,
+      "effective_sample_size": 20789.9803511614
+    },
+    {
+      "feature": "year_built_order",
+      "feature_bin": "(1970.0, 1980.0]",
+      "weighted_mean_feature_value": 1980.0,
+      "weighted_mean_SHAP": -0.0053053893,
+      "lower_95_SHAP": -0.0055092131,
+      "upper_95_SHAP": -0.0051015656,
+      "records": 35647,
+      "effective_sample_size": 21548.4747917361
+    },
+    {
+      "feature": "year_built_order",
+      "feature_bin": "(1980.0, 1990.0]",
+      "weighted_mean_feature_value": 1990.0,
+      "weighted_mean_SHAP": 0.0471573054,
+      "lower_95_SHAP": 0.0467484905,
+      "upper_95_SHAP": 0.0475661202,
+      "records": 31717,
+      "effective_sample_size": 19398.1666909635
+    },
+    {
+      "feature": "year_built_order",
+      "feature_bin": "(1990.0, 2000.0]",
+      "weighted_mean_feature_value": 2000.0,
+      "weighted_mean_SHAP": 0.0724210422,
+      "lower_95_SHAP": 0.071971192,
+      "upper_95_SHAP": 0.0728708923,
+      "records": 38489,
+      "effective_sample_size": 22905.32025434
+    },
+    {
+      "feature": "year_built_order",
+      "feature_bin": "(2000.0, 2010.0]",
+      "weighted_mean_feature_value": 2010.0,
+      "weighted_mean_SHAP": 0.102725896,
+      "lower_95_SHAP": 0.1020610933,
+      "upper_95_SHAP": 0.1033906987,
+      "records": 23025,
+      "effective_sample_size": 12506.8261646835
+    },
+    {
+      "feature": "year_built_order",
+      "feature_bin": "(2010.0, 2020.0]",
+      "weighted_mean_feature_value": 2020.0,
+      "weighted_mean_SHAP": 0.1088145041,
+      "lower_95_SHAP": 0.1069544724,
+      "upper_95_SHAP": 0.1106745357,
+      "records": 2765,
+      "effective_sample_size": 1540.6561285437
+    },
+    {
+      "feature": "year_built_order",
+      "feature_bin": "(2020.0, inf]",
+      "weighted_mean_feature_value": 2022.0144606773,
+      "weighted_mean_SHAP": 0.0978004106,
+      "lower_95_SHAP": 0.0966768508,
+      "upper_95_SHAP": 0.0989239703,
+      "records": 8174,
+      "effective_sample_size": 4871.0345771249
+    },
+    {
+      "feature": "non_bedroom_rooms",
+      "feature_bin": "(-inf, 2.0]",
+      "weighted_mean_feature_value": 1.7188825771,
+      "weighted_mean_SHAP": -0.0528921449,
+      "lower_95_SHAP": -0.0530155334,
+      "upper_95_SHAP": -0.0527687565,
+      "records": 84472,
+      "effective_sample_size": 50009.2092893723
+    },
+    {
+      "feature": "non_bedroom_rooms",
+      "feature_bin": "(2.0, 3.0]",
+      "weighted_mean_feature_value": 3.0,
+      "weighted_mean_SHAP": -0.0160909252,
+      "lower_95_SHAP": -0.0161360279,
+      "upper_95_SHAP": -0.0160458226,
+      "records": 72908,
+      "effective_sample_size": 43132.9253924157
+    },
+    {
+      "feature": "non_bedroom_rooms",
+      "feature_bin": "(3.0, 4.0]",
+      "weighted_mean_feature_value": 4.0,
+      "weighted_mean_SHAP": 0.0203596546,
+      "lower_95_SHAP": 0.0202649328,
+      "upper_95_SHAP": 0.0204543764,
+      "records": 52174,
+      "effective_sample_size": 30637.4990046403
+    },
+    {
+      "feature": "non_bedroom_rooms",
+      "feature_bin": "(4.0, 5.0]",
+      "weighted_mean_feature_value": 5.0,
+      "weighted_mean_SHAP": 0.0578849987,
+      "lower_95_SHAP": 0.0576807893,
+      "upper_95_SHAP": 0.0580892081,
+      "records": 28633,
+      "effective_sample_size": 16873.1071538182
+    },
+    {
+      "feature": "non_bedroom_rooms",
+      "feature_bin": "(5.0, 6.0]",
+      "weighted_mean_feature_value": 6.0,
+      "weighted_mean_SHAP": 0.078871279,
+      "lower_95_SHAP": 0.0784803031,
+      "upper_95_SHAP": 0.0792622548,
+      "records": 14937,
+      "effective_sample_size": 8698.4604076541
+    },
+    {
+      "feature": "non_bedroom_rooms",
+      "feature_bin": "(6.0, 7.0]",
+      "weighted_mean_feature_value": 7.0,
+      "weighted_mean_SHAP": 0.0913026024,
+      "lower_95_SHAP": 0.0906982069,
+      "upper_95_SHAP": 0.0919069979,
+      "records": 7509,
+      "effective_sample_size": 4596.6137371003
+    },
+    {
+      "feature": "non_bedroom_rooms",
+      "feature_bin": "(7.0, inf]",
+      "weighted_mean_feature_value": 9.3691045693,
+      "weighted_mean_SHAP": 0.1239756689,
+      "lower_95_SHAP": 0.1229948619,
+      "upper_95_SHAP": 0.1249564759,
+      "records": 8297,
+      "effective_sample_size": 4694.8185782405
+    },
+    {
+      "feature": "household_size",
+      "feature_bin": "(-inf, 2.0]",
+      "weighted_mean_feature_value": 1.6527643993,
+      "weighted_mean_SHAP": 0.027463035,
+      "lower_95_SHAP": 0.0274101111,
+      "upper_95_SHAP": 0.0275159589,
+      "records": 158916,
+      "effective_sample_size": 95328.0389458408
+    },
+    {
+      "feature": "household_size",
+      "feature_bin": "(2.0, 3.0]",
+      "weighted_mean_feature_value": 3.0,
+      "weighted_mean_SHAP": -0.0203939031,
+      "lower_95_SHAP": -0.0204900965,
+      "upper_95_SHAP": -0.0202977098,
+      "records": 44991,
+      "effective_sample_size": 26201.5807615128
+    },
+    {
+      "feature": "household_size",
+      "feature_bin": "(3.0, 4.0]",
+      "weighted_mean_feature_value": 4.0,
+      "weighted_mean_SHAP": -0.0353543754,
+      "lower_95_SHAP": -0.0355235982,
+      "upper_95_SHAP": -0.0351851526,
+      "records": 37334,
+      "effective_sample_size": 21791.3086625235
+    },
+    {
+      "feature": "household_size",
+      "feature_bin": "(4.0, 5.0]",
+      "weighted_mean_feature_value": 5.0,
+      "weighted_mean_SHAP": -0.0563900842,
+      "lower_95_SHAP": -0.0567609169,
+      "upper_95_SHAP": -0.0560192514,
+      "records": 16527,
+      "effective_sample_size": 9835.0303743122
+    },
+    {
+      "feature": "household_size",
+      "feature_bin": "(5.0, inf]",
+      "weighted_mean_feature_value": 6.7700182737,
+      "weighted_mean_SHAP": -0.1089773189,
+      "lower_95_SHAP": -0.1101226978,
+      "upper_95_SHAP": -0.1078319401,
+      "records": 11162,
+      "effective_sample_size": 6568.1234738903
+    }
+  ]
+}

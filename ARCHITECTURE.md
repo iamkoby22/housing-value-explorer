@@ -1,0 +1,78 @@
+# Architecture
+
+## Scope
+
+This is a standalone public research-results explorer. It has no authentication, accounts, database, background workers, or dependency on VISION Office.
+
+## Stack
+
+- Next.js-compatible Vinext application
+- React 19 and TypeScript
+- Tailwind CSS
+- Recharts for general statistical graphics
+- D3 Geo for the five-state SVG geography selector
+- Zod for runtime validation of curated research JSON
+- Static hosting through OpenAI Sites
+
+One charting approach and one geographic renderer are used; no overlapping visualization frameworks are introduced.
+
+## Data flow
+
+```text
+Authoritative notebook + geographic SHAP workbook + notebook-produced CSVs
+                              ↓
+             scripts/export_research_data.py
+                              ↓
+        validated, documented public/data/*.json
+                              ↓
+               server-side data access in lib/
+                              ↓
+         page and visualization React components
+```
+
+Raw ACS PUMS microdata is never shipped to the browser. The exporter normalizes existing outputs without retraining or changing the study methodology. It records source SHA-256 hashes, provenance, units, weighting, geographic level, and caveats.
+
+## Curated datasets
+
+- `study-summary.json` — scope and headline scientific facts.
+- `feature-metadata.json` — the 18-feature human-readable registry.
+- `model-performance.json` — five-fold CV uncertainty and 2024 temporal evaluation.
+- `global-shap.json` — selected-model global importance.
+- `state-shap.json` — state ranking and direction data.
+- `county-shap.json` — descriptive approximate-county results with reliability.
+- `puma-shap.json` — direct State-PUMA explanation results.
+- `shap-dependence.json` — publication-readiness non-geographic dependence bins.
+- `methodology.json` — workbook methods, leakage audit, limitations, and research questions.
+- `states.geojson` — actual state geometry, generated from research boundary files when available.
+- `source-manifest.json` — provenance and hashes.
+
+## Application structure
+
+- `app/` — five routes and shared layout.
+- `components/` — editorial shell and reusable visualization components.
+- `lib/` — typed data schemas, loaders, labels, and formatting.
+- `scripts/` — deterministic research export and source audit.
+- `public/data/` — generated, browser-safe scientific results.
+- `tests/` — data and route consistency checks.
+
+## Routing
+
+- `/` — Overview
+- `/explore` — geography selector and state detail foundation
+- `/drivers` — global importance and dependence
+- `/model` — validation and temporal performance
+- `/research` — scientific documentation and limitations
+
+## Deployment
+
+The repository builds to a static-compatible Vinext deployment package and is deployed to a housing-specific OpenAI Sites project. No database bindings are required.
+
+## Five-phase roadmap
+
+1. Research grounding, deterministic data layer, design system, polished Overview, and foundational routes.
+2. Deep geographic explorer with PUMA/county layers, comparison, zoom, and reliability UX.
+3. Deep SHAP explorer with feature profiles, dependence, ranking variation, and stability.
+4. Model/publication layer with diagnostics, robust methodology, and downloadable supplements.
+5. Integration, accessibility, performance, responsive refinement, and release hardening.
+
+Scientific analysis changes remain outside the web application and require explicit authorization plus corresponding notebook changes.

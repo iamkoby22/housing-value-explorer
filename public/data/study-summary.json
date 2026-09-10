@@ -1,0 +1,59 @@
+{
+  "metadata": {
+    "generated_by": "scripts/export_research_data.py",
+    "scientific_role": "Presentation-only normalization of existing analytical outputs",
+    "unit": "records and geographic counts",
+    "weighting": "Housing-unit weights where indicated"
+  },
+  "data": {
+    "title": "Unboxing the Black Box",
+    "subtitle": "Geographic variation in machine-learning explanations of U.S. housing values",
+    "states": ["California", "Florida", "New York", "Tennessee", "Texas"],
+    "development_period": "2020–2023",
+    "temporal_evaluation_year": 2024,
+    "development_records": 960182,
+    "explanation_records_2024": 268930,
+    "state_count": 5,
+    "approximate_county_count": 236,
+    "state_puma_count": 868,
+    "model_feature_count": 18,
+    "selected_model": "Reduced XGBoost with log1p property-value target",
+    "state_records": [
+      {
+        "state_name": "California",
+        "records": 79636,
+        "survey_weight_sum": 1383781,
+        "effective_sample_size": 50298.2356060313
+      },
+      {
+        "state_name": "Florida",
+        "records": 52892,
+        "survey_weight_sum": 1012353,
+        "effective_sample_size": 31924.6552871393
+      },
+      {
+        "state_name": "New York",
+        "records": 43269,
+        "survey_weight_sum": 649223,
+        "effective_sample_size": 25378.1293235387
+      },
+      {
+        "state_name": "Tennessee",
+        "records": 20580,
+        "survey_weight_sum": 353788,
+        "effective_sample_size": 12050.1040368626
+      },
+      {
+        "state_name": "Texas",
+        "records": 72553,
+        "survey_weight_sum": 1309412,
+        "effective_sample_size": 39793.4042531898
+      }
+    ],
+    "county_reliability_counts": {
+      "Higher confidence": 147,
+      "Moderate overlap": 88,
+      "Low sample": 1
+    }
+  }
+}

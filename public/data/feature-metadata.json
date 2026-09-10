@@ -1,0 +1,207 @@
+{
+  "metadata": {
+    "generated_by": "scripts/export_research_data.py",
+    "scientific_role": "Presentation-only normalization of existing analytical outputs",
+    "source": "C:\\Users\\LORD OF LORDS\\Desktop\\csv_hfl (1)\\capstone_figures\\publication_readiness\\selected_model_feature_dictionary.csv"
+  },
+  "data": [
+    {
+      "feature": "bedroom_count",
+      "ACS_source": "BDSP",
+      "semantic_type": "Count numeric",
+      "transformation_and_encoding": "Retained count",
+      "remaining_missing_handling": "Training-fold median plus missing indicator",
+      "included_in_selected_model": true,
+      "display_name": "Bedrooms",
+      "category": "Property",
+      "description": "Number of bedrooms in the housing unit."
+    },
+    {
+      "feature": "non_bedroom_rooms",
+      "ACS_source": "RMSP - BDSP",
+      "semantic_type": "Count numeric",
+      "transformation_and_encoding": "room_count - bedroom_count, clipped at zero",
+      "remaining_missing_handling": "Training-fold median plus missing indicator",
+      "included_in_selected_model": true,
+      "display_name": "Other rooms",
+      "category": "Property",
+      "description": "Total rooms minus bedrooms, clipped at zero."
+    },
+    {
+      "feature": "lot_size_order",
+      "ACS_source": "ACR",
+      "semantic_type": "Ordinal band",
+      "transformation_and_encoding": "Ordered ACS category; one-hot encoded",
+      "remaining_missing_handling": "Training-fold median plus missing indicator",
+      "included_in_selected_model": true,
+      "display_name": "Lot size",
+      "category": "Property",
+      "description": "ACS ordered lot-size category."
+    },
+    {
+      "feature": "year_built_order",
+      "ACS_source": "YRBLT",
+      "semantic_type": "Ordinal era",
+      "transformation_and_encoding": "Ordered construction-era category; one-hot encoded",
+      "remaining_missing_handling": "Training-fold median plus missing indicator",
+      "included_in_selected_model": true,
+      "display_name": "Year built",
+      "category": "Property",
+      "description": "ACS construction-era category."
+    },
+    {
+      "feature": "survey_year",
+      "ACS_source": "SERIALNO prefix",
+      "semantic_type": "Temporal numeric",
+      "transformation_and_encoding": "Numeric year",
+      "remaining_missing_handling": "Training-fold median plus missing indicator",
+      "included_in_selected_model": true,
+      "display_name": "Survey year",
+      "category": "Survey",
+      "description": "ACS PUMS survey year."
+    },
+    {
+      "feature": "signed_log_household_income_2024",
+      "ACS_source": "HINCP and ADJINC",
+      "semantic_type": "Transformed continuous",
+      "transformation_and_encoding": "ADJINC-adjusted signed log1p",
+      "remaining_missing_handling": "Training-fold median plus missing indicator",
+      "included_in_selected_model": true,
+      "display_name": "Household income",
+      "category": "Household",
+      "description": "Inflation-adjusted household income represented with a signed log transform."
+    },
+    {
+      "feature": "household_size",
+      "ACS_source": "NP",
+      "semantic_type": "Count numeric",
+      "transformation_and_encoding": "Retained count",
+      "remaining_missing_handling": "Training-fold median plus missing indicator",
+      "included_in_selected_model": true,
+      "display_name": "Household size",
+      "category": "Household",
+      "description": "Number of people in the household."
+    },
+    {
+      "feature": "year_moved_order",
+      "ACS_source": "YBL",
+      "semantic_type": "Ordinal period",
+      "transformation_and_encoding": "Ordered ACS period; one-hot encoded",
+      "remaining_missing_handling": "Training-fold median plus missing indicator",
+      "included_in_selected_model": true,
+      "display_name": "Year moved in",
+      "category": "Household",
+      "description": "ACS ordered period when the householder moved into the unit."
+    },
+    {
+      "feature": "first_mortgage_log_2024",
+      "ACS_source": "MRGP and ADJHSG",
+      "semantic_type": "Transformed continuous",
+      "transformation_and_encoding": "ADJHSG-adjusted log1p; structural zero when no mortgage",
+      "remaining_missing_handling": "Training-fold median plus missing indicator",
+      "included_in_selected_model": true,
+      "display_name": "First mortgage payment",
+      "category": "Financial",
+      "description": "Inflation-adjusted monthly first-mortgage payment represented with log1p."
+    },
+    {
+      "feature": "hoa_fee_log_2024",
+      "ACS_source": "CONP and ADJHSG",
+      "semantic_type": "Transformed continuous",
+      "transformation_and_encoding": "ADJHSG-adjusted log1p",
+      "remaining_missing_handling": "Training-fold median plus missing indicator",
+      "included_in_selected_model": true,
+      "display_name": "Condo or HOA fee",
+      "category": "Financial",
+      "description": "Inflation-adjusted condo or homeowners-association fee represented with log1p."
+    },
+    {
+      "feature": "electricity_log_2024",
+      "ACS_source": "ELEP and ADJHSG",
+      "semantic_type": "Transformed continuous",
+      "transformation_and_encoding": "ADJHSG-adjusted log1p; status-based structural zero",
+      "remaining_missing_handling": "Training-fold median plus missing indicator",
+      "included_in_selected_model": true,
+      "display_name": "Electricity cost",
+      "category": "Utilities",
+      "description": "Inflation-adjusted electricity cost represented with log1p."
+    },
+    {
+      "feature": "gas_log_2024",
+      "ACS_source": "GASP and ADJHSG",
+      "semantic_type": "Transformed continuous",
+      "transformation_and_encoding": "ADJHSG-adjusted log1p; status-based structural zero",
+      "remaining_missing_handling": "Training-fold median plus missing indicator",
+      "included_in_selected_model": true,
+      "display_name": "Gas cost",
+      "category": "Utilities",
+      "description": "Inflation-adjusted gas cost represented with log1p."
+    },
+    {
+      "feature": "other_fuel_log_2024",
+      "ACS_source": "FULP and ADJHSG",
+      "semantic_type": "Transformed continuous",
+      "transformation_and_encoding": "ADJHSG-adjusted log1p; status-based structural zero",
+      "remaining_missing_handling": "Training-fold median plus missing indicator",
+      "included_in_selected_model": true,
+      "display_name": "Other fuel cost",
+      "category": "Utilities",
+      "description": "Inflation-adjusted other-fuel cost represented with log1p."
+    },
+    {
+      "feature": "water_sewer_log_2024",
+      "ACS_source": "WATP and ADJHSG",
+      "semantic_type": "Transformed continuous",
+      "transformation_and_encoding": "ADJHSG-adjusted log1p; status-based structural zero",
+      "remaining_missing_handling": "Training-fold median plus missing indicator",
+      "included_in_selected_model": true,
+      "display_name": "Water and sewer cost",
+      "category": "Utilities",
+      "description": "Inflation-adjusted water and sewer cost represented with log1p."
+    },
+    {
+      "feature": "structure_type",
+      "ACS_source": "BLD",
+      "semantic_type": "Nominal categorical",
+      "transformation_and_encoding": "Nominal category; one-hot encoded",
+      "remaining_missing_handling": "Training-fold most-frequent plus one-hot",
+      "included_in_selected_model": true,
+      "display_name": "Structure type",
+      "category": "Property",
+      "description": "ACS building or structure category."
+    },
+    {
+      "feature": "heating_fuel",
+      "ACS_source": "HFL",
+      "semantic_type": "Nominal categorical",
+      "transformation_and_encoding": "Nominal category; one-hot encoded",
+      "remaining_missing_handling": "Training-fold most-frequent plus one-hot",
+      "included_in_selected_model": true,
+      "display_name": "Heating fuel",
+      "category": "Property",
+      "description": "Primary fuel used to heat the unit."
+    },
+    {
+      "feature": "state_puma",
+      "ACS_source": "STATE + PUMA",
+      "semantic_type": "Nominal geography",
+      "transformation_and_encoding": "Nominal geography; five-fold cross-fitted target encoding",
+      "remaining_missing_handling": "Target encoder handles unseen geography inside pipeline",
+      "included_in_selected_model": true,
+      "display_name": "State–PUMA",
+      "category": "Geography",
+      "description": "State and Public Use Microdata Area, the geography learned directly by the model."
+    },
+    {
+      "feature": "household_type",
+      "ACS_source": "HHT",
+      "semantic_type": "Nominal categorical",
+      "transformation_and_encoding": "Nominal category; one-hot encoded",
+      "remaining_missing_handling": "Training-fold most-frequent plus one-hot",
+      "included_in_selected_model": true,
+      "display_name": "Household type",
+      "category": "Household",
+      "description": "ACS household/family composition category."
+    }
+  ]
+}

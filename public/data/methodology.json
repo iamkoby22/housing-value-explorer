@@ -1,0 +1,171 @@
+{
+  "metadata": {
+    "generated_by": "scripts/export_research_data.py",
+    "scientific_role": "Presentation-only normalization of existing analytical outputs"
+  },
+  "data": {
+    "method": [
+      {
+        "Item": "Model",
+        "Method": "Reduced XGBoost with log1p property-value target",
+        "Interpretation": "Selected using five-fold development CV before SHAP."
+      },
+      {
+        "Item": "Development data",
+        "Method": "2020-2023",
+        "Interpretation": "Used for fitting and model selection."
+      },
+      {
+        "Item": "Explanation data",
+        "Method": "All 268,930 records from 2024",
+        "Interpretation": "No sampling error in the geographic SHAP aggregation for the 2024 records."
+      },
+      {
+        "Item": "Importance",
+        "Method": "Survey-weighted mean absolute SHAP",
+        "Interpretation": "Ranks contribution strength, not causal influence."
+      },
+      {
+        "Item": "Average direction",
+        "Method": "Survey-weighted mean signed SHAP",
+        "Interpretation": "Average adjustment relative to the model baseline."
+      },
+      {
+        "Item": "Value trend",
+        "Method": "Survey-weighted correlation between feature value and SHAP",
+        "Interpretation": "Higher-value direction for numeric and ordinal variables; nominal variables are category-dependent."
+      },
+      {
+        "Item": "County",
+        "Method": "Largest PUMA-county overlap",
+        "Interpretation": "Approximate descriptive assignment; review overlap and reliability fields."
+      },
+      {
+        "Item": "State-PUMA",
+        "Method": "Direct modeled geography",
+        "Interpretation": "Best geographic audit level because State-PUMA entered the model."
+      },
+      {
+        "Item": "SHAP units",
+        "Method": "log1p property-value units",
+        "Interpretation": "Contributions are not direct dollar changes."
+      }
+    ],
+    "research_questions": [
+      {
+        "component": "Primary research question",
+        "statement": "How accurately can 2024 inflation-adjusted property values for owner-occupied one-family houses in five U.S. states be predicted from 2020-2023 ACS PUMS property, household, financing, utility, and State-PUMA characteristics?",
+        "empirical_evidence": "Five-fold development CV followed by 2024 temporal evaluation"
+      },
+      {
+        "component": "Geographic interpretation question",
+        "statement": "How does the selected model's reliance on non-geographic predictors vary across states and across dominant-overlap county summaries?",
+        "empirical_evidence": "Survey-weighted state, State-PUMA, and descriptive county SHAP summaries"
+      },
+      {
+        "component": "Modeling contribution",
+        "statement": "A leakage-safe comparison of linear, regularized, bagged-tree, gradient-boosting, and native-categorical models with development-only feature reduction.",
+        "empirical_evidence": "Common folds, MAE/RMSE/R-squared, and fold uncertainty"
+      },
+      {
+        "component": "Interpretive contribution",
+        "statement": "Record-level TreeSHAP is aggregated with housing-unit weights while keeping predictive PUMA geography distinct from approximate county visualization.",
+        "empirical_evidence": "Exact 2024 TreeSHAP, non-geographic comparisons, and stability checks"
+      }
+    ],
+    "leakage_audit": [
+      {
+        "audit_item": "Development period",
+        "observed_value": "2020-2023",
+        "interpretation": "Model search, family comparison, feature reduction, and CV"
+      },
+      {
+        "audit_item": "Temporal evaluation period",
+        "observed_value": "2024",
+        "interpretation": "Final evaluation and SHAP interpretation only"
+      },
+      {
+        "audit_item": "Development records",
+        "observed_value": "960182",
+        "interpretation": "All eligible 2020-2023 records"
+      },
+      {
+        "audit_item": "Temporal evaluation records",
+        "observed_value": "268930",
+        "interpretation": "All eligible 2024 records"
+      },
+      {
+        "audit_item": "Serial identifiers shared across periods",
+        "observed_value": "0",
+        "interpretation": "Must equal zero"
+      },
+      {
+        "audit_item": "Target-related columns in predictors",
+        "observed_value": "0",
+        "interpretation": "Must equal zero"
+      },
+      {
+        "audit_item": "County columns in predictors",
+        "observed_value": "0",
+        "interpretation": "Must equal zero; counties are descriptive only"
+      },
+      {
+        "audit_item": "Predictive geography",
+        "observed_value": "state_puma",
+        "interpretation": "Cross-fitted target encoding inside training folds"
+      },
+      {
+        "audit_item": "Selection seed",
+        "observed_value": "314",
+        "interpretation": "Common five-fold development split"
+      }
+    ],
+    "limitations": [
+      {
+        "limitation": "Predictive, not causal",
+        "evidence": "SHAP decomposes the selected model's predictions.",
+        "required_claim_boundary": "Do not claim that changing a feature will cause property value to change."
+      },
+      {
+        "limitation": "Survey-reported response",
+        "evidence": "VALP is rounded, allocated for some records, and state-specific top-coded.",
+        "required_claim_boundary": "Report allocation and top-code sensitivity; do not treat the response as an appraisal."
+      },
+      {
+        "limitation": "Geographic precision",
+        "evidence": "State and PUMA are observed; county is assigned from dominant spatial overlap after modeling.",
+        "required_claim_boundary": "Describe county findings as approximate visual summaries, not county estimates."
+      },
+      {
+        "limitation": "Survey uncertainty",
+        "evidence": "Housing-unit weights are used for descriptive aggregation.",
+        "required_claim_boundary": "The record bootstrap is a stability check; it is not an ACS SDR margin of error using WGTP1-WGTP80."
+      },
+      {
+        "limitation": "Geographic scope",
+        "evidence": "The analysis contains California, Florida, New York, Tennessee, and Texas.",
+        "required_claim_boundary": "Do not generalize results to every U.S. state without external validation."
+      },
+      {
+        "limitation": "Temporal scope",
+        "evidence": "Model selection uses 2020-2023 and final evaluation uses 2024.",
+        "required_claim_boundary": "Claims concern short-horizon temporal generalization to 2024."
+      },
+      {
+        "limitation": "Model performance",
+        "evidence": "The model explains a meaningful but incomplete portion of 2024 value variation.",
+        "required_claim_boundary": "Present MAE, RMSE, R-squared, relative-error coverage, and value-band errors together."
+      },
+      {
+        "limitation": "Financing predictors",
+        "evidence": "Mortgage payments reflect both financing and the underlying property/borrower context.",
+        "required_claim_boundary": "Interpret mortgage SHAP as predictive association, not a structural property effect."
+      },
+      {
+        "limitation": "Ordinal ACS codes",
+        "evidence": "Year-built, year-moved, and lot-size fields are ordered categories rather than interval measurements.",
+        "required_claim_boundary": "Interpret tree thresholds by documented categories; do not assume equal distances between codes."
+      }
+    ]
+  }
+}

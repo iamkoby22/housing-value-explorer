@@ -1,0 +1,73 @@
+{
+  "generator": {
+    "generated_by": "scripts/export_research_data.py",
+    "scientific_role": "Presentation-only normalization of existing analytical outputs"
+  },
+  "sources": [
+    {
+      "path": "C:\\Users\\LORD OF LORDS\\Desktop\\UNBOXINGTHEBLACKBOX.ipynb",
+      "sha256": "afb50548d0bd49af3513a083e9e9e2a0826affe9706422128b56b4398924c7bb",
+      "bytes": 10772264
+    },
+    {
+      "path": "C:\\Users\\LORD OF LORDS\\Desktop\\geographic_shap_analysis.xlsx",
+      "sha256": "2a4249e95d6a87307fe38da730537b60c04b1f93a19d95beea63c05361d84788",
+      "bytes": 1218361
+    },
+    {
+      "path": "C:\\Users\\LORD OF LORDS\\Desktop\\csv_hfl (1)\\capstone_figures\\publication_readiness\\selected_model_feature_dictionary.csv",
+      "sha256": "73995b755ba1291a75412aa1ff2885d186f3db8412a8b6e1e2f4d1a2d3645de0",
+      "bytes": 2545
+    },
+    {
+      "path": "C:\\Users\\LORD OF LORDS\\Desktop\\csv_hfl (1)\\capstone_figures\\publication_readiness\\final_model_cv_uncertainty.csv",
+      "sha256": "79b6f525273f6b9604412172a24e072a86a80cb4bdd1bfa1ccd72402e9948f2f",
+      "bytes": 1533
+    },
+    {
+      "path": "C:\\Users\\LORD OF LORDS\\Desktop\\csv_hfl (1)\\capstone_figures\\publication_readiness\\cv_vs_2024_temporal_evaluation.csv",
+      "sha256": "7f51ff6893f9d5e106e9b18c7d5d6e43f5ea763788902f8e74f74ef88d1e9215",
+      "bytes": 1746
+    },
+    {
+      "path": "C:\\Users\\LORD OF LORDS\\Desktop\\csv_hfl (1)\\capstone_figures\\publication_readiness\\shap_dependence_binned_non_geographic.csv",
+      "sha256": "bc6163c0728545718841253a329bdb1b9e29fa5cf797245fe2c5a0e0d08b3bba",
+      "bytes": 8702
+    },
+    {
+      "path": "C:\\Users\\LORD OF LORDS\\Desktop\\csv_hfl (1)\\capstone_figures\\method2b_tree_shap_global_importance.csv",
+      "sha256": "115285b4c98cf55997c160b13cbf10535a64be43b9eee8de24e4a9871b2860fd",
+      "bytes": 1468
+    },
+    {
+      "path": "C:\\Users\\LORD OF LORDS\\Desktop\\csv_hfl (1)\\boundaries\\Counties\\cb_2020_us_county_500k.shp",
+      "sha256": "6338e1d5b9093370eb66345f70c6d2198e526247666453e6e959bb055125f05a",
+      "bytes": 18032348
+    }
+  ],
+  "outputs": [
+    "county-shap.json",
+    "feature-metadata.json",
+    "global-shap.json",
+    "methodology.json",
+    "model-performance.json",
+    "puma-shap.json",
+    "shap-dependence.json",
+    "state-shap.json",
+    "states.geojson",
+    "study-summary.json"
+  ],
+  "validation": {
+    "expected_states": [
+      "California",
+      "Florida",
+      "New York",
+      "Tennessee",
+      "Texas"
+    ],
+    "features": 18,
+    "approximate_counties": 236,
+    "state_pumas": 868,
+    "county_reliability_present": true
+  }
+}

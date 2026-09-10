@@ -1,0 +1,171 @@
+{
+  "metadata": {
+    "generated_by": "scripts/export_research_data.py",
+    "scientific_role": "Presentation-only normalization of existing analytical outputs",
+    "development": "2020–2023 five-fold CV",
+    "evaluation": "2024 temporal evaluation only",
+    "currency_unit": "2024-comparable U.S. dollars"
+  },
+  "data": [
+    {
+      "model": "Reduced XGBoost (selected)",
+      "cross_validation": {
+        "folds": 5,
+        "mean_CV_MAE": 247093.0477557546,
+        "std_CV_MAE": 2772.4474233875,
+        "lower_95_CV_MAE": 243650.5996032216,
+        "upper_95_CV_MAE": 250535.4959082877,
+        "mean_CV_RMSE": 655007.6405565117,
+        "std_CV_RMSE": 10005.3727250526,
+        "lower_95_CV_RMSE": 642584.329455204,
+        "upper_95_CV_RMSE": 667430.9516578194,
+        "mean_CV_R_squared": 0.3731671261,
+        "std_CV_R_squared": 0.0061490728,
+        "lower_95_CV_R_squared": 0.3655320437,
+        "upper_95_CV_R_squared": 0.3808022084,
+        "mean_fit_time_seconds": 19.2759368,
+        "selected_for_SHAP": true
+      },
+      "temporal_2024": {
+        "test_MAE": 275638.814768083,
+        "test_median_absolute_error": 113950.53125,
+        "test_RMSE": 710455.8985894376,
+        "test_R_squared": 0.3176961239,
+        "within_20_percent": 38.0980180716,
+        "within_30_percent": 53.4733945636,
+        "MAE_generalization_gap": 28545.7670123284,
+        "R_squared_generalization_gap": -0.0554710022,
+        "selected_using": "2020-2023 development CV",
+        "2024_role": "Final temporal evaluation only"
+      }
+    },
+    {
+      "model": "Full XGBoost",
+      "cross_validation": {
+        "folds": 5,
+        "mean_CV_MAE": 247147.87806,
+        "std_CV_MAE": 2719.2348808078,
+        "lower_95_CV_MAE": 243771.5020058409,
+        "upper_95_CV_MAE": 250524.2541141589,
+        "mean_CV_RMSE": 655352.51224,
+        "std_CV_RMSE": 9824.8374222708,
+        "lower_95_CV_RMSE": 643153.3653245611,
+        "upper_95_CV_RMSE": 667551.6591554388,
+        "mean_CV_R_squared": 0.3725,
+        "std_CV_R_squared": 0.0059954149,
+        "lower_95_CV_R_squared": 0.3650557091,
+        "upper_95_CV_R_squared": 0.3799442909,
+        "mean_fit_time_seconds": 18.47868,
+        "selected_for_SHAP": false
+      },
+      "temporal_2024": {
+        "test_MAE": 275598.0638,
+        "test_median_absolute_error": 113856.9375,
+        "test_RMSE": 710956.4897,
+        "test_R_squared": 0.3167,
+        "within_20_percent": 38.127,
+        "within_30_percent": 53.5061,
+        "MAE_generalization_gap": 28450.18574,
+        "R_squared_generalization_gap": -0.0558,
+        "selected_using": "Not selected as final SHAP model",
+        "2024_role": "Final temporal evaluation only"
+      }
+    },
+    {
+      "model": "CatBoost",
+      "cross_validation": {
+        "folds": 5,
+        "mean_CV_MAE": 250809.82812,
+        "std_CV_MAE": 2605.4982880044,
+        "lower_95_CV_MAE": 247574.6746984035,
+        "upper_95_CV_MAE": 254044.9815415966,
+        "mean_CV_RMSE": 658600.3858,
+        "std_CV_RMSE": 9924.0855696813,
+        "lower_95_CV_RMSE": 646278.0060330334,
+        "upper_95_CV_RMSE": 670922.7655669667,
+        "mean_CV_R_squared": 0.36626,
+        "std_CV_R_squared": 0.0054952707,
+        "lower_95_CV_R_squared": 0.3594367202,
+        "upper_95_CV_R_squared": 0.3730832798,
+        "mean_fit_time_seconds": 193.92134,
+        "selected_for_SHAP": false
+      },
+      "temporal_2024": {
+        "test_MAE": 277482.2533,
+        "test_median_absolute_error": 115690.8222,
+        "test_RMSE": 711366.2868,
+        "test_R_squared": 0.3159,
+        "within_20_percent": 36.6106,
+        "within_30_percent": 51.9604,
+        "MAE_generalization_gap": 26672.42518,
+        "R_squared_generalization_gap": -0.05036,
+        "selected_using": "Not selected as final SHAP model",
+        "2024_role": "Final temporal evaluation only"
+      }
+    },
+    {
+      "model": "Random Forest",
+      "cross_validation": {
+        "folds": 5,
+        "mean_CV_MAE": 275798.69584,
+        "std_CV_MAE": 1590.883266493,
+        "lower_95_CV_MAE": 273823.3533626509,
+        "upper_95_CV_MAE": 277774.0383173491,
+        "mean_CV_RMSE": 643180.9966399999,
+        "std_CV_RMSE": 7799.5183045452,
+        "lower_95_CV_RMSE": 633496.6155579148,
+        "upper_95_CV_RMSE": 652865.377722085,
+        "mean_CV_R_squared": 0.39558,
+        "std_CV_R_squared": 0.0037678907,
+        "lower_95_CV_R_squared": 0.3909015458,
+        "upper_95_CV_R_squared": 0.4002584542,
+        "mean_fit_time_seconds": 554.01978,
+        "selected_for_SHAP": false
+      },
+      "temporal_2024": {
+        "test_MAE": 305679.4646,
+        "test_median_absolute_error": 147053.8201,
+        "test_RMSE": 694482.6767,
+        "test_R_squared": 0.348,
+        "within_20_percent": 33.0718,
+        "within_30_percent": 46.498,
+        "MAE_generalization_gap": 29880.76876,
+        "R_squared_generalization_gap": -0.04758,
+        "selected_using": "Not selected as final SHAP model",
+        "2024_role": "Final temporal evaluation only"
+      }
+    },
+    {
+      "model": "Elastic Net",
+      "cross_validation": {
+        "folds": 5,
+        "mean_CV_MAE": 304927.8082,
+        "std_CV_MAE": 1580.6320525406,
+        "lower_95_CV_MAE": 302965.1942859534,
+        "upper_95_CV_MAE": 306890.4221140466,
+        "mean_CV_RMSE": 679668.7574799999,
+        "std_CV_RMSE": 9713.5967769048,
+        "lower_95_CV_RMSE": 667607.7340690491,
+        "upper_95_CV_RMSE": 691729.7808909507,
+        "mean_CV_R_squared": 0.32504,
+        "std_CV_R_squared": 0.0060351471,
+        "lower_95_CV_R_squared": 0.3175463752,
+        "upper_95_CV_R_squared": 0.3325336248,
+        "mean_fit_time_seconds": 300.8962,
+        "selected_for_SHAP": false
+      },
+      "temporal_2024": {
+        "test_MAE": 333369.201,
+        "test_median_absolute_error": 178523.4382,
+        "test_RMSE": 733470.4324,
+        "test_R_squared": 0.2728,
+        "within_20_percent": 28.0813,
+        "within_30_percent": 40.2079,
+        "MAE_generalization_gap": 28441.3928,
+        "R_squared_generalization_gap": -0.05224,
+        "selected_using": "Not selected as final SHAP model",
+        "2024_role": "Final temporal evaluation only"
+      }
+    }
+  ]
+}

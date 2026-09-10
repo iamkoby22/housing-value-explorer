@@ -1,0 +1,712 @@
+{
+  "metadata": {
+    "generated_by": "scripts/export_research_data.py",
+    "scientific_role": "Presentation-only normalization of existing analytical outputs",
+    "geographic_level": "state",
+    "unit": "log1p property-value SHAP units",
+    "weighting": "Housing-unit survey weights",
+    "caveat": "Predictive contribution, not causal effect"
+  },
+  "data": [
+    {
+      "state_name": "California",
+      "effective_sample_size": 50298.2356060313,
+      "records": 79636,
+      "survey_weight_sum": 1383781,
+      "top_features": [
+        {
+          "rank": 1,
+          "feature": "state_puma",
+          "importance": 0.4612786802,
+          "mean_signed": 0.4370957238,
+          "average_direction": "Upward average contribution",
+          "value_trend": "Category-dependent",
+          "positive_share_pct": 90.0375131614
+        },
+        {
+          "rank": 2,
+          "feature": "first_mortgage_log_2024",
+          "importance": 0.1748054521,
+          "mean_signed": 0.0784619715,
+          "average_direction": "Upward average contribution",
+          "value_trend": "Higher values generally increase prediction",
+          "positive_share_pct": 62.1478398677
+        },
+        {
+          "rank": 3,
+          "feature": "signed_log_household_income_2024",
+          "importance": 0.084551184,
+          "mean_signed": 0.0245407035,
+          "average_direction": "Upward average contribution",
+          "value_trend": "Higher values generally increase prediction",
+          "positive_share_pct": 48.574955141
+        },
+        {
+          "rank": 4,
+          "feature": "bedroom_count",
+          "importance": 0.0638365374,
+          "mean_signed": 0.0068649006,
+          "average_direction": "Balanced or near zero",
+          "value_trend": "Higher values generally increase prediction",
+          "positive_share_pct": 38.8450195515
+        },
+        {
+          "rank": 5,
+          "feature": "non_bedroom_rooms",
+          "importance": 0.0362083431,
+          "mean_signed": -0.0096633705,
+          "average_direction": "Balanced or near zero",
+          "value_trend": "Higher values generally increase prediction",
+          "positive_share_pct": 31.3741842098
+        }
+      ],
+      "top_non_geographic_features": [
+        {
+          "rank": 1,
+          "feature": "first_mortgage_log_2024",
+          "importance": 0.1748054521,
+          "mean_signed": 0.0784619715,
+          "average_direction": "Upward average contribution",
+          "value_trend": "Higher values generally increase prediction",
+          "positive_share_pct": 62.1478398677
+        },
+        {
+          "rank": 2,
+          "feature": "signed_log_household_income_2024",
+          "importance": 0.084551184,
+          "mean_signed": 0.0245407035,
+          "average_direction": "Upward average contribution",
+          "value_trend": "Higher values generally increase prediction",
+          "positive_share_pct": 48.574955141
+        },
+        {
+          "rank": 3,
+          "feature": "bedroom_count",
+          "importance": 0.0638365374,
+          "mean_signed": 0.0068649006,
+          "average_direction": "Balanced or near zero",
+          "value_trend": "Higher values generally increase prediction",
+          "positive_share_pct": 38.8450195515
+        },
+        {
+          "rank": 4,
+          "feature": "non_bedroom_rooms",
+          "importance": 0.0362083431,
+          "mean_signed": -0.0096633705,
+          "average_direction": "Balanced or near zero",
+          "value_trend": "Higher values generally increase prediction",
+          "positive_share_pct": 31.3741842098
+        },
+        {
+          "rank": 5,
+          "feature": "year_built_order",
+          "importance": 0.0329397395,
+          "mean_signed": -0.0024863116,
+          "average_direction": "Balanced or near zero",
+          "value_trend": "Higher values generally increase prediction",
+          "positive_share_pct": 33.7184858009
+        }
+      ],
+      "feature_importance": {
+        "state_puma": 0.4612786802,
+        "first_mortgage_log_2024": 0.1748054521,
+        "signed_log_household_income_2024": 0.084551184,
+        "bedroom_count": 0.0638365374,
+        "year_built_order": 0.0329397395,
+        "non_bedroom_rooms": 0.0362083431,
+        "survey_year": 0.0251443606,
+        "household_size": 0.0312450449,
+        "lot_size_order": 0.0189493782,
+        "electricity_log_2024": 0.0223926664,
+        "gas_log_2024": 0.0197348671,
+        "water_sewer_log_2024": 0.022079444,
+        "household_type": 0.0151175127,
+        "year_moved_order": 0.0114651231,
+        "heating_fuel": 0.0053469562,
+        "structure_type": 0.0093436072,
+        "hoa_fee_log_2024": 0.0072474624,
+        "other_fuel_log_2024": 0.0021376447
+      },
+      "feature_direction": {
+        "state_puma": 0.4370957238,
+        "first_mortgage_log_2024": 0.0784619715,
+        "signed_log_household_income_2024": 0.0245407035,
+        "bedroom_count": 0.0068649006,
+        "year_built_order": -0.0024863116,
+        "non_bedroom_rooms": -0.0096633705,
+        "survey_year": 0.0195908825,
+        "household_size": -0.0057931336,
+        "lot_size_order": -0.0056931778,
+        "electricity_log_2024": 0.0042863119,
+        "gas_log_2024": 0.0138430139,
+        "water_sewer_log_2024": 0.0058508587,
+        "household_type": -0.0004698455,
+        "year_moved_order": 0.0037493942,
+        "heating_fuel": 0.0018493701,
+        "structure_type": 0.0013096223,
+        "hoa_fee_log_2024": -0.0037992801,
+        "other_fuel_log_2024": 0.0007294053
+      }
+    },
+    {
+      "state_name": "Florida",
+      "effective_sample_size": 31924.6552871393,
+      "records": 52892,
+      "survey_weight_sum": 1012353,
+      "top_features": [
+        {
+          "rank": 1,
+          "feature": "state_puma",
+          "importance": 0.1663244078,
+          "mean_signed": -0.0763454598,
+          "average_direction": "Downward average contribution",
+          "value_trend": "Category-dependent",
+          "positive_share_pct": 31.5498645235
+        },
+        {
+          "rank": 2,
+          "feature": "first_mortgage_log_2024",
+          "importance": 0.1415087357,
+          "mean_signed": 0.0073670693,
+          "average_direction": "Balanced or near zero",
+          "value_trend": "Higher values generally increase prediction",
+          "positive_share_pct": 38.5708344816
+        },
+        {
+          "rank": 3,
+          "feature": "signed_log_household_income_2024",
+          "importance": 0.079654361,
+          "mean_signed": -0.0062977296,
+          "average_direction": "Balanced or near zero",
+          "value_trend": "Higher values generally increase prediction",
+          "positive_share_pct": 36.0258723983
+        },
+        {
+          "rank": 4,
+          "feature": "year_built_order",
+          "importance": 0.0582110889,
+          "mean_signed": 0.0234323251,
+          "average_direction": "Upward average contribution",
+          "value_trend": "Higher values generally increase prediction",
+          "positive_share_pct": 55.9329601433
+        },
+        {
+          "rank": 5,
+          "feature": "bedroom_count",
+          "importance": 0.0574710701,
+          "mean_signed": -0.0024397711,
+          "average_direction": "Balanced or near zero",
+          "value_trend": "Higher values generally increase prediction",
+          "positive_share_pct": 31.569719258
+        }
+      ],
+      "top_non_geographic_features": [
+        {
+          "rank": 1,
+          "feature": "first_mortgage_log_2024",
+          "importance": 0.1415087357,
+          "mean_signed": 0.0073670693,
+          "average_direction": "Balanced or near zero",
+          "value_trend": "Higher values generally increase prediction",
+          "positive_share_pct": 38.5708344816
+        },
+        {
+          "rank": 2,
+          "feature": "signed_log_household_income_2024",
+          "importance": 0.079654361,
+          "mean_signed": -0.0062977296,
+          "average_direction": "Balanced or near zero",
+          "value_trend": "Higher values generally increase prediction",
+          "positive_share_pct": 36.0258723983
+        },
+        {
+          "rank": 3,
+          "feature": "year_built_order",
+          "importance": 0.0582110889,
+          "mean_signed": 0.0234323251,
+          "average_direction": "Upward average contribution",
+          "value_trend": "Higher values generally increase prediction",
+          "positive_share_pct": 55.9329601433
+        },
+        {
+          "rank": 4,
+          "feature": "bedroom_count",
+          "importance": 0.0574710701,
+          "mean_signed": -0.0024397711,
+          "average_direction": "Balanced or near zero",
+          "value_trend": "Higher values generally increase prediction",
+          "positive_share_pct": 31.569719258
+        },
+        {
+          "rank": 5,
+          "feature": "survey_year",
+          "importance": 0.0450360406,
+          "mean_signed": 0.044113401,
+          "average_direction": "Upward average contribution",
+          "value_trend": "Nonlinear or mixed",
+          "positive_share_pct": 99.6170308183
+        }
+      ],
+      "feature_importance": {
+        "state_puma": 0.1663244078,
+        "first_mortgage_log_2024": 0.1415087357,
+        "signed_log_household_income_2024": 0.079654361,
+        "bedroom_count": 0.0574710701,
+        "year_built_order": 0.0582110889,
+        "non_bedroom_rooms": 0.041412578,
+        "survey_year": 0.0450360406,
+        "household_size": 0.0319774422,
+        "lot_size_order": 0.0203609528,
+        "electricity_log_2024": 0.0239097109,
+        "gas_log_2024": 0.0292454279,
+        "water_sewer_log_2024": 0.0147229285,
+        "household_type": 0.0186725201,
+        "year_moved_order": 0.0123289871,
+        "heating_fuel": 0.0061422787,
+        "structure_type": 0.0079283397,
+        "hoa_fee_log_2024": 0.006394823,
+        "other_fuel_log_2024": 0.0009468823
+      },
+      "feature_direction": {
+        "state_puma": -0.0763454598,
+        "first_mortgage_log_2024": 0.0073670693,
+        "signed_log_household_income_2024": -0.0062977296,
+        "bedroom_count": -0.0024397711,
+        "year_built_order": 0.0234323251,
+        "non_bedroom_rooms": -0.005691665,
+        "survey_year": 0.044113401,
+        "household_size": 0.001377826,
+        "lot_size_order": -0.0075912901,
+        "electricity_log_2024": -0.0004941395,
+        "gas_log_2024": -0.0241279191,
+        "water_sewer_log_2024": -0.0043412214,
+        "household_type": -0.0009253899,
+        "year_moved_order": 0.0034662628,
+        "heating_fuel": 0.0033567001,
+        "structure_type": -0.0003194572,
+        "hoa_fee_log_2024": -0.0009633411,
+        "other_fuel_log_2024": 0.0007149586
+      }
+    },
+    {
+      "state_name": "New York",
+      "effective_sample_size": 25378.1293235387,
+      "records": 43269,
+      "survey_weight_sum": 649223,
+      "top_features": [
+        {
+          "rank": 1,
+          "feature": "state_puma",
+          "importance": 0.4059311906,
+          "mean_signed": -0.1073284532,
+          "average_direction": "Downward average contribution",
+          "value_trend": "Category-dependent",
+          "positive_share_pct": 44.175730065
+        },
+        {
+          "rank": 2,
+          "feature": "first_mortgage_log_2024",
+          "importance": 0.1625805176,
+          "mean_signed": 0.0187014614,
+          "average_direction": "Upward average contribution",
+          "value_trend": "Higher values generally increase prediction",
+          "positive_share_pct": 42.4445837563
+        },
+        {
+          "rank": 3,
+          "feature": "signed_log_household_income_2024",
+          "importance": 0.0893075445,
+          "mean_signed": 0.014340245,
+          "average_direction": "Upward average contribution",
+          "value_trend": "Higher values generally increase prediction",
+          "positive_share_pct": 46.9832399653
+        },
+        {
+          "rank": 4,
+          "feature": "year_built_order",
+          "importance": 0.0640868427,
+          "mean_signed": -0.0330375896,
+          "average_direction": "Downward average contribution",
+          "value_trend": "Higher values generally increase prediction",
+          "positive_share_pct": 23.5700213948
+        },
+        {
+          "rank": 5,
+          "feature": "bedroom_count",
+          "importance": 0.059166678,
+          "mean_signed": 0.0051635062,
+          "average_direction": "Balanced or near zero",
+          "value_trend": "Higher values generally increase prediction",
+          "positive_share_pct": 36.4163007164
+        }
+      ],
+      "top_non_geographic_features": [
+        {
+          "rank": 1,
+          "feature": "first_mortgage_log_2024",
+          "importance": 0.1625805176,
+          "mean_signed": 0.0187014614,
+          "average_direction": "Upward average contribution",
+          "value_trend": "Higher values generally increase prediction",
+          "positive_share_pct": 42.4445837563
+        },
+        {
+          "rank": 2,
+          "feature": "signed_log_household_income_2024",
+          "importance": 0.0893075445,
+          "mean_signed": 0.014340245,
+          "average_direction": "Upward average contribution",
+          "value_trend": "Higher values generally increase prediction",
+          "positive_share_pct": 46.9832399653
+        },
+        {
+          "rank": 3,
+          "feature": "year_built_order",
+          "importance": 0.0640868427,
+          "mean_signed": -0.0330375896,
+          "average_direction": "Downward average contribution",
+          "value_trend": "Higher values generally increase prediction",
+          "positive_share_pct": 23.5700213948
+        },
+        {
+          "rank": 4,
+          "feature": "bedroom_count",
+          "importance": 0.059166678,
+          "mean_signed": 0.0051635062,
+          "average_direction": "Balanced or near zero",
+          "value_trend": "Higher values generally increase prediction",
+          "positive_share_pct": 36.4163007164
+        },
+        {
+          "rank": 5,
+          "feature": "non_bedroom_rooms",
+          "importance": 0.0397949005,
+          "mean_signed": 0.0094599122,
+          "average_direction": "Balanced or near zero",
+          "value_trend": "Higher values generally increase prediction",
+          "positive_share_pct": 50.5545860205
+        }
+      ],
+      "feature_importance": {
+        "state_puma": 0.4059311906,
+        "first_mortgage_log_2024": 0.1625805176,
+        "signed_log_household_income_2024": 0.0893075445,
+        "bedroom_count": 0.059166678,
+        "year_built_order": 0.0640868427,
+        "non_bedroom_rooms": 0.0397949005,
+        "survey_year": 0.0341060874,
+        "household_size": 0.0335983178,
+        "lot_size_order": 0.0315186564,
+        "electricity_log_2024": 0.0237061452,
+        "gas_log_2024": 0.0193380426,
+        "water_sewer_log_2024": 0.0157333283,
+        "household_type": 0.0173132011,
+        "year_moved_order": 0.0122802993,
+        "heating_fuel": 0.0124986441,
+        "structure_type": 0.0048771166,
+        "hoa_fee_log_2024": 0.0020456698,
+        "other_fuel_log_2024": 0.0053896324
+      },
+      "feature_direction": {
+        "state_puma": -0.1073284532,
+        "first_mortgage_log_2024": 0.0187014614,
+        "signed_log_household_income_2024": 0.014340245,
+        "bedroom_count": 0.0051635062,
+        "year_built_order": -0.0330375896,
+        "non_bedroom_rooms": 0.0094599122,
+        "survey_year": 0.0329275151,
+        "household_size": -0.0026730007,
+        "lot_size_order": 0.0020706728,
+        "electricity_log_2024": -0.0020009579,
+        "gas_log_2024": 0.0034088995,
+        "water_sewer_log_2024": -0.0088097311,
+        "household_type": -0.0008997238,
+        "year_moved_order": 0.0001079204,
+        "heating_fuel": -0.0091877341,
+        "structure_type": -9.93991e-5,
+        "hoa_fee_log_2024": 0.0001542152,
+        "other_fuel_log_2024": -0.0028891004
+      }
+    },
+    {
+      "state_name": "Tennessee",
+      "effective_sample_size": 12050.1040368626,
+      "records": 20580,
+      "survey_weight_sum": 353788,
+      "top_features": [
+        {
+          "rank": 1,
+          "feature": "state_puma",
+          "importance": 0.3511779004,
+          "mean_signed": -0.3056579741,
+          "average_direction": "Downward average contribution",
+          "value_trend": "Category-dependent",
+          "positive_share_pct": 8.06839124
+        },
+        {
+          "rank": 2,
+          "feature": "first_mortgage_log_2024",
+          "importance": 0.140498883,
+          "mean_signed": -0.0608075118,
+          "average_direction": "Downward average contribution",
+          "value_trend": "Nonlinear or mixed",
+          "positive_share_pct": 23.7899533054
+        },
+        {
+          "rank": 3,
+          "feature": "signed_log_household_income_2024",
+          "importance": 0.0847429633,
+          "mean_signed": -0.0160748662,
+          "average_direction": "Downward average contribution",
+          "value_trend": "Higher values generally increase prediction",
+          "positive_share_pct": 35.0882449376
+        },
+        {
+          "rank": 4,
+          "feature": "year_built_order",
+          "importance": 0.0773217026,
+          "mean_signed": 0.0179856062,
+          "average_direction": "Upward average contribution",
+          "value_trend": "Higher values generally increase prediction",
+          "positive_share_pct": 55.0886406549
+        },
+        {
+          "rank": 5,
+          "feature": "bedroom_count",
+          "importance": 0.0593784168,
+          "mean_signed": 0.0017993474,
+          "average_direction": "Balanced or near zero",
+          "value_trend": "Higher values generally increase prediction",
+          "positive_share_pct": 31.6545501826
+        }
+      ],
+      "top_non_geographic_features": [
+        {
+          "rank": 1,
+          "feature": "first_mortgage_log_2024",
+          "importance": 0.140498883,
+          "mean_signed": -0.0608075118,
+          "average_direction": "Downward average contribution",
+          "value_trend": "Nonlinear or mixed",
+          "positive_share_pct": 23.7899533054
+        },
+        {
+          "rank": 2,
+          "feature": "signed_log_household_income_2024",
+          "importance": 0.0847429633,
+          "mean_signed": -0.0160748662,
+          "average_direction": "Downward average contribution",
+          "value_trend": "Higher values generally increase prediction",
+          "positive_share_pct": 35.0882449376
+        },
+        {
+          "rank": 3,
+          "feature": "year_built_order",
+          "importance": 0.0773217026,
+          "mean_signed": 0.0179856062,
+          "average_direction": "Upward average contribution",
+          "value_trend": "Higher values generally increase prediction",
+          "positive_share_pct": 55.0886406549
+        },
+        {
+          "rank": 4,
+          "feature": "bedroom_count",
+          "importance": 0.0593784168,
+          "mean_signed": 0.0017993474,
+          "average_direction": "Balanced or near zero",
+          "value_trend": "Higher values generally increase prediction",
+          "positive_share_pct": 31.6545501826
+        },
+        {
+          "rank": 5,
+          "feature": "non_bedroom_rooms",
+          "importance": 0.0481601103,
+          "mean_signed": 0.007607693,
+          "average_direction": "Balanced or near zero",
+          "value_trend": "Higher values generally increase prediction",
+          "positive_share_pct": 48.0491141588
+        }
+      ],
+      "feature_importance": {
+        "state_puma": 0.3511779004,
+        "first_mortgage_log_2024": 0.140498883,
+        "signed_log_household_income_2024": 0.0847429633,
+        "bedroom_count": 0.0593784168,
+        "year_built_order": 0.0773217026,
+        "non_bedroom_rooms": 0.0481601103,
+        "survey_year": 0.0450205628,
+        "household_size": 0.0348821723,
+        "lot_size_order": 0.0400559931,
+        "electricity_log_2024": 0.0213727073,
+        "gas_log_2024": 0.0201539961,
+        "water_sewer_log_2024": 0.0158690779,
+        "household_type": 0.0192579404,
+        "year_moved_order": 0.0131530908,
+        "heating_fuel": 0.0056302059,
+        "structure_type": 0.0040632676,
+        "hoa_fee_log_2024": 0.0035682638,
+        "other_fuel_log_2024": 0.0013926585
+      },
+      "feature_direction": {
+        "state_puma": -0.3056579741,
+        "first_mortgage_log_2024": -0.0608075118,
+        "signed_log_household_income_2024": -0.0160748662,
+        "bedroom_count": 0.0017993474,
+        "year_built_order": 0.0179856062,
+        "non_bedroom_rooms": 0.007607693,
+        "survey_year": 0.0445064737,
+        "household_size": 0.001581124,
+        "lot_size_order": 0.0130725901,
+        "electricity_log_2024": -0.0068755478,
+        "gas_log_2024": -0.0048739393,
+        "water_sewer_log_2024": -0.0103516962,
+        "household_type": -1.08398e-5,
+        "year_moved_order": 0.0011150028,
+        "heating_fuel": -0.0001457829,
+        "structure_type": 0.0007212274,
+        "hoa_fee_log_2024": -0.0020605484,
+        "other_fuel_log_2024": 0.0006555735
+      }
+    },
+    {
+      "state_name": "Texas",
+      "effective_sample_size": 39793.4042531898,
+      "records": 72553,
+      "survey_weight_sum": 1309412,
+      "top_features": [
+        {
+          "rank": 1,
+          "feature": "state_puma",
+          "importance": 0.3480683456,
+          "mean_signed": -0.3021251431,
+          "average_direction": "Downward average contribution",
+          "value_trend": "Category-dependent",
+          "positive_share_pct": 15.155657654
+        },
+        {
+          "rank": 2,
+          "feature": "first_mortgage_log_2024",
+          "importance": 0.1457813736,
+          "mean_signed": -0.0068337262,
+          "average_direction": "Balanced or near zero",
+          "value_trend": "Higher values generally increase prediction",
+          "positive_share_pct": 36.2096116425
+        },
+        {
+          "rank": 3,
+          "feature": "signed_log_household_income_2024",
+          "importance": 0.0885241699,
+          "mean_signed": 0.0015742799,
+          "average_direction": "Balanced or near zero",
+          "value_trend": "Higher values generally increase prediction",
+          "positive_share_pct": 42.3510705569
+        },
+        {
+          "rank": 4,
+          "feature": "year_built_order",
+          "importance": 0.0744777821,
+          "mean_signed": 0.0279790559,
+          "average_direction": "Upward average contribution",
+          "value_trend": "Higher values generally increase prediction",
+          "positive_share_pct": 61.5586232599
+        },
+        {
+          "rank": 5,
+          "feature": "bedroom_count",
+          "importance": 0.0588629084,
+          "mean_signed": 0.0107822186,
+          "average_direction": "Upward average contribution",
+          "value_trend": "Higher values generally increase prediction",
+          "positive_share_pct": 39.6296200126
+        }
+      ],
+      "top_non_geographic_features": [
+        {
+          "rank": 1,
+          "feature": "first_mortgage_log_2024",
+          "importance": 0.1457813736,
+          "mean_signed": -0.0068337262,
+          "average_direction": "Balanced or near zero",
+          "value_trend": "Higher values generally increase prediction",
+          "positive_share_pct": 36.2096116425
+        },
+        {
+          "rank": 2,
+          "feature": "signed_log_household_income_2024",
+          "importance": 0.0885241699,
+          "mean_signed": 0.0015742799,
+          "average_direction": "Balanced or near zero",
+          "value_trend": "Higher values generally increase prediction",
+          "positive_share_pct": 42.3510705569
+        },
+        {
+          "rank": 3,
+          "feature": "year_built_order",
+          "importance": 0.0744777821,
+          "mean_signed": 0.0279790559,
+          "average_direction": "Upward average contribution",
+          "value_trend": "Higher values generally increase prediction",
+          "positive_share_pct": 61.5586232599
+        },
+        {
+          "rank": 4,
+          "feature": "bedroom_count",
+          "importance": 0.0588629084,
+          "mean_signed": 0.0107822186,
+          "average_direction": "Upward average contribution",
+          "value_trend": "Higher values generally increase prediction",
+          "positive_share_pct": 39.6296200126
+        },
+        {
+          "rank": 5,
+          "feature": "non_bedroom_rooms",
+          "importance": 0.046348841,
+          "mean_signed": -0.0032314082,
+          "average_direction": "Balanced or near zero",
+          "value_trend": "Higher values generally increase prediction",
+          "positive_share_pct": 40.1807070655
+        }
+      ],
+      "feature_importance": {
+        "state_puma": 0.3480683456,
+        "first_mortgage_log_2024": 0.1457813736,
+        "signed_log_household_income_2024": 0.0885241699,
+        "bedroom_count": 0.0588629084,
+        "year_built_order": 0.0744777821,
+        "non_bedroom_rooms": 0.046348841,
+        "survey_year": 0.0442409342,
+        "household_size": 0.036819609,
+        "lot_size_order": 0.0298463474,
+        "electricity_log_2024": 0.0231285192,
+        "gas_log_2024": 0.0166305487,
+        "water_sewer_log_2024": 0.0176926042,
+        "household_type": 0.0192330794,
+        "year_moved_order": 0.0138396676,
+        "heating_fuel": 0.0059836235,
+        "structure_type": 0.0037510389,
+        "hoa_fee_log_2024": 0.0055287338,
+        "other_fuel_log_2024": 0.001180323
+      },
+      "feature_direction": {
+        "state_puma": -0.3021251431,
+        "first_mortgage_log_2024": -0.0068337262,
+        "signed_log_household_income_2024": 0.0015742799,
+        "bedroom_count": 0.0107822186,
+        "year_built_order": 0.0279790559,
+        "non_bedroom_rooms": -0.0032314082,
+        "survey_year": 0.043602268,
+        "household_size": -0.0062625311,
+        "lot_size_order": -0.006824502,
+        "electricity_log_2024": 0.0010372724,
+        "gas_log_2024": -0.0041288724,
+        "water_sewer_log_2024": -0.0026530861,
+        "household_type": -0.0002997885,
+        "year_moved_order": 0.0017406134,
+        "heating_fuel": -0.0009962031,
+        "structure_type": 0.0015661388,
+        "hoa_fee_log_2024": -0.0018228294,
+        "other_fuel_log_2024": 0.0006861417
+      }
+    }
+  ]
+}

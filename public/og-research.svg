@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Unboxing the Black Box</title>
+  <desc id="desc">Geographic variation in machine-learning explanations of housing value across five states.</desc>
+  <rect width="1200" height="630" fill="#f5f2eb"/>
+  <rect x="58" y="56" width="46" height="46" fill="none" stroke="#18201d" stroke-width="2"/>
+  <text x="81" y="85" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#18201d">UB</text>
+  <text x="1120" y="76" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="12" letter-spacing="3" fill="#176b55">ACS PUMS · 2020–2024</text>
+  <line x1="58" y1="123" x2="1142" y2="123" stroke="#d8d2c5"/>
+  <text x="58" y="217" font-family="Georgia, serif" font-size="76" fill="#18201d">Unboxing the Black Box</text>
+  <text x="58" y="265" font-family="Georgia, serif" font-size="30" fill="#4d5752">Geographic variation in machine-learning explanations</text>
+  <text x="58" y="303" font-family="Georgia, serif" font-size="30" fill="#4d5752">of U.S. housing values</text>
+  <g transform="translate(58 386)" font-family="Arial, Helvetica, sans-serif">
+    <text y="0" font-size="11" letter-spacing="2" fill="#626b66">LEADING NON-GEOGRAPHIC CONTRIBUTIONS</text>
+    <text y="39" font-size="17" fill="#18201d">First mortgage payment</text>
+    <rect x="260" y="21" width="420" height="22" fill="#176b55"/>
+    <text y="82" font-size="17" fill="#18201d">Household income</text>
+    <rect x="260" y="64" width="236" height="22" fill="#397f6c"/>
+    <text y="125" font-size="17" fill="#18201d">Bedrooms</text>
+    <rect x="260" y="107" width="167" height="22" fill="#68a18f"/>
+    <text y="168" font-size="17" fill="#18201d">Year built</text>
+    <rect x="260" y="150" width="161" height="22" fill="#91b7ab"/>
+  </g>
+  <g transform="translate(820 390)" font-family="Arial, Helvetica, sans-serif" fill="#18201d">
+    <text font-size="11" letter-spacing="2" fill="#626b66">FIVE HOUSING MARKETS</text>
+    <text y="40" font-size="18">California</text><text x="170" y="40" font-size="18">Florida</text>
+    <text y="78" font-size="18">New York</text><text x="170" y="78" font-size="18">Tennessee</text>
+    <text y="116" font-size="18">Texas</text>
+    <line y1="148" x2="320" y2="148" stroke="#d8d2c5"/>
+    <text y="180" font-size="12" fill="#626b66">Reduced XGBoost · 2024 TreeSHAP</text>
+  </g>
+  <line x1="58" y1="588" x2="1142" y2="588" stroke="#18201d"/>
+  <text x="58" y="610" font-family="Arial, Helvetica, sans-serif" font-size="10" letter-spacing="2" fill="#626b66">PREDICTIVE CONTRIBUTION · NOT CAUSAL EFFECT</text>
+</svg>

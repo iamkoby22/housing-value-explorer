@@ -1,0 +1,119 @@
+{
+  "metadata": {
+    "generated_by": "scripts/export_research_data.py",
+    "scientific_role": "Presentation-only normalization of existing analytical outputs",
+    "unit": "log1p property-value SHAP units",
+    "weighting": "Housing-unit survey weights",
+    "caveat": "Predictive contribution, not causal effect"
+  },
+  "data": [
+    {
+      "feature": "state_puma",
+      "mean_absolute_SHAP": 0.36732525,
+      "survey_weighted_mean_absolute_SHAP": 0.3440498716,
+      "SHAP_units": "log1p property-value units"
+    },
+    {
+      "feature": "first_mortgage_log_2024",
+      "mean_absolute_SHAP": 0.1497597,
+      "survey_weighted_mean_absolute_SHAP": 0.1506819508,
+      "SHAP_units": "log1p property-value units"
+    },
+    {
+      "feature": "signed_log_household_income_2024",
+      "mean_absolute_SHAP": 0.088282906,
+      "survey_weighted_mean_absolute_SHAP": 0.0846812105,
+      "SHAP_units": "log1p property-value units"
+    },
+    {
+      "feature": "bedroom_count",
+      "mean_absolute_SHAP": 0.060425922,
+      "survey_weighted_mean_absolute_SHAP": 0.0597738511,
+      "SHAP_units": "log1p property-value units"
+    },
+    {
+      "feature": "year_built_order",
+      "mean_absolute_SHAP": 0.058543842,
+      "survey_weighted_mean_absolute_SHAP": 0.0575555916,
+      "SHAP_units": "log1p property-value units"
+    },
+    {
+      "feature": "non_bedroom_rooms",
+      "mean_absolute_SHAP": 0.042692766,
+      "survey_weighted_mean_absolute_SHAP": 0.0414113664,
+      "SHAP_units": "log1p property-value units"
+    },
+    {
+      "feature": "survey_year",
+      "mean_absolute_SHAP": 0.03726442,
+      "survey_weighted_mean_absolute_SHAP": 0.0372136042,
+      "SHAP_units": "log1p property-value units"
+    },
+    {
+      "feature": "household_size",
+      "mean_absolute_SHAP": 0.033550117,
+      "survey_weighted_mean_absolute_SHAP": 0.0338902387,
+      "SHAP_units": "log1p property-value units"
+    },
+    {
+      "feature": "lot_size_order",
+      "mean_absolute_SHAP": 0.027663438,
+      "survey_weighted_mean_absolute_SHAP": 0.0251436809,
+      "SHAP_units": "log1p property-value units"
+    },
+    {
+      "feature": "electricity_log_2024",
+      "mean_absolute_SHAP": 0.02337356,
+      "survey_weighted_mean_absolute_SHAP": 0.0224171932,
+      "SHAP_units": "log1p property-value units"
+    },
+    {
+      "feature": "gas_log_2024",
+      "mean_absolute_SHAP": 0.020823509,
+      "survey_weighted_mean_absolute_SHAP": 0.0211541887,
+      "SHAP_units": "log1p property-value units"
+    },
+    {
+      "feature": "household_type",
+      "mean_absolute_SHAP": 0.017350348,
+      "survey_weighted_mean_absolute_SHAP": 0.0176299948,
+      "SHAP_units": "log1p property-value units"
+    },
+    {
+      "feature": "water_sewer_log_2024",
+      "mean_absolute_SHAP": 0.018064847,
+      "survey_weighted_mean_absolute_SHAP": 0.0174876867,
+      "SHAP_units": "log1p property-value units"
+    },
+    {
+      "feature": "year_moved_order",
+      "mean_absolute_SHAP": 0.012938617,
+      "survey_weighted_mean_absolute_SHAP": 0.0126670589,
+      "SHAP_units": "log1p property-value units"
+    },
+    {
+      "feature": "heating_fuel",
+      "mean_absolute_SHAP": 0.007139207,
+      "survey_weighted_mean_absolute_SHAP": 0.0071467626,
+      "SHAP_units": "log1p property-value units"
+    },
+    {
+      "feature": "structure_type",
+      "mean_absolute_SHAP": 0.0063641965,
+      "survey_weighted_mean_absolute_SHAP": 0.0066731878,
+      "SHAP_units": "log1p property-value units"
+    },
+    {
+      "feature": "hoa_fee_log_2024",
+      "mean_absolute_SHAP": 0.005543331,
+      "survey_weighted_mean_absolute_SHAP": 0.0058411558,
+      "SHAP_units": "log1p property-value units"
+    },
+    {
+      "feature": "other_fuel_log_2024",
+      "mean_absolute_SHAP": 0.002224531,
+      "survey_weighted_mean_absolute_SHAP": 0.0020202303,
+      "SHAP_units": "log1p property-value units"
+    }
+  ]
+}

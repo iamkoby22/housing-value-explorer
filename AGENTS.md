@@ -1,0 +1,31 @@
+# Repository instructions
+
+Before changing this repository:
+
+1. Read `RESEARCH_SPEC.md` completely.
+2. Read `DESIGN.md` completely.
+3. Read `ARCHITECTURE.md` completely.
+4. Inspect the existing implementation and generated data manifest.
+
+Scientific rules:
+
+- Never fabricate, interpolate, or silently recalculate research results.
+- Never retrain the model or alter research methodology without explicit instruction.
+- Preserve predictive, non-causal SHAP language.
+- Distinguish the modeled `state_puma` feature from descriptive approximate-county summaries.
+- Every county result must retain its overlap and reliability context.
+- Prefer the deterministic exporter over hand-copying research values.
+- Raw ACS microdata must not be bundled into the web application.
+
+Product rules:
+
+- Keep exactly five primary destinations: Overview, Explore, Drivers, Model, Research.
+- Maintain the editorial visual system in `DESIGN.md` and avoid generic AI/SaaS patterns.
+- Use human-readable labels in the interface; internal feature names belong in methodology/detail views.
+- Do not introduce authentication, a database, workers, or unrelated product concepts without a concrete approved need.
+
+Quality rules:
+
+- Add or update scientific consistency tests with data-layer changes.
+- Run formatter check, lint, TypeScript typecheck, tests, and production build before completion.
+- Do not suppress genuine failures.
