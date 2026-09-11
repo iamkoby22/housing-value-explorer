@@ -1,0 +1,29 @@
+name: Quality gate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.14.0
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: 3.12.4
+          cache: pip
+      - run: npm ci
+      - run: pip install -r requirements-inference.txt -r requirements-test.txt
+      - run: python scripts/export_inference_runtime.py
+      - run: git diff --exit-code -- model_artifacts/puma-local-drivers.json
+      - run: npm run format:check
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build

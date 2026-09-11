@@ -1,4 +1,4 @@
-"""Local-only HTTP inference service for the Phase 3 valuation workspace."""
+"""Production-safe HTTP inference service for the Phase 3 valuation workspace."""
 
 from __future__ import annotations
 
@@ -6,13 +6,27 @@ import json
 import math
 import os
 import re
-from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any
+
+# Set conservative defaults before importing numerical libraries. Render may
+# override every value explicitly; local development needs no configuration.
+NUMERICAL_THREADS = os.environ.get("HOUSING_NUM_THREADS", "1")
+for variable in (
+    "OMP_NUM_THREADS",
+    "OPENBLAS_NUM_THREADS",
+    "MKL_NUM_THREADS",
+    "NUMEXPR_NUM_THREADS",
+):
+    os.environ.setdefault(variable, NUMERICAL_THREADS)
 
 import joblib
 import numpy as np
 import pandas as pd
+import uvicorn
+from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from xgboost import DMatrix
 
 
@@ -20,6 +34,30 @@ ROOT = Path(__file__).resolve().parents[1]
 ARTIFACT_PATH = ROOT / "model_artifacts" / "reduced_xgboost_method2b.joblib"
 CROSSWALK_PATH = ROOT / "public" / "data" / "zip-puma-crosswalk.json"
 CONTEXT_PATH = ROOT / "public" / "data" / "valuation-context.json"
+LOCAL_DRIVERS_PATH = ROOT / "model_artifacts" / "puma-local-drivers.json"
+MAX_REQUEST_BYTES = int(os.environ.get("HOUSING_MAX_REQUEST_BYTES", "100000"))
+
+DEFAULT_DEVELOPMENT_ORIGINS = (
+    "http://localhost:3000",
+    "http://localhost:3001",
+    "http://127.0.0.1:3000",
+    "http://127.0.0.1:3001",
+)
+
+
+def configured_origins() -> list[str]:
+    configured = os.environ.get("HOUSING_ALLOWED_ORIGINS", "")
+    origins = (
+        [origin.strip().rstrip("/") for origin in configured.split(",") if origin.strip()]
+        if configured
+        else list(DEFAULT_DEVELOPMENT_ORIGINS)
+    )
+    if "*" in origins:
+        raise RuntimeError("HOUSING_ALLOWED_ORIGINS must list explicit origins, not '*'.")
+    for origin in origins:
+        if not re.fullmatch(r"https?://[^/]+", origin):
+            raise RuntimeError(f"Invalid allowed origin: {origin!r}")
+    return origins
 
 FEATURE_LABELS = {
     "bedroom_count": "Bedrooms",
@@ -90,18 +128,25 @@ FEATURES: list[str] = ARTIFACT["features"]
 NUMERIC_FEATURES: set[str] = set(ARTIFACT["numeric_features"])
 CROSSWALK = load_json(CROSSWALK_PATH)
 CONTEXT = load_json(CONTEXT_PATH)
+LOCAL_DRIVERS = load_json(LOCAL_DRIVERS_PATH)["data"]
 
+try:
+    THREAD_COUNT = max(1, int(NUMERICAL_THREADS))
+except ValueError as error:
+    raise RuntimeError("HOUSING_NUM_THREADS must be a positive integer.") from error
 
-def load_local_drivers() -> dict[str, list[dict[str, Any]]]:
-    result = {}
-    for state_fips in ["06", "12", "36", "47", "48"]:
-        payload = load_json(ROOT / "public" / "data" / f"puma-shap-{state_fips}.json")
-        for row in payload["data"]:
-            result[row["state_puma_id"]] = row["top_non_geographic_features"]
-    return result
+REGRESSION = MODEL.regressor_.named_steps["regression"]
+BOOSTER = REGRESSION.get_booster()
+BOOSTER.set_param({"nthread": THREAD_COUNT})
 
-
-LOCAL_DRIVERS = load_local_drivers()
+ALLOWED_INPUT_FIELDS = {
+    "zip_code",
+    *NUMERIC_RULES.keys(),
+    "lot_size",
+    "structure_type",
+    "heating_fuel",
+    "household_type",
+}
 
 
 class InputError(ValueError):
@@ -294,10 +339,10 @@ def local_context(location: dict[str, Any], estimate: float) -> dict[str, Any]:
 def predict_frame(frame: pd.DataFrame) -> dict[str, Any]:
     fitted = MODEL.regressor_
     preprocessing = fitted.named_steps["preprocessing"]
-    regression = fitted.named_steps["regression"]
     transformed = preprocessing.transform(frame)
-    contributions = regression.get_booster().predict(
-        DMatrix(transformed), pred_contribs=True, approx_contribs=False
+    matrix = DMatrix(transformed)
+    contributions = BOOSTER.predict(
+        matrix, pred_contribs=True, approx_contribs=False
     )[0]
     transformed_names = preprocessing.get_feature_names_out()
     sources = np.array([source_feature(name) for name in transformed_names])
@@ -306,7 +351,7 @@ def predict_frame(frame: pd.DataFrame) -> dict[str, Any]:
     }
     baseline = float(contributions[-1])
     model_output = baseline + sum(semantic.values())
-    direct_output = float(regression.get_booster().predict(DMatrix(transformed))[0])
+    direct_output = float(BOOSTER.predict(matrix)[0])
     dollar_prediction = max(float(np.expm1(direct_output)), 0.0)
     ordered = sorted(semantic.items(), key=lambda item: abs(item[1]), reverse=True)
     largest = max(abs(value) for _, value in ordered) or 1.0
@@ -343,6 +388,13 @@ def predict_frame(frame: pd.DataFrame) -> dict[str, Any]:
     }
 
 
+def predict_estimate(frame: pd.DataFrame) -> float:
+    """Run scenario inference without calculating unused TreeSHAP contributions."""
+    transformed = MODEL.regressor_.named_steps["preprocessing"].transform(frame)
+    direct_output = float(BOOSTER.predict(DMatrix(transformed))[0])
+    return max(float(np.expm1(direct_output)), 0.0)
+
+
 def sensitivity(payload: dict[str, Any], location: dict[str, Any], current: float) -> list[dict[str, Any]]:
     candidates: list[tuple[str, str, dict[str, Any]]] = []
     bedrooms = payload.get("bedrooms")
@@ -364,7 +416,7 @@ def sensitivity(payload: dict[str, Any], location: dict[str, Any], current: floa
         frame = build_frame(candidate, location)
         if support_diagnostic(frame)["status"] == "outside_observed_support":
             continue
-        estimate = predict_frame(frame)["estimate"]
+        estimate = predict_estimate(frame)
         difference = estimate - current
         if difference > 0:
             rows.append(
@@ -383,6 +435,9 @@ def sensitivity(payload: dict[str, Any], location: dict[str, Any], current: floa
 def prediction(payload: dict[str, Any]) -> dict[str, Any]:
     if not isinstance(payload, dict):
         raise InputError("Request body must be an object.")
+    unsupported = sorted(set(payload) - ALLOWED_INPUT_FIELDS)
+    if unsupported:
+        raise InputError(f"Unsupported request field: {unsupported[0]}.")
     location = resolve_zip(payload)
     frame = build_frame(payload, location)
     result = predict_frame(frame)
@@ -404,67 +459,95 @@ def prediction(payload: dict[str, Any]) -> dict[str, Any]:
     return result
 
 
-class Handler(BaseHTTPRequestHandler):
-    server_version = "HousingValueInference/1.0"
+app = FastAPI(
+    title="Housing Value Explorer inference",
+    version="1.0.0",
+    docs_url=None,
+    redoc_url=None,
+    openapi_url=None,
+)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=configured_origins(),
+    allow_credentials=False,
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["Content-Type"],
+)
 
-    def _headers(self, status: int = 200) -> None:
-        self.send_response(status)
-        self.send_header("Content-Type", "application/json; charset=utf-8")
-        origin = self.headers.get("Origin", "")
-        if re.fullmatch(r"https?://(localhost|127\.0\.0\.1)(:\d+)?", origin):
-            self.send_header("Access-Control-Allow-Origin", origin)
-            self.send_header("Vary", "Origin")
-        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
-        self.send_header("Access-Control-Allow-Headers", "Content-Type")
-        self.send_header("Cache-Control", "no-store")
-        self.end_headers()
 
-    def _send(self, payload: dict[str, Any], status: int = 200) -> None:
-        encoded = json.dumps(payload, allow_nan=False).encode("utf-8")
-        self._headers(status)
-        self.wfile.write(encoded)
+def no_store(payload: dict[str, Any], status_code: int = 200) -> JSONResponse:
+    return JSONResponse(
+        payload,
+        status_code=status_code,
+        headers={"Cache-Control": "no-store"},
+    )
 
-    def do_OPTIONS(self) -> None:  # noqa: N802
-        self._headers(204)
 
-    def do_GET(self) -> None:  # noqa: N802
-        if self.path == "/health":
-            self._send(
-                {
-                    "status": "ok",
-                    "model": "Reduced XGBoost - Log1p target (Method 2B)",
-                    "artifact": ARTIFACT_PATH.name,
-                }
-            )
-            return
-        self._send({"error": "Not found"}, 404)
+@app.get("/health")
+def health() -> JSONResponse:
+    ready = bool(
+        FEATURES
+        and MODEL is not None
+        and BOOSTER is not None
+        and CROSSWALK.get("data")
+        and CONTEXT.get("state_pumas")
+        and LOCAL_DRIVERS
+    )
+    return no_store(
+        {
+            "status": "ok" if ready else "not_ready",
+            "model": "Reduced XGBoost - Log1p target (Method 2B)",
+            "artifact": ARTIFACT_PATH.name,
+            "components": {
+                "model": MODEL is not None and BOOSTER is not None,
+                "preprocessing": bool(FEATURES),
+                "zip_puma_lookup": bool(CROSSWALK.get("data")),
+                "valuation_context": bool(CONTEXT.get("state_pumas")),
+                "local_drivers": bool(LOCAL_DRIVERS),
+            },
+        },
+        200 if ready else 503,
+    )
 
-    def do_POST(self) -> None:  # noqa: N802
-        if self.path != "/predict":
-            self._send({"error": "Not found"}, 404)
-            return
-        try:
-            length = int(self.headers.get("Content-Length", "0"))
-            if length <= 0 or length > 100_000:
-                raise InputError("Invalid request size.")
-            body = json.loads(self.rfile.read(length).decode("utf-8"))
-            self._send({"data": prediction(body)})
-        except InputError as error:
-            self._send({"error": str(error)}, 422)
-        except (json.JSONDecodeError, UnicodeDecodeError):
-            self._send({"error": "Request body must be valid JSON."}, 400)
-        except Exception as error:  # pragma: no cover - final safety boundary
-            self._send({"error": f"Inference failed: {error}"}, 500)
 
-    def log_message(self, format_string: str, *args: object) -> None:
-        print(f"[inference] {self.address_string()} {format_string % args}")
+@app.post("/predict")
+async def predict_endpoint(request: Request) -> JSONResponse:
+    content_type = request.headers.get("content-type", "").split(";", 1)[0].strip().lower()
+    if content_type != "application/json":
+        return no_store({"error": "Content-Type must be application/json."}, 415)
+
+    raw_length = request.headers.get("content-length")
+    try:
+        length = int(raw_length) if raw_length is not None else 0
+    except ValueError:
+        return no_store({"error": "Invalid Content-Length."}, 400)
+    if length <= 0:
+        return no_store({"error": "A non-empty request body is required."}, 411)
+    if length > MAX_REQUEST_BYTES:
+        return no_store({"error": "Request body is too large."}, 413)
+
+    body = await request.body()
+    if not body or len(body) > MAX_REQUEST_BYTES:
+        return no_store({"error": "Invalid request size."}, 413)
+    try:
+        payload = json.loads(body.decode("utf-8"))
+        return no_store({"data": prediction(payload)})
+    except (json.JSONDecodeError, UnicodeDecodeError):
+        return no_store({"error": "Request body must be valid JSON."}, 400)
+    except InputError as error:
+        return no_store({"error": str(error)}, 422)
+    except Exception:  # pragma: no cover - final public safety boundary
+        return no_store({"error": "Inference failed."}, 500)
 
 
 def main() -> None:
-    host = os.environ.get("HOUSING_INFERENCE_HOST", "127.0.0.1")
-    port = int(os.environ.get("HOUSING_INFERENCE_PORT", "8765"))
+    render_environment = os.environ.get("RENDER", "").lower() == "true"
+    host = os.environ.get(
+        "HOUSING_INFERENCE_HOST", "0.0.0.0" if render_environment else "127.0.0.1"
+    )
+    port = int(os.environ.get("PORT", os.environ.get("HOUSING_INFERENCE_PORT", "8765")))
     print(f"Inference service ready at http://{host}:{port}", flush=True)
-    ThreadingHTTPServer((host, port), Handler).serve_forever()
+    uvicorn.run(app, host=host, port=port, workers=1, access_log=True)
 
 
 if __name__ == "__main__":

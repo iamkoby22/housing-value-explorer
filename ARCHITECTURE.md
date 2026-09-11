@@ -12,8 +12,8 @@ This is a standalone research-results explorer and local homeowner valuation too
 - Recharts for general statistical graphics
 - D3 Geo for the five-state SVG geography selector
 - Zod for runtime validation of curated research JSON
-- Local Python/XGBoost inference service bound to loopback only
-- Local Vinext development runtime; no remote deployment
+- FastAPI/Uvicorn Python/XGBoost inference service
+- Static Vinext production export; no remote deployment yet
 
 One charting approach and one geographic renderer are used; no overlapping visualization frameworks are introduced.
 
@@ -42,7 +42,7 @@ Exact notebook Method 2B specification + 2020–2023 development cohort
                               ↓
    model_artifacts/reduced_xgboost_method2b.joblib
                               ↓
-       inference/valuation_service.py (127.0.0.1:8765)
+       inference/valuation_service.py (local 127.0.0.1:8765; hosted HTTPS API)
                               ↓
                /estimate homeowner workspace
 ```
@@ -90,7 +90,9 @@ The productionized refit exactly reproduces the notebook's 2024 MAE, RMSE, and R
 
 ## Runtime and deployment
 
-The default runtime is local: `npm run dev` starts Vinext and the Python inference service together. No database or database binding is required. The browser application is normally served at `http://localhost:3001`; model inference is loopback-only at `http://127.0.0.1:8765`. No remote deployment was performed.
+Local development remains one command: `npm run dev` starts Vinext and the FastAPI/Uvicorn inference service together. The browser normally uses `http://localhost:3001` and inference defaults to `http://127.0.0.1:8765`.
+
+Production is prepared as two Render services: a static `dist/client` frontend and one Python `1c-2g` web service. The browser API origin is compiled from `NEXT_PUBLIC_INFERENCE_API_URL`; the API uses explicit `HOUSING_ALLOWED_ORIGINS`, Render's `PORT`, `0.0.0.0`, one Uvicorn worker, and one numerical thread. Runtime inference loads only the 3.82 MiB serialized model, ZIP-PUMA lookup, valuation context, and deterministic compact PUMA driver lookup. No remote deployment has been performed.
 
 ## Five-phase roadmap
 

@@ -5,6 +5,8 @@
   "sortPackageJson": false,
   "ignorePatterns": [
     "package-lock.json",
+    "model_artifacts/load-test-results.json",
+    "model_artifacts/puma-local-drivers.json",
     "pnpm-lock.yaml",
     "yarn.lock",
     "bun.lock",

@@ -12,6 +12,7 @@ import {
   Route,
   X,
 } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useReducer, useState } from 'react';
 
@@ -97,7 +98,14 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       >
         <div className="app-brand">
           <Link href="/" onClick={() => dispatch({ type: 'close-mobile' })}>
-            <span className="app-mark">UB</span>
+            <Image
+              className="app-mark"
+              src="/housing-value-explorer-logo.png"
+              alt=""
+              width={36}
+              height={36}
+              unoptimized
+            />
             <span className="app-brand-copy">
               <strong>Housing Value Explorer</strong>
               <small>ACS PUMS · 2020–2024</small>
@@ -136,7 +144,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
         <div className="app-sidebar-meta">
           <span>Five-state research model</span>
-          <small>Local · Phase 4</small>
+          <small>Research · Phase 4</small>
         </div>
         <button
           className="app-sidebar-toggle"

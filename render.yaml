@@ -1,0 +1,62 @@
+services:
+  - type: web
+    name: housing-value-explorer
+    runtime: static
+    buildCommand: npm ci && npm run build
+    staticPublishPath: ./dist/client
+    autoDeployTrigger: checksPass
+    routes:
+      - type: rewrite
+        source: /drivers
+        destination: /drivers.html
+      - type: rewrite
+        source: /estimate
+        destination: /estimate.html
+      - type: rewrite
+        source: /evaluate
+        destination: /evaluate.html
+      - type: rewrite
+        source: /explore
+        destination: /explore.html
+      - type: rewrite
+        source: /model
+        destination: /model.html
+      - type: rewrite
+        source: /research
+        destination: /research.html
+    envVars:
+      - key: NODE_VERSION
+        value: 24.14.0
+      - key: NEXT_PUBLIC_INFERENCE_API_URL
+        sync: false
+
+  - type: web
+    name: housing-value-explorer-api
+    runtime: python
+    plan: 1c-2g
+    buildCommand: pip install --no-cache-dir -r requirements-inference.txt
+    startCommand: python inference/valuation_service.py
+    healthCheckPath: /health
+    autoDeployTrigger: checksPass
+    maxShutdownDelaySeconds: 30
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.4
+      - key: HOUSING_ALLOWED_ORIGINS
+        sync: false
+      - key: HOUSING_INFERENCE_HOST
+        value: 0.0.0.0
+      - key: HOUSING_NUM_THREADS
+        value: 1
+      - key: OMP_NUM_THREADS
+        value: 1
+      - key: OPENBLAS_NUM_THREADS
+        value: 1
+      - key: MKL_NUM_THREADS
+        value: 1
+      - key: NUMEXPR_NUM_THREADS
+        value: 1
+      - key: HOUSING_MAX_REQUEST_BYTES
+        value: 100000
+      - key: PYTHONUNBUFFERED
+        value: 1

@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   },
   description:
     'Geographic variation in machine-learning explanations of housing value across five U.S. states using ACS PUMS.',
+  icons: { icon: '/housing-value-explorer-logo.png' },
   openGraph: {
     title: 'Unboxing the Black Box',
     description:

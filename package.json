@@ -9,6 +9,7 @@
     "dev": "node scripts/dev.mjs",
     "dev:web": "vinext dev",
     "dev:inference": "node scripts/run-python.mjs inference/valuation_service.py",
+    "export:inference-runtime": "node scripts/run-python.mjs scripts/export_inference_runtime.py",
     "build:inference": "node scripts/run-python.mjs scripts/build_inference_artifacts.py",
     "build": "vinext build",
     "start": "wrangler dev --config dist/server/wrangler.json",

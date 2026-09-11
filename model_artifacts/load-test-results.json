@@ -1,0 +1,49 @@
+{
+  "environment": "local development machine; not a Render timing guarantee",
+  "workers": 1,
+  "numerical_threads": 1,
+  "cold_start_seconds": 2.0780220000015106,
+  "peak_rss_mib": 295.37890625,
+  "batches": [
+    {
+      "concurrency": 1,
+      "requests": 1,
+      "errors": 0,
+      "wall_seconds": 0.07671340000524651,
+      "mean_latency_ms": 73.29359999857843,
+      "p95_latency_ms": 73.29359999857843,
+      "throughput_requests_per_second": 13.035532252925941,
+      "single_core_cpu_utilization_pct": 101.84009572598391
+    },
+    {
+      "concurrency": 2,
+      "requests": 2,
+      "errors": 0,
+      "wall_seconds": 0.15075400000205263,
+      "mean_latency_ms": 112.13505000341684,
+      "p95_latency_ms": 150.4138000018429,
+      "throughput_requests_per_second": 13.266646324295,
+      "single_core_cpu_utilization_pct": 93.28110696769923
+    },
+    {
+      "concurrency": 5,
+      "requests": 5,
+      "errors": 0,
+      "wall_seconds": 0.3570590000017546,
+      "mean_latency_ms": 224.69021999568213,
+      "p95_latency_ms": 355.7997999887448,
+      "throughput_requests_per_second": 14.003287971947016,
+      "single_core_cpu_utilization_pct": 96.27260480713574
+    },
+    {
+      "concurrency": 10,
+      "requests": 10,
+      "errors": 0,
+      "wall_seconds": 0.734699599997839,
+      "mean_latency_ms": 398.2868099992629,
+      "p95_latency_ms": 732.318900001701,
+      "throughput_requests_per_second": 13.611005096544783,
+      "single_core_cpu_utilization_pct": 97.82909913141563
+    }
+  ]
+}

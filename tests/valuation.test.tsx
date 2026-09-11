@@ -2,7 +2,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { describe, expect, it } from 'vitest';
 
 import EstimatePage from '@/app/estimate/page';
-import { valuationRequestSchema } from '@/lib/valuation';
+import { allocateShapToDollars, valuationRequestSchema } from '@/lib/valuation';
 
 const validRequest = {
   zip_code: '37601',
@@ -58,5 +58,38 @@ describe('Phase 3 valuation workspace', () => {
     );
     sparse.zip_code = '37601';
     expect(valuationRequestSchema.parse(sparse).zip_code).toBe('37601');
+  });
+
+  it('allocates log-space SHAP values into an exact dollar bridge', () => {
+    const allocations = allocateShapToDollars({
+      baseline_dollars_for_orientation: 300_000,
+      estimate: 450_000,
+      shap: [
+        {
+          rank: 1,
+          feature: 'bedroom_count',
+          label: 'Bedrooms',
+          value: 0.3,
+          direction: 'higher',
+          magnitude: 'high',
+          units: 'log1p',
+        },
+        {
+          rank: 2,
+          feature: 'year_built_order',
+          label: 'Year built',
+          value: -0.1,
+          direction: 'lower',
+          magnitude: 'moderate',
+          units: 'log1p',
+        },
+      ],
+    });
+
+    expect(allocations[0].dollars).toBeCloseTo(225_000);
+    expect(allocations[1].dollars).toBeCloseTo(-75_000);
+    expect(
+      300_000 + allocations.reduce((sum, item) => sum + item.dollars, 0),
+    ).toBeCloseTo(450_000);
   });
 });

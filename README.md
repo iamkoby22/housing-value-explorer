@@ -6,16 +6,23 @@ Public research-results explorer for _Unboxing the Black Box: Geographic Variati
 
 ```powershell
 npm ci
+python -m pip install -r requirements-inference.txt -r requirements-test.txt
 npm run dev
 ```
 
 Open the local URL printed by Vinext.
 
-The single development command starts the React application and the local-only Python inference service together. There is no database. The web preview normally opens at `http://localhost:3001` when port 3000 is occupied; the inference service binds only to `http://127.0.0.1:8765`.
+The single development command starts the React application and Python inference service together. There is no database. The web preview normally opens at `http://localhost:3001` when port 3000 is occupied; the inference service defaults to `http://127.0.0.1:8765`.
 
 The unified application begins at `/` and uses one collapsible shell across Overview, Explore, Estimate, Drivers, Model, and Research. The former `/evaluate` route remains as a query-preserving compatibility redirect. All phases are intentionally local-only and have not been remotely deployed.
 
-Set `HOUSING_EXPLORER_PYTHON` if the appropriate Python interpreter is not discoverable automatically. The pinned dependencies are recorded in `requirements.txt`.
+Set `HOUSING_EXPLORER_PYTHON` if the appropriate Python interpreter is not discoverable automatically. Research/build dependencies are pinned in `requirements.txt`; the production API uses only `requirements-inference.txt`.
+
+## Render production readiness
+
+The checked-in `render.yaml` defines a static frontend and one FastAPI/Uvicorn `1c-2g` inference service. No deployment has been performed. See `RENDER_DEPLOYMENT.md` for the exact pre-deployment configuration and verification procedure.
+
+Production uses `NEXT_PUBLIC_INFERENCE_API_URL` for the HTTPS API origin and `HOUSING_ALLOWED_ORIGINS` for the API's comma-separated browser allowlist. The API reads Render's `PORT`, binds `0.0.0.0` on Render, and limits numerical libraries to one thread. Local development requires none of these variables.
 
 ## Rebuild the locked inference artifact
 
@@ -54,5 +61,7 @@ npm run typecheck
 npm test
 npm run build
 ```
+
+The Python production transport tests include known-prediction equivalence, geographic/context/scenario equivalence, and exact TreeSHAP additivity. A modest local concurrency check is available with `python scripts/load_test_inference.py` after installing `requirements-test.txt`.
 
 Read `RESEARCH_SPEC.md`, `DESIGN.md`, `ARCHITECTURE.md`, and `AGENTS.md` before changing scientific content or interaction patterns.

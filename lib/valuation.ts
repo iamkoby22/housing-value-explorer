@@ -1,5 +1,19 @@
 import { z } from 'zod';
 
+const configuredInferenceApiUrl =
+  process.env.NEXT_PUBLIC_INFERENCE_API_URL?.trim().replace(/\/+$/, '');
+const inferenceApiUrl = configuredInferenceApiUrl || 'http://127.0.0.1:8765';
+
+if (
+  process.env.NODE_ENV === 'production' &&
+  configuredInferenceApiUrl &&
+  !configuredInferenceApiUrl.startsWith('https://')
+) {
+  throw new Error(
+    'NEXT_PUBLIC_INFERENCE_API_URL must use HTTPS in production.',
+  );
+}
+
 const optionalFinite = (minimum: number, maximum: number) =>
   z.number().min(minimum).max(maximum).nullable();
 
@@ -124,12 +138,37 @@ export const valuationResultSchema = z.object({
 
 export type ValuationRequest = z.infer<typeof valuationRequestSchema>;
 export type ValuationResult = z.infer<typeof valuationResultSchema>;
+export type DollarEquivalentContribution = ValuationResult['shap'][number] & {
+  dollars: number;
+};
+
+/**
+ * Re-expresses the exact log1p SHAP bridge as an additive dollar bridge.
+ * This preserves the model's baseline-to-prediction total, but it is an
+ * explanatory allocation—not a causal or standalone price effect.
+ */
+export function allocateShapToDollars(
+  result: Pick<
+    ValuationResult,
+    'baseline_dollars_for_orientation' | 'estimate' | 'shap'
+  >,
+): DollarEquivalentContribution[] {
+  const shapTotal = result.shap.reduce((sum, item) => sum + item.value, 0);
+  const dollarDifference =
+    result.estimate - result.baseline_dollars_for_orientation;
+  const scale = Math.abs(shapTotal) > 1e-12 ? dollarDifference / shapTotal : 0;
+
+  return result.shap.map((item) => ({
+    ...item,
+    dollars: item.value * scale,
+  }));
+}
 
 export async function estimateProperty(
   request: ValuationRequest,
 ): Promise<ValuationResult> {
   const payload = valuationRequestSchema.parse(request);
-  const response = await fetch('http://127.0.0.1:8765/predict', {
+  const response = await fetch(`${inferenceApiUrl}/predict`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),

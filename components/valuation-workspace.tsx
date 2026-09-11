@@ -14,6 +14,7 @@ import {
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
 
+import { DollarContributionExplorer } from '@/components/dollar-contribution-explorer';
 import { displayFeature } from '@/lib/research-data';
 import {
   estimateProperty,
@@ -88,6 +89,10 @@ const compactDollars = new Intl.NumberFormat('en-US', {
   maximumFractionDigits: 0,
 });
 const integer = new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 });
+
+function signedCompactDifference(value: number) {
+  return `${value >= 0 ? '+' : '−'}${compactDollars.format(Math.abs(value))}`;
+}
 
 function optionalNumber(value: string) {
   return value.trim() === '' ? null : Number(value);
@@ -236,6 +241,9 @@ export function ValuationWorkspace() {
     null,
   );
   const [scenarioName, setScenarioName] = useState('Scenario 1');
+  const [scenarioMode, setScenarioMode] = useState<'recommended' | 'custom'>(
+    'recommended',
+  );
   const [savedScenarios, setSavedScenarios] = useState<SavedScenario[]>(() => {
     if (typeof window === 'undefined') return [];
     const saved = window.sessionStorage.getItem(SESSION_KEY);
@@ -315,11 +323,11 @@ export function ValuationWorkspace() {
     }
   }
 
-  async function runScenario() {
+  async function runScenarioProfile(nextForm: FormState) {
     setScenarioBusy(true);
     setError('');
     try {
-      const next = await estimateProperty(formToPayload(scenarioForm));
+      const next = await estimateProperty(formToPayload(nextForm));
       setScenarioResult(next);
     } catch (caught) {
       setError(
@@ -330,6 +338,29 @@ export function ValuationWorkspace() {
     } finally {
       setScenarioBusy(false);
     }
+  }
+
+  async function runScenario() {
+    await runScenarioProfile(scenarioForm);
+  }
+
+  async function applyRecommendation(
+    opportunity: ValuationResult['opportunities'][number],
+  ) {
+    const nextForm = { ...form };
+    if (opportunity.feature === 'bedrooms') {
+      nextForm.bedrooms =
+        opportunity.scenario.match(/\d+/)?.[0] ?? form.bedrooms;
+    } else if (opportunity.feature === 'other_rooms') {
+      nextForm.otherRooms =
+        opportunity.scenario.match(/\d+/)?.[0] ?? form.otherRooms;
+    } else if (opportunity.feature === 'heating_fuel') {
+      nextForm.heatingFuel =
+        heatingOptions.find((item) => item.label === opportunity.scenario)
+          ?.value ?? form.heatingFuel;
+    }
+    setScenarioForm(nextForm);
+    await runScenarioProfile(nextForm);
   }
 
   function persistScenarios(next: SavedScenario[]) {
@@ -358,6 +389,57 @@ export function ValuationWorkspace() {
     : 1;
   const comparisonDifference =
     scenarioResult && result ? scenarioResult.estimate - result.estimate : 0;
+  const featureValues = useMemo<Record<string, string>>(
+    () => ({
+      bedroom_count: form.bedrooms
+        ? `${form.bedrooms} bedrooms`
+        : 'Unknown input',
+      non_bedroom_rooms: form.otherRooms
+        ? `${form.otherRooms} other rooms`
+        : 'Unknown input',
+      lot_size_order:
+        lotOptions.find((item) => item.value === form.lotSize)?.label ??
+        'Unknown input',
+      year_built_order: form.yearBuilt || 'Unknown input',
+      survey_year: '2024 · fixed prediction year',
+      signed_log_household_income_2024: form.householdIncome
+        ? dollars.format(Number(form.householdIncome))
+        : 'Unknown input',
+      household_size: form.householdSize
+        ? `${form.householdSize} people`
+        : 'Unknown input',
+      year_moved_order: form.yearMoved || 'Unknown input',
+      first_mortgage_log_2024: form.firstMortgage
+        ? `${dollars.format(Number(form.firstMortgage))} / month`
+        : 'Unknown input',
+      hoa_fee_log_2024: form.hoaFee
+        ? `${dollars.format(Number(form.hoaFee))} / month`
+        : 'Unknown input',
+      electricity_log_2024: form.electricity
+        ? `${dollars.format(Number(form.electricity))} / month`
+        : 'Unknown input',
+      gas_log_2024: form.gas
+        ? `${dollars.format(Number(form.gas))} / month`
+        : 'Unknown input',
+      other_fuel_log_2024: form.otherFuel
+        ? `${dollars.format(Number(form.otherFuel))} / year`
+        : 'Unknown input',
+      water_sewer_log_2024: form.waterSewer
+        ? `${dollars.format(Number(form.waterSewer))} / year`
+        : 'Unknown input',
+      structure_type:
+        structureOptions.find((item) => item.value === form.structureType)
+          ?.label ?? 'Unknown input',
+      heating_fuel:
+        heatingOptions.find((item) => item.value === form.heatingFuel)?.label ??
+        'Unknown input',
+      state_puma: result?.location.state_puma ?? 'Resolved after estimation',
+      household_type:
+        householdOptions.find((item) => item.value === form.householdType)
+          ?.label ?? 'Unknown input',
+    }),
+    [form, result?.location.state_puma],
+  );
 
   return (
     <div className="valuation-page">
@@ -915,6 +997,11 @@ export function ValuationWorkspace() {
                 </p>
               </article>
 
+              <DollarContributionExplorer
+                result={result}
+                featureValues={featureValues}
+              />
+
               <article className="result-card driver-comparison-card">
                 <div className="result-card-heading">
                   <span>03 · Explanation in context</span>
@@ -961,42 +1048,110 @@ export function ValuationWorkspace() {
                 </p>
               </div>
 
-              <div className="scenario-controls">
-                <NumberField
-                  label="Bedrooms"
-                  value={scenarioForm.bedrooms}
-                  onChange={(value) => updateScenario('bedrooms', value)}
-                  helper="Potentially modifiable only when structurally feasible."
-                  max={20}
-                />
-                <NumberField
-                  label="Other rooms"
-                  value={scenarioForm.otherRooms}
-                  onChange={(value) => updateScenario('otherRooms', value)}
-                  helper="Represents room configuration, not guaranteed construction."
-                  max={30}
-                />
-                <SelectField
-                  label="Heating fuel"
-                  value={scenarioForm.heatingFuel}
-                  onChange={(value) => updateScenario('heatingFuel', value)}
-                  helper="A system-level scenario; feasibility is not assessed."
-                  options={heatingOptions}
-                />
-                <div className="scenario-buttons">
-                  <button onClick={runScenario} disabled={scenarioBusy}>
-                    {scenarioBusy ? 'Rerunning…' : 'Run scenario'}
-                  </button>
-                  <button
-                    onClick={() => {
-                      setScenarioForm(form);
-                      setScenarioResult(null);
-                    }}
-                  >
-                    <RotateCcw size={14} /> Reset original
-                  </button>
-                </div>
+              <div
+                className="scenario-mode-switch"
+                aria-label="Scenario method"
+              >
+                <button
+                  aria-pressed={scenarioMode === 'recommended'}
+                  onClick={() => setScenarioMode('recommended')}
+                  type="button"
+                >
+                  Recommended tests
+                  <small>Pre-screened, model-sensitive changes</small>
+                </button>
+                <button
+                  aria-pressed={scenarioMode === 'custom'}
+                  onClick={() => setScenarioMode('custom')}
+                  type="button"
+                >
+                  Custom scenario
+                  <small>Build your own governed comparison</small>
+                </button>
               </div>
+
+              {scenarioMode === 'recommended' ? (
+                result.opportunities.length ? (
+                  <div className="opportunity-list interactive-opportunities">
+                    <h3>
+                      Choose a recommendation to test with the actual model
+                    </h3>
+                    {result.opportunities.map((item) => (
+                      <article key={`${item.feature}-${item.scenario}`}>
+                        <span>{item.label}</span>
+                        <strong>{item.scenario}</strong>
+                        <b>{signedCompactDifference(item.difference)}</b>
+                        <small>
+                          Previewed model difference ·{' '}
+                          {item.percent_difference >= 0 ? '+' : ''}
+                          {item.percent_difference.toFixed(1)}%
+                        </small>
+                        <button
+                          disabled={scenarioBusy}
+                          onClick={() => applyRecommendation(item)}
+                          type="button"
+                        >
+                          {scenarioBusy ? 'Running…' : 'Test this scenario'}
+                          <ArrowRight size={14} />
+                        </button>
+                      </article>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="scenario-empty">
+                    <strong>
+                      No higher-value governed scenario was identified.
+                    </strong>
+                    <span>
+                      Use the custom builder to test bedrooms, other rooms, or
+                      heating fuel without changing protected or fixed inputs.
+                    </span>
+                    <button
+                      onClick={() => setScenarioMode('custom')}
+                      type="button"
+                    >
+                      Open custom builder <ArrowRight size={14} />
+                    </button>
+                  </div>
+                )
+              ) : (
+                <div className="scenario-controls">
+                  <NumberField
+                    label="Bedrooms"
+                    value={scenarioForm.bedrooms}
+                    onChange={(value) => updateScenario('bedrooms', value)}
+                    helper="Potentially modifiable only when structurally feasible."
+                    max={20}
+                  />
+                  <NumberField
+                    label="Other rooms"
+                    value={scenarioForm.otherRooms}
+                    onChange={(value) => updateScenario('otherRooms', value)}
+                    helper="Represents room configuration, not guaranteed construction."
+                    max={30}
+                  />
+                  <SelectField
+                    label="Heating fuel"
+                    value={scenarioForm.heatingFuel}
+                    onChange={(value) => updateScenario('heatingFuel', value)}
+                    helper="A system-level scenario; feasibility is not assessed."
+                    options={heatingOptions}
+                  />
+                  <div className="scenario-buttons">
+                    <button onClick={runScenario} disabled={scenarioBusy}>
+                      {scenarioBusy ? 'Rerunning…' : 'Run custom scenario'}
+                    </button>
+                    <button
+                      onClick={() => {
+                        setScenarioForm(form);
+                        setScenarioResult(null);
+                      }}
+                    >
+                      <RotateCcw size={14} /> Reset original
+                    </button>
+                  </div>
+                </div>
+              )}
 
               {scenarioResult ? (
                 <div className="scenario-comparison">
@@ -1042,23 +1197,6 @@ export function ValuationWorkspace() {
                       <Save size={14} /> Save in this tab
                     </button>
                   </div>
-                </div>
-              ) : null}
-
-              {result.opportunities.length ? (
-                <div className="opportunity-list">
-                  <h3>Model-sensitive scenarios worth investigating</h3>
-                  {result.opportunities.map((item) => (
-                    <article key={`${item.feature}-${item.scenario}`}>
-                      <span>{item.label}</span>
-                      <strong>{item.scenario}</strong>
-                      <b>+{compactDollars.format(item.difference)}</b>
-                      <small>
-                        Predicted difference only; no cost, feasibility, or
-                        market-sale guarantee.
-                      </small>
-                    </article>
-                  ))}
                 </div>
               ) : null}
 

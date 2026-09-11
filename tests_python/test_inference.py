@@ -8,6 +8,7 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+from fastapi.testclient import TestClient
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -69,6 +70,18 @@ class ModelArtifactTests(unittest.TestCase):
             result["estimate"], math.expm1(result["prediction_log1p"]), places=6
         )
 
+    def test_compact_local_drivers_match_authoritative_exports(self) -> None:
+        expected = {}
+        for state_fips in ("06", "12", "36", "47", "48"):
+            payload = json.loads(
+                (ROOT / "public" / "data" / f"puma-shap-{state_fips}.json").read_text(
+                    encoding="utf-8"
+                )
+            )
+            for row in payload["data"]:
+                expected[row["state_puma_id"]] = row["top_non_geographic_features"]
+        self.assertEqual(service.LOCAL_DRIVERS, expected)
+
 
 class GeographyTests(unittest.TestCase):
     def test_supported_zip_resolves_by_census_crosswalk(self) -> None:
@@ -106,6 +119,12 @@ class InferenceTests(unittest.TestCase):
         self.assertNotEqual(current["prediction_log1p"], scenario["prediction_log1p"])
         self.assertEqual(current["model"]["name"], scenario["model"]["name"])
 
+    def test_scenario_prediction_optimization_is_numerically_equivalent(self) -> None:
+        frame = service.build_frame(BASE_PROFILE, service.resolve_zip(BASE_PROFILE))
+        self.assertEqual(
+            service.predict_estimate(frame), service.predict_frame(frame)["estimate"]
+        )
+
     def test_unknown_values_use_fitted_missingness_path(self) -> None:
         sparse = {key: None for key in BASE_PROFILE}
         sparse["zip_code"] = "37601"
@@ -122,6 +141,64 @@ class InferenceTests(unittest.TestCase):
         ]:
             with self.subTest(update=update), self.assertRaises(service.InputError):
                 service.prediction({**BASE_PROFILE, **update})
+
+
+class ProductionTransportTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.client = TestClient(service.app)
+
+    def test_health_confirms_all_runtime_components(self) -> None:
+        response = self.client.get("/health")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json()["status"], "ok")
+        self.assertTrue(all(response.json()["components"].values()))
+        self.assertEqual(response.headers["cache-control"], "no-store")
+
+    def test_http_result_matches_direct_reference_inference(self) -> None:
+        for profile in (
+            BASE_PROFILE,
+            {**BASE_PROFILE, "zip_code": "90210", "bedrooms": 5},
+            {**BASE_PROFILE, "zip_code": "10001", "household_income": None},
+        ):
+            with self.subTest(zip_code=profile["zip_code"]):
+                reference = service.prediction(profile)
+                response = self.client.post("/predict", json=profile)
+                self.assertEqual(response.status_code, 200)
+                actual = response.json()["data"]
+                self.assertAlmostEqual(actual["estimate"], reference["estimate"], places=9)
+                self.assertAlmostEqual(
+                    actual["prediction_log1p"], reference["prediction_log1p"], places=9
+                )
+                self.assertEqual(actual["location"], reference["location"])
+                self.assertEqual(actual["context"], reference["context"])
+                self.assertEqual(actual["opportunities"], reference["opportunities"])
+                self.assertEqual(actual["shap"], reference["shap"])
+                self.assertTrue(actual["additivity"]["verified"])
+
+    def test_public_request_boundaries_are_clean(self) -> None:
+        self.assertEqual(self.client.get("/predict").status_code, 405)
+        self.assertEqual(
+            self.client.post("/predict", content=b"{}", headers={"Content-Type": "text/plain"}).status_code,
+            415,
+        )
+        response = self.client.post("/predict", json={**BASE_PROFILE, "unexpected": True})
+        self.assertEqual(response.status_code, 422)
+        self.assertNotIn("traceback", response.text.lower())
+
+    def test_local_development_cors_is_explicit(self) -> None:
+        response = self.client.options(
+            "/predict",
+            headers={
+                "Origin": "http://localhost:3001",
+                "Access-Control-Request-Method": "POST",
+                "Access-Control-Request-Headers": "Content-Type",
+            },
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            response.headers["access-control-allow-origin"], "http://localhost:3001"
+        )
 
 
 if __name__ == "__main__":

@@ -94,7 +94,11 @@ Source: <https://www2.census.gov/geo/docs/maps-data/data/rel2020/puma520/tab20_p
 
 ## Runtime boundary
 
-The model runs only in `inference/valuation_service.py`, bound by default to `127.0.0.1:8765`. The browser never receives the serialized estimator or raw ACS microdata. `npm run dev` starts the web runtime and inference service together. The service stores no requests and returns `Cache-Control: no-store`.
+The model runs only in `inference/valuation_service.py` through FastAPI/Uvicorn, bound by default to `127.0.0.1:8765` locally and to Render's `PORT` on `0.0.0.0` in production. The browser never receives the serialized estimator or raw ACS microdata. `npm run dev` starts the web runtime and inference service together. The service stores no requests and returns `Cache-Control: no-store`.
+
+Production loads `model_artifacts/puma-local-drivers.json`, a deterministic lossless projection of the five State-PUMA SHAP presentation files containing only the local-driver rows used by `/predict`. Scenario recommendations use prediction-only inference; the primary explanation still calculates exact TreeSHAP and verifies additivity. Regression tests prove the transport and optimization do not change prediction, log prediction, geography, context, scenarios, or SHAP outputs.
+
+The compact production runtime artifacts total 9.39 MiB, reduced from 12.73 MiB. A one-worker, one-thread local production-service load test measured a 2.08-second cold start and 295.38 MiB peak RSS. Batches of 1, 2, 5, and 10 simultaneous complete predictions produced zero errors; observed p95 latencies were 73, 150, 356, and 732 milliseconds. These are development-machine measurements, not guarantees of Render latency. The recorded result is `model_artifacts/load-test-results.json`.
 
 ## Scientific limits
 

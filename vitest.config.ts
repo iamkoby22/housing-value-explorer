@@ -9,6 +9,9 @@ export default defineConfig({
       'next/link': fileURLToPath(
         new URL('./tests/next-link.tsx', import.meta.url),
       ),
+      'next/image': fileURLToPath(
+        new URL('./tests/next-image.tsx', import.meta.url),
+      ),
     },
   },
   test: {
