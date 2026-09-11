@@ -27,13 +27,15 @@ services:
     envVars:
       - key: NODE_VERSION
         value: 24.14.0
+      - key: SKIP_INSTALL_DEPS
+        value: 'true'
       - key: NEXT_PUBLIC_INFERENCE_API_URL
         sync: false
 
   - type: web
     name: housing-value-explorer-api
     runtime: python
-    plan: 1c-2g
+    plan: 0.5c-512mb
     buildCommand: pip install --no-cache-dir -r requirements-inference.txt
     startCommand: python inference/valuation_service.py
     healthCheckPath: /health
