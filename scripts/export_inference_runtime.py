@@ -27,7 +27,7 @@ def build_payload() -> dict[str, Any]:
     for state_fips in STATE_FIPS:
         path = ROOT / "public" / "data" / f"puma-shap-{state_fips}.json"
         source = json.loads(path.read_text(encoding="utf-8"))
-        sources.append({"path": str(path.relative_to(ROOT)), "sha256": sha256(path)})
+        sources.append({"path": path.relative_to(ROOT).as_posix(), "sha256": sha256(path)})
         for row in source["data"]:
             data[row["state_puma_id"]] = row["top_non_geographic_features"]
 
@@ -44,10 +44,8 @@ def build_payload() -> dict[str, Any]:
 
 def main() -> None:
     payload = build_payload()
-    OUTPUT.write_text(
-        json.dumps(payload, ensure_ascii=False, separators=(",", ":")) + "\n",
-        encoding="utf-8",
-    )
+    with OUTPUT.open("w", encoding="utf-8", newline="\n") as output:
+        output.write(json.dumps(payload, ensure_ascii=False, separators=(",", ":")) + "\n")
     print(f"Wrote {OUTPUT} ({OUTPUT.stat().st_size:,} bytes).")
 
 
