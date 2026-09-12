@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 
 import { SectionHeading } from '@/components/section-heading';
+import { StaticLink } from '@/components/static-link';
 import { features } from '@/lib/research-data';
 
 export const metadata: Metadata = { title: 'Research' };
@@ -181,9 +181,12 @@ export default function ResearchPage() {
             geography and feature consistency, and records SHA-256 source
             hashes.
           </p>
-          <Link className="primary-link" href="/data/source-manifest.json">
+          <StaticLink
+            className="primary-link"
+            href="/data/source-manifest.json"
+          >
             Open source manifest <span aria-hidden="true">→</span>
-          </Link>
+          </StaticLink>
         </div>
       </section>
     </div>

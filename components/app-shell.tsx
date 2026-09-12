@@ -13,8 +13,9 @@ import {
   X,
 } from 'lucide-react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useEffect, useReducer, useState } from 'react';
+
+import { StaticLink } from '@/components/static-link';
 
 export const primaryNavigation = [
   { href: '/', label: 'Overview', icon: House },
@@ -97,7 +98,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         aria-label="Primary navigation"
       >
         <div className="app-brand">
-          <Link href="/" onClick={() => dispatch({ type: 'close-mobile' })}>
+          <StaticLink
+            href="/"
+            onClick={() => dispatch({ type: 'close-mobile' })}
+          >
             <Image
               className="app-mark"
               src="/housing-value-explorer-logo.png"
@@ -110,7 +114,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               <strong>Housing Value Explorer</strong>
               <small>ACS PUMS · 2020–2024</small>
             </span>
-          </Link>
+          </StaticLink>
           <button
             className="app-mobile-close"
             onClick={() => dispatch({ type: 'close-mobile' })}
@@ -125,7 +129,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             const active = isRouteActive(pathname, item.href);
             const Icon = item.icon;
             return (
-              <Link
+              <StaticLink
                 key={item.href}
                 href={item.href}
                 aria-current={active ? 'page' : undefined}
@@ -137,7 +141,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               >
                 <Icon size={17} aria-hidden="true" />
                 <span>{item.label}</span>
-              </Link>
+              </StaticLink>
             );
           })}
         </nav>

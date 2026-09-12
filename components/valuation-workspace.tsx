@@ -11,10 +11,10 @@ import {
   Save,
   Trash2,
 } from 'lucide-react';
-import Link from 'next/link';
 import { useMemo, useState } from 'react';
 
 import { DollarContributionExplorer } from '@/components/dollar-contribution-explorer';
+import { StaticLink } from '@/components/static-link';
 import { displayFeature } from '@/lib/research-data';
 import {
   estimateProperty,
@@ -807,9 +807,9 @@ export function ValuationWorkspace() {
             <li>Predictions are observational, not causal</li>
             <li>No name, email, or street address requested</li>
           </ul>
-          <Link href="/research" className="text-link">
+          <StaticLink href="/research" className="text-link">
             Read the methodology
-          </Link>
+          </StaticLink>
         </aside>
       </section>
 
@@ -1272,22 +1272,22 @@ export function ValuationWorkspace() {
                 <h2>Interrogate this model area</h2>
               </div>
               <nav aria-label="Related research views">
-                <Link
+                <StaticLink
                   href={`/explore?module=geography&state=${encodeURIComponent(result.location.state_name)}&level=puma&puma=${encodeURIComponent(result.location.state_puma)}`}
                 >
                   Open geography <ArrowRight size={14} />
-                </Link>
-                <Link
+                </StaticLink>
+                <StaticLink
                   href={`/drivers?module=drivers&state=${encodeURIComponent(result.location.state_name)}&level=puma&puma=${encodeURIComponent(result.location.state_puma)}`}
                 >
                   Open drivers & SHAP <ArrowRight size={14} />
-                </Link>
-                <Link href="/model?module=models">
+                </StaticLink>
+                <StaticLink href="/model?module=models">
                   Review models <ArrowRight size={14} />
-                </Link>
-                <Link href="/research">
+                </StaticLink>
+                <StaticLink href="/research">
                   Read methods <ArrowRight size={14} />
-                </Link>
+                </StaticLink>
               </nav>
             </section>
 

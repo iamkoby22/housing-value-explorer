@@ -1,8 +1,7 @@
-import Link from 'next/link';
-
 import { ImportanceChart } from '@/components/importance-chart';
 import { ModelComparison } from '@/components/model-comparison';
 import { SectionHeading } from '@/components/section-heading';
+import { StaticLink } from '@/components/static-link';
 import { compactInteger, dollars, integer } from '@/lib/format';
 import {
   displayFeature,
@@ -49,9 +48,9 @@ export default function OverviewPage() {
             Chosen using five-fold development CV, then evaluated on 2024 and
             explained with TreeSHAP.
           </p>
-          <Link className="text-link" href="/explore">
+          <StaticLink className="text-link" href="/explore">
             Explore the findings
-          </Link>
+          </StaticLink>
         </aside>
       </section>
 
@@ -59,22 +58,22 @@ export default function OverviewPage() {
         className="overview-actions page-width"
         aria-label="Overview actions"
       >
-        <Link href="/explore">
+        <StaticLink href="/explore">
           <span>Explore</span>
           <strong>Explore housing data</strong>
-        </Link>
-        <Link href="/estimate">
+        </StaticLink>
+        <StaticLink href="/estimate">
           <span>Estimate</span>
           <strong>Estimate a home</strong>
-        </Link>
-        <Link href="/drivers">
+        </StaticLink>
+        <StaticLink href="/drivers">
           <span>Drivers</span>
           <strong>View model drivers</strong>
-        </Link>
-        <Link href="/model">
+        </StaticLink>
+        <StaticLink href="/model">
           <span>Model</span>
           <strong>Inspect performance</strong>
-        </Link>
+        </StaticLink>
       </nav>
 
       <section className="scope-band" aria-label="Study scope">
@@ -161,9 +160,9 @@ export default function OverviewPage() {
                   non-geographic features in every state-level ranking.
                 </p>
               </article>
-              <Link className="text-link light" href="/drivers">
+              <StaticLink className="text-link light" href="/drivers">
                 Examine the drivers <span aria-hidden="true">→</span>
-              </Link>
+              </StaticLink>
             </div>
           </div>
         </div>
@@ -246,9 +245,9 @@ export default function OverviewPage() {
                 </dd>
               </div>
             </dl>
-            <Link className="primary-link" href="/model">
+            <StaticLink className="primary-link" href="/model">
               See the model evidence <span aria-hidden="true">→</span>
-            </Link>
+            </StaticLink>
           </div>
           <ModelComparison data={modelChart} />
         </div>
